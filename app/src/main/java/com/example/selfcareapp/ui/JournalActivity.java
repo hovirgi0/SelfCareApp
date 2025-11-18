@@ -22,7 +22,7 @@ public class JournalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_journal);
 
         // A fő nézethez (R.id.main) listener, ami kezeli a rendszer sávok insets-eit
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.journal_root), (v, insets) -> {
             // Lekéri a rendszer sávok (status bar, navigation bar) méreteit
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 

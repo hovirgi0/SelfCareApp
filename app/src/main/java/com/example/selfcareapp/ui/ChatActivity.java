@@ -21,7 +21,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         // Listener beállítása, ami kezeli a rendszer sávok (status bar, navigation bar) insets-eit
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.chat_root), (v, insets) -> {
             // Lekéri a rendszer sávok méreteit
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 

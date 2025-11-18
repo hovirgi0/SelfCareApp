@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // A fő nézethez (R.id.main) listener, ami kezeli a rendszer sávok insets-eit
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login_root), (v, insets) -> {
             // Lekéri a rendszer sávok méreteit (status bar, navigation bar)
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 
