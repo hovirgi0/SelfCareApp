@@ -15,25 +15,50 @@
             android:theme="@style/Theme.SelfCareApp">
 
     <!-- Kezdőképernyő -->
-    <activity android:name="com.example.selfcareapp.ui.MainActivity"
-              android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        <!--<activity android:name="com.example.selfcareapp.ui.MainActivity"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> -->
 
-    <!-- Login képernyő -->
-    <activity android:name="com.example.selfcareapp.ui.LoginActivity" />
+        <!-- Login képernyő -->
+        <!-- <activity android:name="com.example.selfcareapp.ui.LoginActivity" /> -->
 
-    <!-- ToDo képernyő -->
-    <activity android:name="com.example.selfcareapp.ui.TodoActivity" />
+         <!-- ToDo képernyő -->
+        <!--<activity android:name="com.example.selfcareapp.ui.TodoActivity" /> -->
 
-    <!-- Journal képernyő -->
-    <activity android:name="com.example.selfcareapp.ui.JournalActivity" />
+        <!-- Journal képernyő -->
+        <!--<activity android:name="com.example.selfcareapp.ui.JournalActivity" /> -->
 
-    <!-- Chat képernyő -->
-    <activity android:name="com.example.selfcareapp.ui.ChatActivity" />
+        <!-- Chat képernyő -->
+        <!--<activity android:name="com.example.selfcareapp.ui.ChatActivity" /> -->
 
-    </application>
-</manifest>
+        <!-- Kezdőképernyő -->
+      <!--  <activity android:name="com.example.selfcareapp.ui.personalization.StartActivity"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> -->
+
+        <!-- Kezdőképernyő -->
+        <activity android:name="com.example.selfcareapp.ui.MainMenuActivity"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+       <activity android:name=".ui.personalization.StartActivity" />
+       <activity android:name=".ui.personalization.NameActivity" />
+        <activity android:name=".ui.personalization.PreferencesActivity" />
+        <!-- <activity android:name=".ui.MainMenuActivity" /> -->
+
+
+
+        </application>
+    </manifest>

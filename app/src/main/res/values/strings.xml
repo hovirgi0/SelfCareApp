@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">SelfCareApp</string>
+    <string name="wellbeing_companion">Wellbeing Companion</string>
+    <string name="Login">Login</string>
+    <string name="Todo">ToDo</string>
+    <string name="Journal">Journal</string>
+    <string name="Chat">Chat</string>
+
+    <string name="type_a_message">Type a message</string>
+    <string name="send">Send</string>
+    <string name="write_your_thoughts_here">Write your thoughts here…</string>
+    <string name="save_entry">Save Entry</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="todo_list">ToDo List</string>
+    <string name="add_task">Add Task</string>
+    <string name="journal">Journal</string>
+    <string name="chat">chat</string>
 </resources>
