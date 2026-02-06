@@ -5,54 +5,68 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.PersonalizationCompleteActivity">
+        tools:context=".ui.personalization.CompleteActivity">
 
-        <ImageView
-                android:id="@+id/imgAppIcon"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:contentDescription="App icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvAppTitle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-                android:id="@+id/tvAppTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Készen áll az .. -od!"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/imgAppIcon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Icon is Andorid default launcher icon (for now) -->
+    <ImageView
+            android:id="@+id/imgAppIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="App icon"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvAppTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
-            android:id="@+id/tvExplanation"
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Készen áll az appod!"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            app:layout_constraintTop_toBottomOf="@id/imgAppIcon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Ez a te személyre szabott wellness tered."
+            android:text="A profilod elkészült,\nkezdődhet a személyre szabott élmény!"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="14sp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-                android:id="@+id/btnStart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Kezdjük el"
-                android:layout_marginTop="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:onClick="onContinueClicked"
-                app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+    <!-- layout_marginTop: Distance between the button and whatever is above it (tvAppTitle) -->
+    <!-- layout_marginStart: Distance between the button and the left edge of the screen -->
+    <!-- layout_marginEnd: Distance between the button and the right edge of the screen -->
+    <Button
+            android:id="@+id/btnStart"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Kezdjük el"
+            app:cornerRadius="0dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:onClick="onStartClicked"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
