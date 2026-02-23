@@ -13,7 +13,7 @@ public class PreferencesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personalization_preferences);
     }
 
-    public void onNeedsContinueClicked(View view) {
+    public void onPreferencesContinueClicked(View view) {
         // empty on purpose (Week 4 UI lock)
     }
 }
