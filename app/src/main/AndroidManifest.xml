@@ -45,7 +45,7 @@
         </activity> -->
 
         <!-- Kezdőképernyő -->
-        <activity android:name="com.example.selfcareapp.ui.personalization.PreferencesActivity"
+        <activity android:name="com.example.selfcareapp.ui.MainMenuActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

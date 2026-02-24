@@ -13,6 +13,9 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mainmenu);
     }
 
+    public void onSettingsClicked(View view) {
+        // empty
+    }
     public void onTodoClicked(View view) {
         // empty
     }
@@ -25,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         // empty
     }
 
-    public void onSettingsClicked(View view) {
+    public void onButtonClicked(View view) {
         // empty
     }
 }
