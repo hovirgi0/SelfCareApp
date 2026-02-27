@@ -45,7 +45,7 @@
         </activity> -->
 
         <!-- Kezdőképernyő -->
-        <activity android:name="com.example.selfcareapp.ui.todo.ToDoListActivity"
+        <activity android:name="com.example.selfcareapp.ui.journal.JournalAddEntryActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,6 +58,10 @@
         <!--  <activity android:name=".ui.personalization.PreferencesActivity" /> -->
         <!--  <activity android:name=".ui.personalization.CompleteActivity" /> -->
         <!-- <activity android:name=".ui.MainMenuActivity" /> -->
+        <!--  <activity android:name=".ui.todo.ToDoListActivity" /> -->
+        <!--  <activity android:name=".ui.todo.ToDoAddEntryActivity" /> -->
+        <!--  <activity android:name=".ui.journal.JournalActivity" /> -->
+        <!--  <activity android:name=".ui.journal.JournalAddEntryActivity" /> -->
 
 
 
