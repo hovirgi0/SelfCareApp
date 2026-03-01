@@ -45,7 +45,7 @@
         </activity> -->
 
         <!-- Kezdőképernyő -->
-        <activity android:name="com.example.selfcareapp.ui.chat.ChatConversationActivity"
+        <activity android:name="com.example.selfcareapp.ui.SettingsActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,6 +64,7 @@
         <!--  <activity android:name=".ui.journal.JournalAddEntryActivity" /> -->
         <!--  <activity android:name=".ui.chat.ChatActivity" /> -->
         <!--  <activity android:name=".ui.chat.ChatConversationActivity" /> -->
+        <!--  <activity android:name=".ui.SettingsActivity" /> -->
 
 
 

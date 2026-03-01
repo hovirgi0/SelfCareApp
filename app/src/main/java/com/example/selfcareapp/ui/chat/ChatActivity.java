@@ -28,4 +28,11 @@ public class ChatActivity extends AppCompatActivity {
     public void onSettingsClicked(View view) {
         // Üres a hétre (Week 4 UI lock)
     }
+
+    /*  Logic -> next week
+    // ChatActivity.java-ban
+    public void onSettingsClicked(View view) {
+        Intent intent = new Intent(this, com.example.selfcareapp.ui.settings.SettingsActivity.class);
+        startActivity(intent);
+    } */
 }
