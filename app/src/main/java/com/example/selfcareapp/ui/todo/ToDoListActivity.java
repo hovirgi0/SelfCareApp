@@ -1,13 +1,13 @@
 package com.example.selfcareapp.ui.todo;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
-import com.example.selfcareapp.data.dao.TaskDao;
-import com.example.selfcareapp.data.database.AppDatabase;
 import com.example.selfcareapp.data.entity.TaskEntity;
+import com.example.selfcareapp.data.repository.TaskRepository;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ToDoListActivity extends AppCompatActivity {
         //Log test 03.10.
 
         // Room doesnt allow db operations on the main thread
-        new Thread(() -> {
+        /*new Thread(() -> {
 
             AppDatabase db = AppDatabase.getInstance(getApplicationContext());
             TaskDao taskDao = db.taskDao();
@@ -44,6 +44,24 @@ public class ToDoListActivity extends AppCompatActivity {
             for (TaskEntity t : tasks) {
                 Log.d("DB_TEST", "Task loaded: " + t.getTitle());
             }
+        }).start(); */
+
+        RecyclerView recyclerView = findViewById(R.id.recycleViewTasks); //activitíy_todo_list.xml ...
+
+        TaskAdapter taskAdapter = new TaskAdapter();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
+        recyclerView.setAdapter(taskAdapter);
+
+        TaskRepository repository = new TaskRepository(getApplication());
+
+        new Thread(() -> {
+            List<TaskEntity> tasks = repository.getTasksForUser(1);
+
+            runOnUiThread(() -> {
+                taskAdapter.setTasks(tasks);
+                taskAdapter.notifyDataSetChanged();
+            });
         }).start();
     }
 

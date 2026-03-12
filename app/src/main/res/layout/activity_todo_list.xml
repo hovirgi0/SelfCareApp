@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/taskViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Teendő lista"
@@ -36,12 +36,12 @@
             android:layout_height="wrap_content"
             android:text="Date, Time"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/taskViewTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTasks"
+            android:id="@+id/recycleViewTasks"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toTopOf="@id/tvFooterNote"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_todo" />
+            tools:listitem="@layout/item_task" />
 
     <TextView
             android:id="@+id/tvEmptyState"
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:text="Nincsenek még teendőid."
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/rvTasks"
-            app:layout_constraintBottom_toBottomOf="@id/rvTasks"
+            app:layout_constraintTop_toTopOf="@id/recycleViewTasks"
+            app:layout_constraintBottom_toBottomOf="@id/recycleViewTasks"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
