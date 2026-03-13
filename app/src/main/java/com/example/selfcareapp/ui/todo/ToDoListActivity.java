@@ -2,12 +2,14 @@ package com.example.selfcareapp.ui.todo;
 
 import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.TaskRepository;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class ToDoListActivity extends AppCompatActivity {
             }
         }).start(); */
 
-        RecyclerView recyclerView = findViewById(R.id.recycleViewTasks); //activitíy_todo_list.xml ...
+        RecyclerView recyclerView = findViewById(R.id.recycleViewTasks); //activity_todo_list.xml ...
 
         TaskAdapter taskAdapter = new TaskAdapter();
 
@@ -63,6 +65,13 @@ public class ToDoListActivity extends AppCompatActivity {
                 taskAdapter.notifyDataSetChanged();
             });
         }).start();
+
+        //Attach FAB click listener for flaoting add Button
+        FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+        fabAddTask.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ToDoAddEditActivity.class);
+            startActivity(intent);
+        });
     }
 
     /**
@@ -70,7 +79,8 @@ public class ToDoListActivity extends AppCompatActivity {
      * Navigates to the Add/Edit screen.
      */
     public void onAddTaskClicked(View view) {
-        // empty on purpose (Week 4 UI lock)
+        Intent intent = new Intent(this, ToDoAddEditActivity.class);
+        startActivity(intent);
     }
 
 }

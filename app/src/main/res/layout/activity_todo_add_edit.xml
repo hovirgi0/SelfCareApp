@@ -52,6 +52,7 @@
 
     <ImageButton
             android:id="@+id/btnSaveTask"
+            android:onClick="onSaveTaskClicked"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="32dp"
@@ -93,6 +94,7 @@
 
     <Button
             android:id="@+id/btnCancel"
+            android:onClick="onCancelClicked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mégse"
