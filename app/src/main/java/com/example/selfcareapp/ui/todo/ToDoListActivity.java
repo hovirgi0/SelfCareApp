@@ -3,8 +3,11 @@ package com.example.selfcareapp.ui.todo;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.TaskRepository;
@@ -14,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class ToDoListActivity extends AppCompatActivity {
+    //Repository-t és az Adaptert osztályszintű változóba való kiemelése
+    private TaskAdapter taskAdapter;
+    private TaskRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +56,15 @@ public class ToDoListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycleViewTasks); //activity_todo_list.xml ...
 
-        TaskAdapter taskAdapter = new TaskAdapter();
+        taskAdapter = new TaskAdapter();
+        repository = new TaskRepository(getApplication());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
         recyclerView.setAdapter(taskAdapter);
 
-        TaskRepository repository = new TaskRepository(getApplication());
 
-        new Thread(() -> {
-            List<TaskEntity> tasks = repository.getTasksForUser(1);
 
-            runOnUiThread(() -> {
-                taskAdapter.setTasks(tasks);
-                taskAdapter.notifyDataSetChanged();
-            });
-        }).start();
+
 
         //Attach FAB click listener for flaoting add Button
         FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
@@ -72,6 +72,54 @@ public class ToDoListActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ToDoAddEditActivity.class);
             startActivity(intent);
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                TaskEntity taskToDelete = taskAdapter.getTaskAt(position);
+
+                new Thread(() -> {
+                    repository.deleteTask(taskToDelete);
+
+                    List<TaskEntity> tasks = repository.getTasksForUser(1);
+
+                    runOnUiThread(() -> {
+                        taskAdapter.setTasks(tasks);
+                        taskAdapter.notifyDataSetChanged();
+                    });
+                }).start();
+            }
+        }).attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        refreshTaskList();
+    }
+
+    private void refreshTaskList(){
+        new Thread(() -> {
+            List<TaskEntity> tasks = repository.getTasksForUser(1);
+
+            runOnUiThread(() -> {
+                taskAdapter.setTasks(tasks);
+                taskAdapter.notifyDataSetChanged();
+
+                TextView tvEmpty = findViewById(R.id.tvEmptyState);
+                if (tasks.isEmpty()) {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    tvEmpty.setVisibility(View.GONE);
+                }
+            });
+        }).start();
     }
 
     /**
@@ -82,5 +130,7 @@ public class ToDoListActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ToDoAddEditActivity.class);
         startActivity(intent);
     }
+
+
 
 }

@@ -52,4 +52,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    //Swipe-to-Delete törlés (alternatív megoldás - egyszerű, modern)
+    public TaskEntity getTaskAt(int position) {
+        return tasks.get(position);
+    }
+
 }
