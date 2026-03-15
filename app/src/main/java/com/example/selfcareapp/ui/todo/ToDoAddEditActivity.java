@@ -12,7 +12,9 @@ import com.example.selfcareapp.data.repository.TaskRepository;
 
 public class ToDoAddEditActivity extends Activity {
     private EditText etTaskName;
+    private EditText etTaskDescription;
     private TaskRepository repository;
+    private int currentTaskId = -1; //-1 jelzi, ha új feladatról van szó
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,14 @@ public class ToDoAddEditActivity extends Activity {
         setContentView(R.layout.activity_todo_add_edit);
 
         etTaskName = findViewById(R.id.etTaskName);
+        etTaskDescription = findViewById(R.id.etTaskDescription);
         repository = new TaskRepository(getApplication());
+
+        if (getIntent().hasExtra("TASK_ID")) {
+            currentTaskId = getIntent().getIntExtra("TASK_ID", -1);
+            etTaskName.setText(getIntent().getStringExtra("TASK_TITLE"));
+            etTaskDescription.setText(getIntent().getStringExtra("TASK_DESCRIPTION"));
+        }
     }
 
     /**
@@ -29,26 +38,38 @@ public class ToDoAddEditActivity extends Activity {
     //Save new task
     public void onSaveTaskClicked(View view) {
         String title = etTaskName.getText().toString().trim();
+        String desc = etTaskDescription.getText().toString().trim();
 
+        //Simple Validation Hibakezelés
         if(title.isEmpty()){
-            Toast.makeText(this, "Please enter a title", Toast.LENGTH_SHORT).show();
+            etTaskName.setError("A cím nem maradhat üresen!"); //Vizuális hibaüzenet
+            Toast.makeText(this, "Kérlek adj meg egy címet", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //TaskEntity összeállítása
         TaskEntity task = new TaskEntity();
         task.setTitle(title);
-        task.setDescription(""); //etTaskName.getText().toString().trim()
+        task.setDescription(desc); //etTaskName.getText().toString().trim()
         task.setCreatedAt(System.currentTimeMillis());
         task.setCompleted(false);
         task.setUserId(1);
 
         new Thread(() -> {
-            repository.insertTask(task);
+            if (currentTaskId == -1) {
+                //új hozzáadása
+                TaskEntity newTask = new TaskEntity();
+                newTask.setTitle(title);
+                newTask.setDescription("");
+                repository.insertTask(task);
+            } else {
+                //Szerkesztés: Update kell a DAO-ba is
+                // Itt lehet lekérni a régit és módosítani v. újat küldeni ugyanazzal az id-val
+            }
+            //Itt dől el, hogy: Új vagy szerkesztés?
+            //repository.insertTask(task); //jelenleg csak Insert van benne
 
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Task Saved", Toast.LENGTH_SHORT).show();
-                finish();
-            });
+            runOnUiThread(() ->  finish());
         }).start();
     }
 

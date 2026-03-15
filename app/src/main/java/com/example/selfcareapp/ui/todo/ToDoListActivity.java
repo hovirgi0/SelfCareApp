@@ -112,11 +112,12 @@ public class ToDoListActivity extends AppCompatActivity {
                 taskAdapter.setTasks(tasks);
                 taskAdapter.notifyDataSetChanged();
 
+                //empty state kezelése
                 TextView tvEmpty = findViewById(R.id.tvEmptyState);
-                if (tasks.isEmpty()) {
-                    tvEmpty.setVisibility(View.VISIBLE);
+                if (tasks == null || tasks.isEmpty()) {
+                    tvEmpty.setVisibility(View.VISIBLE); //"Nincsenek még teendőid"
                 } else {
-                    tvEmpty.setVisibility(View.GONE);
+                    tvEmpty.setVisibility(View.GONE); //"Elrejtjük, ha van adat
                 }
             });
         }).start();
