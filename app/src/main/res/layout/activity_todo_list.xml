@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleViewTasks"
+            android:id="@+id/rvTasks"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:text="Nincsenek még teendőid."
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/recycleViewTasks"
-            app:layout_constraintBottom_toBottomOf="@id/recycleViewTasks"
+            app:layout_constraintTop_toTopOf="@id/rvTasks"
+            app:layout_constraintBottom_toBottomOf="@id/rvTasks"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

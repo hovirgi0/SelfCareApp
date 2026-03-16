@@ -54,16 +54,12 @@ public class ToDoListActivity extends AppCompatActivity {
             }
         }).start(); */
 
-        RecyclerView recyclerView = findViewById(R.id.recycleViewTasks); //activity_todo_list.xml ...
-
         taskAdapter = new TaskAdapter();
         repository = new TaskRepository(getApplication());
 
+        RecyclerView recyclerView = findViewById(R.id.rvTasks); //activity_todo_list.xml ...
         recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
         recyclerView.setAdapter(taskAdapter);
-
-
-
 
 
         //Attach FAB click listener for flaoting add Button

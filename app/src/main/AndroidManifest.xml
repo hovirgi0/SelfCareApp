@@ -45,7 +45,7 @@
         </activity> -->
 
         <!-- Kezdőképernyő -->
-        <activity android:name="com.example.selfcareapp.ui.todo.ToDoListActivity"
+        <activity android:name="com.example.selfcareapp.ui.journal.JournalActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
         </activity>
 
         <!-- Kezdőképernyő  teszthez-->
-        <activity android:name="com.example.selfcareapp.ui.todo.ToDoAddEditActivity"
+        <activity android:name="com.example.selfcareapp.ui.journal.JournalAddEntryActivity"
                   android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
