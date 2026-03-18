@@ -9,6 +9,7 @@ public class JournalEntryEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public String mood;
     public String title;
 
     public String content;
@@ -23,6 +24,14 @@ public class JournalEntryEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMood() {
+        return mood;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
     }
 
     public String getTitle() {

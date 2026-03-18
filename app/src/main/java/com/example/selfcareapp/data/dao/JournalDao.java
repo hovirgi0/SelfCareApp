@@ -17,7 +17,7 @@ public interface JournalDao {
     void insertEntry(JournalEntryEntity entry);
 
     @Update
-    void updateEntry(JournalEntryEntity entry);
+    void editEntry(JournalEntryEntity editedentry);
 
     @Delete
     void deleteEntry(JournalEntryEntity entry);

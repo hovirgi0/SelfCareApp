@@ -46,6 +46,10 @@ public class TaskRepository {
         taskDao.insertTask(task);
     }
 
+    public void editTask(TaskEntity task) {
+        taskDao.editTask(task);
+    }
+
     /*
      Deletes a task from the database.
     */

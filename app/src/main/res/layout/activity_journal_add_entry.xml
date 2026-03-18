@@ -55,7 +55,7 @@
                 android:text="😢"
                 android:textSize="24sp"
                 android:gravity="center"
-                android:onClick="onMoodSelected"
+                android:onClick="onMoodEntrySelected"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <TextView
@@ -65,7 +65,7 @@
                 android:text="😐"
                 android:textSize="24sp"
                 android:gravity="center"
-                android:onClick="onMoodSelected"
+                android:onClick="onMoodEntrySelected"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <TextView
@@ -75,7 +75,7 @@
                 android:text="😊"
                 android:textSize="24sp"
                 android:gravity="center"
-                android:onClick="onMoodSelected"
+                android:onClick="onMoodEntrySelected"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <TextView
@@ -85,7 +85,7 @@
                 android:text="😃"
                 android:textSize="24sp"
                 android:gravity="center"
-                android:onClick="onMoodSelected"
+                android:onClick="onMoodEntrySelected"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
 

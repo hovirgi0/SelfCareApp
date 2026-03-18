@@ -42,17 +42,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             intent.putExtra("TASK_ID", task.id);
             intent.putExtra("TASK_TITLE", task.getTitle());
             intent.putExtra("TASK_DESCRIPTION", task.getDescription());
+
             v.getContext().startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-
-        if (tasks == null) {
+        return tasks == null ? 0 : tasks.size();
+       /* if (tasks == null) {
             return 0;
         }
-        return tasks.size();
+        return tasks.size(); */
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder{

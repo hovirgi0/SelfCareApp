@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.selfcareapp.data.dao.JournalDao;
 import com.example.selfcareapp.data.database.AppDatabase;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
+import com.example.selfcareapp.data.entity.TaskEntity;
 
 /*
  Repository responsible for handling journal entry data.
@@ -41,6 +42,10 @@ public class JournalRepository {
     */
     public void insertEntry(JournalEntryEntity entry) {
         journalDao.insertEntry(entry);
+    }
+
+    public void editEntry(JournalEntryEntity entry) {
+        journalDao.editEntry(entry);
     }
 
     /*

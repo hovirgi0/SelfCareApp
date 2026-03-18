@@ -19,12 +19,19 @@ import java.util.List;
 public class ToDoListActivity extends AppCompatActivity {
     //Repository-t és az Adaptert osztályszintű változóba való kiemelése
     private TaskAdapter taskAdapter;
-    private TaskRepository repository;
+    private TaskRepository taskRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+
+        taskAdapter = new TaskAdapter();
+        taskRepository = new TaskRepository(getApplication());
+
+        RecyclerView recyclerView = findViewById(R.id.rvTasks); //activity_todo_list.xml ...
+        recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
+        recyclerView.setAdapter(taskAdapter);
 
         //Log test 03.10.
 
@@ -54,14 +61,6 @@ public class ToDoListActivity extends AppCompatActivity {
             }
         }).start(); */
 
-        taskAdapter = new TaskAdapter();
-        repository = new TaskRepository(getApplication());
-
-        RecyclerView recyclerView = findViewById(R.id.rvTasks); //activity_todo_list.xml ...
-        recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
-        recyclerView.setAdapter(taskAdapter);
-
-
         //Attach FAB click listener for flaoting add Button
         FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
         fabAddTask.setOnClickListener(view -> {
@@ -81,9 +80,9 @@ public class ToDoListActivity extends AppCompatActivity {
                 TaskEntity taskToDelete = taskAdapter.getTaskAt(position);
 
                 new Thread(() -> {
-                    repository.deleteTask(taskToDelete);
+                    taskRepository.deleteTask(taskToDelete);
 
-                    List<TaskEntity> tasks = repository.getTasksForUser(1);
+                    List<TaskEntity> tasks = taskRepository.getTasksForUser(1);
 
                     runOnUiThread(() -> {
                         taskAdapter.setTasks(tasks);
@@ -102,7 +101,7 @@ public class ToDoListActivity extends AppCompatActivity {
 
     private void refreshTaskList(){
         new Thread(() -> {
-            List<TaskEntity> tasks = repository.getTasksForUser(1);
+            List<TaskEntity> tasks = taskRepository.getTasksForUser(1);
 
             runOnUiThread(() -> {
                 taskAdapter.setTasks(tasks);

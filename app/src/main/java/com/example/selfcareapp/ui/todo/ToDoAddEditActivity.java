@@ -7,13 +7,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.data.dao.TaskDao;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.TaskRepository;
+import com.example.selfcareapp.ui.journal.JournalAddEntryActivity;
 
 public class ToDoAddEditActivity extends Activity {
     private EditText etTaskName;
     private EditText etTaskDescription;
-    private TaskRepository repository;
+    private TaskRepository taskRepository;
     private int currentTaskId = -1; //-1 jelzi, ha új feladatról van szó
 
     @Override
@@ -23,7 +25,7 @@ public class ToDoAddEditActivity extends Activity {
 
         etTaskName = findViewById(R.id.etTaskName);
         etTaskDescription = findViewById(R.id.etTaskDescription);
-        repository = new TaskRepository(getApplication());
+        taskRepository = new TaskRepository(getApplication());
 
         if (getIntent().hasExtra("TASK_ID")) {
             currentTaskId = getIntent().getIntExtra("TASK_ID", -1);
@@ -47,29 +49,33 @@ public class ToDoAddEditActivity extends Activity {
             return;
         }
 
-        //TaskEntity összeállítása
-        TaskEntity task = new TaskEntity();
-        task.setTitle(title);
-        task.setDescription(desc); //etTaskName.getText().toString().trim()
-        task.setCreatedAt(System.currentTimeMillis());
-        task.setCompleted(false);
-        task.setUserId(1);
-
         new Thread(() -> {
+            //új hozzáadása
+            TaskEntity task = new TaskEntity();
+            task.setTitle(title);
+            task.setDescription(desc); //etTaskName.getText().toString().trim()
+            task.setUserId(1);
+            task.setCompleted(false);
+
             if (currentTaskId == -1) {
-                //új hozzáadása
-                TaskEntity newTask = new TaskEntity();
-                newTask.setTitle(title);
-                newTask.setDescription("");
-                repository.insertTask(task);
+                task.setCreatedAt(System.currentTimeMillis());
+                taskRepository.insertTask(task);
+
             } else {
-                //Szerkesztés: Update kell a DAO-ba is
+                //Szerkesztés: létező task-et
                 // Itt lehet lekérni a régit és módosítani v. újat küldeni ugyanazzal az id-val
+                task.setId(currentTaskId);
+                taskRepository.editTask(task);
             }
             //Itt dől el, hogy: Új vagy szerkesztés?
             //repository.insertTask(task); //jelenleg csak Insert van benne
 
-            runOnUiThread(() ->  finish());
+
+            runOnUiThread(() ->  {
+                //Validáció: Bejegyzés sikeresen hozzáadva
+                Toast.makeText(ToDoAddEditActivity.this, "Teendő sikeresen mentve", Toast.LENGTH_SHORT).show();
+                finish();
+            });
         }).start();
     }
 
