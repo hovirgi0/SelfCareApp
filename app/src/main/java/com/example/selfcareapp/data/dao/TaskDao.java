@@ -24,4 +24,6 @@ public interface TaskDao {
 
     @Query("SELECT * FROM tasks WHERE userId = :userId")
     List<TaskEntity> getTasksForUser(int userId);
+
+    //in what order the tasks are displayed?
 }

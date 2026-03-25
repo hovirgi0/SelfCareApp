@@ -9,9 +9,8 @@ public class TaskEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public String title;
+    public String taskName;
 
-    public String description;
 
     public boolean isCompleted;
 
@@ -27,9 +26,6 @@ public class TaskEntity {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public boolean isCompleted() {
         return isCompleted;
@@ -43,17 +39,14 @@ public class TaskEntity {
         return userId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,13 +18,24 @@ import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<TaskEntity> tasks;
+    private setOnTaskStatusChangedListener taskStatusListener; //Variable for?
+
+    //Task toggle box status interface
+    public interface setOnTaskStatusChangedListener {
+        void onTaskStatusChanged(TaskEntity task);
+    }
+
+    //Task toggle box setter and getter
+    public void setOnTaskStatusChangedListener(setOnTaskStatusChangedListener taskStatuslistener){
+        this.taskStatusListener = taskStatuslistener;
+    }
 
     public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
     }
 
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public @org.jspecify.annotations.NonNull TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_task, parent, false);
         return new TaskViewHolder(view);
@@ -32,7 +44,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder (@NonNull TaskViewHolder holder, int position){
         TaskEntity task = tasks.get(position);
-        holder.tvTitle.setText(task.getTitle());
+        holder.tvTaskName.setText(task.getTaskName());
+
+        //Todo toggle box
+        //Phone state listener
+        //set visual state - not to trigger a listener loop
+        holder.cbTaskDone.setOnCheckedChangeListener(null);
+        holder.cbTaskDone.setChecked(task.isCompleted());
+
+        //when the user clicks on the box - listen for a new toggle
+        holder.cbTaskDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            task.setCompleted(isChecked); //object data
+            if (taskStatusListener != null){
+                taskStatusListener.onTaskStatusChanged(task);        }
+        });
 
         //Szerkesztés gomb kezelése
         holder.btnEditTask.setOnClickListener(v -> {
@@ -40,8 +65,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             //Feladat átküldéséhez
             intent.putExtra("TASK_ID", task.id);
-            intent.putExtra("TASK_TITLE", task.getTitle());
-            intent.putExtra("TASK_DESCRIPTION", task.getDescription());
+            intent.putExtra("TASK_NAME", task.getTaskName());
 
             v.getContext().startActivity(intent);
         });
@@ -58,13 +82,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvTitle;
+        CheckBox cbTaskDone;
+        TextView tvTaskName;
         ImageButton btnEditTask;
 
         public TaskViewHolder(View itemView){
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle); //item_task.xml
+            tvTaskName = itemView.findViewById(R.id.tvTaskName); //item_task.xml
             btnEditTask = itemView.findViewById(R.id.btnEditTask);
+            cbTaskDone = itemView.findViewById(R.id.cbTaskDone);
         }
     }
 

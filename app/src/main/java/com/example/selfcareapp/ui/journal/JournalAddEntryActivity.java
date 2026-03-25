@@ -25,8 +25,8 @@ public class JournalAddEntryActivity extends AppCompatActivity {
         etJournalEntry = findViewById(R.id.etJournalEntry);
         journalRepository = new JournalRepository(getApplication());
 
-        if (getIntent().hasExtra("Entry_ID")) {
-            currentEntryId = getIntent().getIntExtra("TASK_ID", -1);
+        if (getIntent().hasExtra("ENTRY_ID")) {
+            currentEntryId = getIntent().getIntExtra("ENTRY_ID", -1);
             etJournalEntry.setText(getIntent().getStringExtra("ENTRY_CONTENT"));
             selectedMoodEntry = getIntent().getStringExtra("ENTRY_MOOD");
         }

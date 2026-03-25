@@ -26,17 +26,30 @@ public class JournalActivity extends AppCompatActivity {
     private JournalAdapter journalAdapter;
     private JournalRepository journalRepository;
 
+    private RecyclerView rvJournalEntries;
+    private TextView tvEmpty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal_list);
 
+        //initialize DB and Adapter
         journalAdapter = new JournalAdapter();
         journalRepository = new JournalRepository(getApplication());
 
-        RecyclerView recyclerView = findViewById(R.id.rvJournalEntries);
+        /*RecyclerView recyclerView = findViewById(R.id.rvJournalEntries);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(journalAdapter);
+        recyclerView.setAdapter(journalAdapter);*/
+
+        //initialize the global variables (Finding the views in the layout)
+        rvJournalEntries = findViewById(R.id.rvJournalEntries);
+        tvEmpty = findViewById(R.id.tvEmptyState);
+
+        //Setup RecyclerView
+        // We use the global 'rvTasks' now instead of a local 'recyclerView'
+        rvJournalEntries.setLayoutManager(new LinearLayoutManager(this));
+        rvJournalEntries.setAdapter(journalAdapter);
 
         //Log test 03.16.
 /*
@@ -81,6 +94,9 @@ public class JournalActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        setupSwipeToDelete();
+    }
+        private void setupSwipeToDelete(){
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -95,15 +111,16 @@ public class JournalActivity extends AppCompatActivity {
                 new Thread(() -> {
                     journalRepository.deleteEntry(entryToDelete);
 
-                    List<JournalEntryEntity> entries = journalRepository.getEntriesForUser(1);
+                    //List<JournalEntryEntity> entries = journalRepository.getEntriesForUser(1);
 
-                    runOnUiThread(() -> {
+                   /* runOnUiThread(() -> {
                         journalAdapter.setEntries(entries);
                         journalAdapter.notifyDataSetChanged();
-                    });
+                    }); */
+                    refreshJournalEntries();
                 }).start();
             }
-        }).attachToRecyclerView(recyclerView);
+        }).attachToRecyclerView(rvJournalEntries);
     }
 
     @Override
@@ -120,23 +137,26 @@ public class JournalActivity extends AppCompatActivity {
                 journalAdapter.setEntries(entries);
                 journalAdapter.notifyDataSetChanged();
 
-                //empty state kezelése
+                //empty state kezelése = ha nincs hozzáadva bejegyzés
                 TextView tvEmpty = findViewById(R.id.tvEmptyState);
                 if (entries == null || entries.isEmpty()) {
-                    tvEmpty.setVisibility(View.VISIBLE); //"Még nincsenek bejegyzéseid"
+                    tvEmpty.setVisibility(View.VISIBLE); //"Még nincsenek bejegyzéseid" //shows text is empty
+                    rvJournalEntries.setVisibility(View.GONE);
                 } else {
-                    tvEmpty.setVisibility(View.GONE); //"Elrejtjük, ha van adat
+                    tvEmpty.setVisibility(View.GONE); //Elrejtjük, ha van adat
+                    rvJournalEntries.setVisibility(View.VISIBLE); //Elrejtük magát a containert
                 }
             });
         }).start();
     }
-    /**
+    /*
      * Triggered by the Floating Action Button (FAB) [+].
      * Navigates to the Add Entry screen to start a new reflection.
      */
-    public void onAddEntryClicked(View view) {
+    //FAB is already used for deleting tasks from db - so onAddTaskClicked in the xml layout also isnt needed anymore
+    /*public void onAddEntryClicked(View view) {
         // Intent to navigate to the Add Entry screen
         Intent intent = new Intent(this, JournalAddEntryActivity.class);
         startActivity(intent);
-    }
+    }*/
 }

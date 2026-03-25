@@ -14,7 +14,6 @@ import com.example.selfcareapp.ui.journal.JournalAddEntryActivity;
 
 public class ToDoAddEditActivity extends Activity {
     private EditText etTaskName;
-    private EditText etTaskDescription;
     private TaskRepository taskRepository;
     private int currentTaskId = -1; //-1 jelzi, ha új feladatról van szó
 
@@ -24,13 +23,11 @@ public class ToDoAddEditActivity extends Activity {
         setContentView(R.layout.activity_todo_add_edit);
 
         etTaskName = findViewById(R.id.etTaskName);
-        etTaskDescription = findViewById(R.id.etTaskDescription);
         taskRepository = new TaskRepository(getApplication());
 
         if (getIntent().hasExtra("TASK_ID")) {
             currentTaskId = getIntent().getIntExtra("TASK_ID", -1);
-            etTaskName.setText(getIntent().getStringExtra("TASK_TITLE"));
-            etTaskDescription.setText(getIntent().getStringExtra("TASK_DESCRIPTION"));
+            etTaskName.setText(getIntent().getStringExtra("TASK_NAME"));
         }
     }
 
@@ -39,21 +36,19 @@ public class ToDoAddEditActivity extends Activity {
      */
     //Save new task
     public void onSaveTaskClicked(View view) {
-        String title = etTaskName.getText().toString().trim();
-        String desc = etTaskDescription.getText().toString().trim();
+        String taskName = etTaskName.getText().toString().trim();
 
         //Simple Validation Hibakezelés
-        if(title.isEmpty()){
-            etTaskName.setError("A cím nem maradhat üresen!"); //Vizuális hibaüzenet
-            Toast.makeText(this, "Kérlek adj meg egy címet", Toast.LENGTH_SHORT).show();
+        if(taskName.isEmpty()){
+            etTaskName.setError("Nem maradhat üresen!"); //Vizuális hibaüzenet
+            Toast.makeText(this, "Kérlek adj meg egy teendőt", Toast.LENGTH_SHORT).show();
             return;
         }
 
         new Thread(() -> {
             //új hozzáadása
             TaskEntity task = new TaskEntity();
-            task.setTitle(title);
-            task.setDescription(desc); //etTaskName.getText().toString().trim()
+            task.setTaskName(taskName);
             task.setUserId(1);
             task.setCompleted(false);
 

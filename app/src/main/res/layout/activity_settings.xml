@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             android:padding="12dp">
 
+        <!-- Header -->
         <LinearLayout
                 android:id="@+id/llHeader"
                 android:layout_width="match_parent"
@@ -24,9 +25,9 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
+                    android:id="@+id/tvSettingsGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Helló, Név!"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#000000" />
@@ -39,6 +40,7 @@
                     android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <!-- Preview Box -->
         <LinearLayout
                 android:id="@+id/llPreviewBox"
                 android:layout_width="match_parent"
@@ -94,6 +96,7 @@
                     android:textColor="#424242"/>
         </LinearLayout>
 
+        <!-- Tone title -->
         <TextView
                 android:id="@+id/tvToneTitle"
                 android:layout_width="wrap_content"
@@ -105,6 +108,7 @@
                 app:layout_constraintTop_toBottomOf="@id/llPreviewBox"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+        <!-- Tone grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glTone"
                 android:layout_width="match_parent"
@@ -114,6 +118,7 @@
                 android:layout_marginTop="6dp">
 
             <LinearLayout
+                    android:id="@+id/cardToneNeutral"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -126,6 +131,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardToneFriendly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -138,6 +144,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardToneCalm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -150,6 +157,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardToneEnergetic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -162,6 +170,7 @@
             </LinearLayout>
         </androidx.gridlayout.widget.GridLayout>
 
+        <!-- Style title -->
         <TextView
                 android:id="@+id/tvStyleTitle"
                 android:layout_width="wrap_content"
@@ -173,6 +182,7 @@
                 app:layout_constraintTop_toBottomOf="@id/glTone"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+        <!-- Style grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glStyle"
                 android:layout_width="match_parent"
@@ -182,6 +192,7 @@
                 android:layout_marginTop="6dp">
 
             <LinearLayout
+                    android:id="@+id/cardStyleSupportive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -194,6 +205,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardStyleDirect"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -206,6 +218,7 @@
             </LinearLayout>
         </androidx.gridlayout.widget.GridLayout>
 
+        <!-- Theme title -->
         <TextView
                 android:id="@+id/tvThemeTitle"
                 android:layout_width="wrap_content"
@@ -217,6 +230,7 @@
                 app:layout_constraintTop_toBottomOf="@id/glStyle"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+        <!-- Theme grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glTheme"
                 android:layout_width="match_parent"
@@ -226,6 +240,7 @@
                 android:layout_marginTop="6dp">
 
             <LinearLayout
+                    android:id="@+id/cardThemeLight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -238,6 +253,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardThemeDark"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -250,6 +266,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardThemeNatural"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
@@ -262,6 +279,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/cardThemeMinimal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"

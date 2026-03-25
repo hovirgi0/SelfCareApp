@@ -21,18 +21,50 @@ public class ToDoListActivity extends AppCompatActivity {
     private TaskAdapter taskAdapter;
     private TaskRepository taskRepository;
 
+    private RecyclerView rvTasks;
+    private TextView tvEmpty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
 
+        //initialize DB and Adapter
         taskAdapter = new TaskAdapter();
         taskRepository = new TaskRepository(getApplication());
 
-        RecyclerView recyclerView = findViewById(R.id.rvTasks); //activity_todo_list.xml ...
+        //Setup RecycleView
+        //local variable for activity_todo_list.xml-s ... other methods (refreshTaskList) cant see it need to declare it globally
+        /*RecyclerView recyclerView = findViewById(R.id.rvTasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(ToDoListActivity.this));
-        recyclerView.setAdapter(taskAdapter);
+        recyclerView.setAdapter(taskAdapter); */
 
+        //initialize the global variables (Finding the views in the layout)
+        rvTasks = findViewById(R.id.rvTasks);
+        tvEmpty = findViewById(R.id.tvEmptyState);
+
+        //Setup RecyclerView
+        // We use the global 'rvTasks' now instead of a local 'recyclerView'
+        rvTasks.setLayoutManager(new LinearLayoutManager(this));
+        rvTasks.setAdapter(taskAdapter);
+
+        // Setup Date and Time
+        // finds the TextView by its ID
+        TextView tvDateMetadata = findViewById(R.id.tvDateMetadata);
+        // creates a formatter for date style
+        // EEEE - day; MMM - month; d - day
+        //Locale.getDefault() ensures that if the language of the emulator/device is to hungarian the date will also be displayed in hungarian
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE MMM d", java.util.Locale.getDefault());
+        String currentDateAndTime = sdf.format(new java.util.Date());
+
+        //sets the text
+        tvDateMetadata.setText(currentDateAndTime);
+
+        taskAdapter.setOnTaskStatusChangedListener(task -> {
+                    new Thread(() -> {
+                        taskRepository.editTask(task);
+                    }).start();
+        });
         //Log test 03.10.
 
         // Room doesnt allow db operations on the main thread
@@ -61,37 +93,46 @@ public class ToDoListActivity extends AppCompatActivity {
             }
         }).start(); */
 
-        //Attach FAB click listener for flaoting add Button
+        //Attach FAB click listener for flaoting add Button - using the id from the xml
         FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
         fabAddTask.setOnClickListener(view -> {
             Intent intent = new Intent(this, ToDoAddEditActivity.class);
             startActivity(intent);
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+        setupSwipeToDelete();
+    }
+        //move
+        private void setupSwipeToDelete(){
+            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                TaskEntity taskToDelete = taskAdapter.getTaskAt(position);
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    int position = viewHolder.getAdapterPosition();
+                    TaskEntity taskToDelete = taskAdapter.getTaskAt(position);
 
-                new Thread(() -> {
-                    taskRepository.deleteTask(taskToDelete);
+                    new Thread(() -> {
+                        taskRepository.deleteTask(taskToDelete); //delete task from database
 
-                    List<TaskEntity> tasks = taskRepository.getTasksForUser(1);
+                        // List<TaskEntity> tasks = taskRepository.getTasksForUser(1);
 
-                    runOnUiThread(() -> {
+                        //dont need a new thread + db delete + telling db to fetch the new list + telling UI to update adapter
+                        // since the same logic already gets executed in refreshTaskList()
+                   /* runOnUiThread(() -> {
                         taskAdapter.setTasks(tasks);
                         taskAdapter.notifyDataSetChanged();
-                    });
-                }).start();
-            }
-        }).attachToRecyclerView(recyclerView);
-    }
+                    }); */
+                        // just call the method that handles ...
+                        // This method already handles the Thread, the UI update, and the Empty State
+                        refreshTaskList();
+                    }).start();
+                }
+            }).attachToRecyclerView(rvTasks);
+        }
 
     @Override
     protected void onResume(){
@@ -107,12 +148,16 @@ public class ToDoListActivity extends AppCompatActivity {
                 taskAdapter.setTasks(tasks);
                 taskAdapter.notifyDataSetChanged();
 
-                //empty state kezelése
+                //empty state kezelése = ha nincs hozzáadva teendő
                 TextView tvEmpty = findViewById(R.id.tvEmptyState);
+                // task == null prevents the app from crashing if database hasnt returned anything
+                //tasks.isEmpty() checks if theres any task added to database
                 if (tasks == null || tasks.isEmpty()) {
                     tvEmpty.setVisibility(View.VISIBLE); //"Nincsenek még teendőid"
+                    rvTasks.setVisibility(View.GONE); //
                 } else {
-                    tvEmpty.setVisibility(View.GONE); //"Elrejtjük, ha van adat
+                    tvEmpty.setVisibility(View.GONE); //Elrejtjük, ha van adat
+                    rvTasks.setVisibility(View.VISIBLE); //Elrejtük magát a containert
                 }
             });
         }).start();
@@ -122,11 +167,9 @@ public class ToDoListActivity extends AppCompatActivity {
      * Triggered by the Floating Action Button (FAB).
      * Navigates to the Add/Edit screen.
      */
-    public void onAddTaskClicked(View view) {
+    //FAB is already used for deleting tasks from db - so onAddTaskClicked in the xml layout also isnt needed anymore
+  /*  public void onAddTaskClicked(View view) {
         Intent intent = new Intent(this, ToDoAddEditActivity.class);
         startActivity(intent);
-    }
-
-
-
+    } */
 }
