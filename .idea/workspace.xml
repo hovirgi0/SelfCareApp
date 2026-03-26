@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fba1b6a-21cc-40d5-b408-87780f234b74" name="Changes" comment="." />
+    <list default="true" id="1fba1b6a-21cc-40d5-b408-87780f234b74" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/JournalDao_Impl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/JournalDao_Impl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/TaskDao_Impl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/TaskDao_Impl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/UserDao_Impl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/dao/UserDao_Impl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/database/AppDatabase_Impl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/example/selfcareapp/data/database/AppDatabase_Impl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/selfcareapp/ui/GitTest0325.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/selfcareapp/ui/SettingsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/selfcareapp/ui/SettingsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_mainmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_mainmenu.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +58,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hovirgi0"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/hovirgi0/SelfCareApp.git",
+    "accountId": "bc724a19-655b-4c36-be8f-bc41a6e1392a"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -63,23 +85,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Felhasznalo/IdeaProjects/SelfCareApp&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Felhasznalo/IdeaProjects/SelfCareApp",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="SelfCareApp.app" />
@@ -159,6 +182,7 @@
       <workItem from="1774452562488" duration="857000" />
       <workItem from="1774453544534" duration="359000" />
       <workItem from="1774453962399" duration="230000" />
+      <workItem from="1774539217503" duration="1607000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -200,7 +224,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774447964749</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1774539386545</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774539386545</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

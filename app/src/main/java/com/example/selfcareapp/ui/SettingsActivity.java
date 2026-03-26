@@ -95,6 +95,9 @@ public class SettingsActivity extends AppCompatActivity {
     private void selectTheme(String theme) {
         sharedPrefs.edit().putString(KEY_THEME, theme).apply();
         highlightTheme(theme);
+        applyTheme(theme); //apply the logic
+
+        recreate(); //force the activity to restart to show the new theme immediately
     }
 
     private void highlightTone(String selected) {
@@ -111,7 +114,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void highlightStyle(String selected) {
-        resetCard(cardStyleDirect);
+        resetCard(cardStyleSupportive);
         resetCard(cardStyleDirect);
         switch (selected) {
             case "supportive": activateCard(cardStyleSupportive); break;
