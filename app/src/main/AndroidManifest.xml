@@ -73,8 +73,8 @@
         <activity android:name=".ui.todo.ToDoAddEditActivity" />
         <activity android:name=".ui.journal.JournalActivity" />
         <activity android:name=".ui.journal.JournalAddEntryActivity" />
-        <!--  <activity android:name=".ui.chat.ChatActivity" /> -->
-        <!--  <activity android:name=".ui.chat.ChatConversationActivity" /> -->
+        <activity android:name=".ui.chat.ChatActivity" />
+        <activity android:name=".ui.chat.ChatConversationActivity" />
         <activity android:name=".ui.SettingsActivity" />
 
 

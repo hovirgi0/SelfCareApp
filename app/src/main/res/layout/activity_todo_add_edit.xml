@@ -58,7 +58,9 @@
             android:layout_height="48dp"
             android:layout_marginEnd="32dp"
             android:src="@android:drawable/ic_input_add"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:backgroundTint="#000000"
+            app:tint="#FFFFFF"
+            app:fabSize="normal"
             app:layout_constraintTop_toTopOf="@id/tilNewTask"
             app:layout_constraintBottom_toBottomOf="@id/tilNewTask"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -75,22 +77,57 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion1"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Suggestion 1" />
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion2"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Suggestion 2" />
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion3"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="..." />
+                android:text="Suggestion 3" />
+
+        <!-- Suggestions hidden by default -->
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion4"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suggestion 4"
+                android:visibility="gone"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion5"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suggestion 5"
+                android:visibility="gone"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipSuggestion6"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suggestion 6"
+                android:visibility="gone"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipMore"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="..."/>
     </com.google.android.material.chip.ChipGroup>
 
     <Button

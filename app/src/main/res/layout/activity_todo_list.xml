@@ -37,8 +37,7 @@
             android:text="Date, Time"
             android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@id/tvTaskName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/rvTasks"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTasks"
@@ -82,7 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
-            android:contentDescription="Add task"
             android:src="@android:drawable/ic_input_add"
             android:backgroundTint="#000000"
             app:tint="#FFFFFF"

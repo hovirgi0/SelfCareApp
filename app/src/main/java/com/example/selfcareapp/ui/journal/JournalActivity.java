@@ -87,7 +87,7 @@ public class JournalActivity extends AppCompatActivity {
         //Initial load of data - without test text
         //refreshJournalEntries();
 
-        //Attach FAB click listener for flaoting add Button
+        //Attach FAB click listener for floating add Button
         FloatingActionButton fabAddTask = findViewById(R.id.fabAddEntry);
         fabAddTask.setOnClickListener(view -> {
             Intent intent = new Intent(this, JournalAddEntryActivity.class);

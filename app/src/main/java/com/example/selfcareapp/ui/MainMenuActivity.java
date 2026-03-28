@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.UserPreferences;
+import com.example.selfcareapp.ui.chat.ChatActivity;
 import com.example.selfcareapp.ui.journal.JournalActivity;
 import com.example.selfcareapp.ui.todo.ToDoListActivity;
 
@@ -41,6 +42,10 @@ public class MainMenuActivity extends AppCompatActivity {
         // Navigate to the Journal screen
         findViewById(R.id.btnJournal).setOnClickListener(view ->
                 startActivity(new Intent(this, JournalActivity.class)));
+
+        // Navigate to the Chat screen
+        findViewById(R.id.btnChat).setOnClickListener(view ->
+                startActivity(new Intent(this, ChatActivity.class)));
     }
 
     /*public void onSettingsClicked(View view) {
