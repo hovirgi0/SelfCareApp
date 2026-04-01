@@ -1,0 +1,12 @@
+# Python
+chat_backend/venv/
+chat_backend/__pycache__/
+chat_backend/*.pyc
+
+# Android
+frontend/.gradle/
+frontend/build/
+frontend/app/build/
+frontend/local.properties
+frontend/*.iml
+.idea/
