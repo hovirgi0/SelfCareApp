@@ -1,6 +1,6 @@
 # FastAPI szerver belépési pontja
 # Docs: https//fastapi.tiangolo.com
-from anyio import streams
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from chatbot import get_response
