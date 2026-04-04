@@ -14,13 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<TaskEntity> tasks;
-    private setOnTaskStatusChangedListener taskStatusListener; //Variable for?
+    private setOnTaskStatusChangedListener taskStatusListener;
+    private OnTaskOrderChangedListener orderChangedListener;
 
-    //Task toggle box status interface
+    // Drag-to-reorder callback
+    public interface OnTaskOrderChangedListener {
+        void onOrderChanged(List<TaskEntity> reorderedTasks);
+    }
+
+    public void setOnTaskOrderChangedListener(OnTaskOrderChangedListener listener) {
+        this.orderChangedListener = listener;
+    }
+
     public interface setOnTaskStatusChangedListener {
         void onTaskStatusChanged(TaskEntity task);
     }
@@ -32,6 +42,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
+    }
+
+    /**
+     * Called by ItemTouchHelper when the user drags a task to a new position.
+     * Swaps the items in the local list and notifies the adapter immediately
+     * for smooth animation — the DB update happens in the Activity.
+     */
+    public void moveItem(int fromPosition, int toPosition) {
+        Collections.swap(tasks, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+
+        // Update the 'order' field to reflect new positions
+        for (int i = 0; i < tasks.size(); i++) {
+            tasks.get(i).order = i;
+        }
+
+        if (orderChangedListener != null) {
+            orderChangedListener.onOrderChanged(tasks);
+        }
     }
 
     @Override
@@ -66,7 +95,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             //Feladat átküldéséhez
             intent.putExtra("TASK_ID", task.id);
             intent.putExtra("TASK_NAME", task.getTaskName());
-
             v.getContext().startActivity(intent);
         });
     }

@@ -1,5 +1,6 @@
 package com.example.selfcareapp.data.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -17,6 +18,9 @@ public class TaskEntity {
     public long createdAt;
 
     public int userId;
+    
+    @ColumnInfo(name = "task_order")
+    public int order;
 
     public int getId() {
         return id;

@@ -19,10 +19,14 @@ public interface TaskDao {
     @Update
     void editTask(TaskEntity editedtask);
 
+    
+    @Update
+    void updateTask(TaskEntity task);
+
     @Delete
     void deleteTask(TaskEntity task);
 
-    @Query("SELECT * FROM tasks WHERE userId = :userId")
+    @Query("SELECT * FROM tasks WHERE userId = :userId ORDER BY task_order ASC")
     List<TaskEntity> getTasksForUser(int userId);
 
     //in what order the tasks are displayed?

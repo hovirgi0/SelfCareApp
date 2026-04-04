@@ -19,7 +19,9 @@ import com.example.selfcareapp.data.entity.TaskEntity;
 
 public class TaskRepository {
 
-    private TaskDao taskDao;
+    private TaskDao taskDao; // Inicialize as field instead contrustror in updatetask
+
+    private Application application; // Inicialize as field instead contrustror in updatetask
 
     /*
      Constructor initializes the DAO using the
@@ -51,6 +53,9 @@ public class TaskRepository {
         taskDao.editTask(task);
     }
 
+    public void updateTask(TaskEntity task) {
+        taskDao.updateTask(task);
+    }
     /*
      Deletes a task from the database.
     */

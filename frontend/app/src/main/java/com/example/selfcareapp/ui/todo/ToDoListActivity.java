@@ -65,6 +65,17 @@ public class ToDoListActivity extends AppCompatActivity {
                         taskRepository.editTask(task);
                     }).start();
         });
+
+        // Rearrange
+        taskAdapter.setOnTaskOrderChangedListener(reorderedTasks -> {
+            new Thread(() -> {
+                for (TaskEntity task : reorderedTasks) {
+                    taskRepository.updateTask(task);
+                }
+            }).start();
+        });
+
+
         //Log test 03.10.
 
         // Room doesnt allow db operations on the main thread
@@ -100,9 +111,14 @@ public class ToDoListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        setupSwipeToDelete();
+        //setupSwipeToDelete();
+
+        // setupSwipeToDelete(); helyett:
+        setupTouchHelper();
     }
         //move
+        // change it to be able to handle: swipe to delete (onSwiped) and rearrange - move (onMove)
+       /*
         private void setupSwipeToDelete(){
             new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                 @Override
@@ -122,16 +138,48 @@ public class ToDoListActivity extends AppCompatActivity {
 
                         //dont need a new thread + db delete + telling db to fetch the new list + telling UI to update adapter
                         // since the same logic already gets executed in refreshTaskList()
-                   /* runOnUiThread(() -> {
-                        taskAdapter.setTasks(tasks);
-                        taskAdapter.notifyDataSetChanged();
-                    }); */
+                   // runOnUiThread(() -> {
+                   //   taskAdapter.setTasks(tasks);
+                   //   taskAdapter.notifyDataSetChanged();
+                    });
                         // just call the method that handles ...
                         // This method already handles the Thread, the UI update, and the Empty State
                         refreshTaskList();
                     }).start();
                 }
             }).attachToRecyclerView(rvTasks);
+        }
+        */
+
+        private void setupTouchHelper() {
+            ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+                    // UP + DOWN engedélyezi a drag-et, LEFT + RIGHT a swipe törlést
+                    ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                    ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
+            ) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView,
+                                      @NonNull RecyclerView.ViewHolder viewHolder,
+                                      @NonNull RecyclerView.ViewHolder target) {
+                    int from = viewHolder.getAdapterPosition();
+                    int to = target.getAdapterPosition();
+                    taskAdapter.moveItem(from, to);
+                    return true;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    int position = viewHolder.getAdapterPosition();
+                    TaskEntity taskToDelete = taskAdapter.getTaskAt(position);
+
+                    new Thread(() -> {
+                        taskRepository.deleteTask(taskToDelete);
+                        refreshTaskList();
+                    }).start();
+                }
+            };
+
+            new ItemTouchHelper(callback).attachToRecyclerView(rvTasks);
         }
 
     @Override
