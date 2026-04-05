@@ -3,6 +3,7 @@ package com.example.selfcareapp.ui.chat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
 
@@ -18,7 +19,12 @@ public class ChatActivity extends AppCompatActivity {
      * Átnavigál a beszélgetős nézetre az üzenetküldő gomb megnyomásakor.
      */
     public void onSendMessageClicked(View view) {
+        EditText etMessage = findViewById(R.id.etChatMessage);
+        String text = etMessage.getText().toString().trim();
+        if (text.isEmpty()) return;
+
         Intent intent = new Intent(this, ChatConversationActivity.class);
+        intent.putExtra("first_message", text);
         startActivity(intent);
     }
 
