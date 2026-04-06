@@ -16,5 +16,5 @@ class ChatRequest(BaseModel):
 # POST /chat végpont
 @app.post("/chat")
 def chat(request: ChatRequest):
-    reply = get_response(request.message, request.tone)
-    return {"reply": reply}
+    response = get_response(request.message, request.tone)
+    return {"response": response}
