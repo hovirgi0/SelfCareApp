@@ -2,6 +2,8 @@ package com.example.selfcareapp.ui.chat;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
 import com.google.gson.JsonObject;
 import okhttp3.*;
+import com.example.selfcareapp.ui.chat.SentimentEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class ChatConversationActivity extends AppCompatActivity {
     private ChatAdapter adapter;
     private EditText etMessage;
     private RecyclerView rvChat;
+    private View viewSentimentBar; // SentimentEngine
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,9 @@ public class ChatConversationActivity extends AppCompatActivity {
 
         etMessage = findViewById(R.id.etChatMessage);
         rvChat = findViewById(R.id.rvChatHistory);
+
+        // SentimentEngine
+        viewSentimentBar = findViewById(R.id.viewSentimentBar);
 
         adapter = new ChatAdapter(messages);
         rvChat.setAdapter(adapter);
@@ -47,6 +54,8 @@ public class ChatConversationActivity extends AppCompatActivity {
             rvChat.scrollToPosition(messages.size() - 1);
             sendMessage(firstMessage);
         }
+
+        setupTextWatcher();
 
     }
 
@@ -127,6 +136,66 @@ public class ChatConversationActivity extends AppCompatActivity {
         messages.add(new ChatMessage(text, ChatMessage.TYPE_BOT));
         adapter.notifyItemInserted(messages.size() - 1);
         rvChat.scrollToPosition(messages.size() - 1);
+    }
+
+    // --- metódus ---
+    /**
+     * TextWatcher: valós idejű hangulatfigyelés gépelés közben.
+     * Feminist HCI – Agency: a rendszer nem vár, hanem reagál a felhasználóra.
+     * A score-t az updateHeaderColor() veszi át.
+     */
+    private void setupTextWatcher() {
+        etMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String currentText = s.toString().trim();
+                SentimentEngine.Sentiment sentiment = SentimentEngine.analyze(currentText);
+                updateHeaderColor(sentiment);
+            }
+        });
+    }
+
+    /**
+     * A chat toolbar háttérszínét a felhasználó aktuális hangulata alapján módosítja.
+     *
+     * Feminist HCI – Empowerment + Transparency:
+     *   A felület vizuálisan visszatükrözi, hogy a rendszer "hallja" a felhasználót.
+     *   Nem ítélkezik – mindhárom szín pozitív, befogadó tónus.
+     *
+     * Színek (Material Theme-ből):
+     *   POSITIVE → colorTertiary (meleg, örömteli)
+     *   NEGATIVE → colorSecondary (nyugtató, nem riasztó – tudatos design döntés)
+     *   NEUTRAL  → colorPrimary (alapszín)
+     */
+    private void updateHeaderColor(SentimentEngine.Sentiment sentiment) {
+        if (viewSentimentBar == null) return;
+
+        int colorAttr;
+        switch (sentiment) {
+            case POSITIVE:
+                colorAttr = com.google.android.material.R.attr.colorTertiary;
+                break;
+            case NEGATIVE:
+                colorAttr = com.google.android.material.R.attr.colorSecondary;
+                break;
+            default:
+                colorAttr = com.google.android.material.R.attr.colorPrimary;
+                break;
+        }
+
+        // Material attr → konkrét szín kinyerése a témából
+        int resolvedColor = com.google.android.material.color.MaterialColors.getColor(viewSentimentBar, colorAttr);
+
+        viewSentimentBar.animate()
+                .setDuration(300)
+                .withStartAction(() -> viewSentimentBar.setBackgroundColor(resolvedColor))
+                .start();
     }
 
     /**
