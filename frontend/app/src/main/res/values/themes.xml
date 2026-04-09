@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SelfCareApp" parent="Theme.Material3.Light.NoActionBar">
-        <!-- App színek -->
-        <item name="colorPrimary">@android:color/holo_purple</item>
-        <item name="colorSecondary">@android:color/holo_blue_dark</item>
+    <style name="Theme.SelfCareApp.Minimalist" parent="Theme.Material3.Light.NoActionBar">
+        <item name="mainAppFontFamily">@font/font_soothing</item>
+        <item name="titleAppFontFamily">@font/font_dopamine</item>
     </style>
 </resources>

@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ public class ChatConversationActivity extends AppCompatActivity {
     private ChatAdapter adapter;
     private EditText etMessage;
     private RecyclerView rvChat;
-    private View viewSentimentBar; // SentimentEngine
+    private ImageView viewSentimentIcon; // SentimentEngine
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class ChatConversationActivity extends AppCompatActivity {
         rvChat = findViewById(R.id.rvChatHistory);
 
         // SentimentEngine
-        viewSentimentBar = findViewById(R.id.viewSentimentBar);
+        viewSentimentIcon = findViewById(R.id.SentimentIconSmall);
 
         adapter = new ChatAdapter(messages);
         rvChat.setAdapter(adapter);
@@ -174,7 +175,7 @@ public class ChatConversationActivity extends AppCompatActivity {
      *   NEUTRAL  → colorPrimary (alapszín)
      */
     private void updateHeaderColor(SentimentEngine.Sentiment sentiment) {
-        if (viewSentimentBar == null) return;
+        if (viewSentimentIcon == null) return;
 
         int colorAttr;
         switch (sentiment) {
@@ -190,11 +191,16 @@ public class ChatConversationActivity extends AppCompatActivity {
         }
 
         // Material attr → konkrét szín kinyerése a témából
-        int resolvedColor = com.google.android.material.color.MaterialColors.getColor(viewSentimentBar, colorAttr);
+        int resolvedColor = com.google.android.material.color.MaterialColors.getColor(viewSentimentIcon, colorAttr);
 
-        viewSentimentBar.animate()
-                .setDuration(300)
-                .withStartAction(() -> viewSentimentBar.setBackgroundColor(resolvedColor))
+    // Apply the color as a tint to the icon
+        viewSentimentIcon.setColorFilter(resolvedColor, android.graphics.PorterDuff.Mode.SRC_IN);
+
+        // Optional: Add a subtle scale pulse to show "thinking"
+        viewSentimentIcon.animate()
+                .scaleX(1.1f).scaleY(1.1f)
+                .setDuration(150)
+                .withEndAction(() -> viewSentimentIcon.animate().scaleX(1.0f).scaleY(1.0f).start())
                 .start();
     }
 
