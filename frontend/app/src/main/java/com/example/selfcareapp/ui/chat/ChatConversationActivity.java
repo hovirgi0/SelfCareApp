@@ -1,5 +1,6 @@
 package com.example.selfcareapp.ui.chat;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.ui.SettingsActivity;
 import com.google.gson.JsonObject;
 import okhttp3.*;
 import com.example.selfcareapp.ui.chat.SentimentEngine;
@@ -55,6 +57,10 @@ public class ChatConversationActivity extends AppCompatActivity {
             rvChat.scrollToPosition(messages.size() - 1);
             sendMessage(firstMessage);
         }
+
+        // Navigate to the Settings Screen
+        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
+                startActivity(new Intent(this, SettingsActivity.class)));
 
         setupTextWatcher();
 

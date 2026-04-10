@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.ui.SettingsActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -13,18 +14,17 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
+
+        // Navigate to the Settings Screen
+        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
+                startActivity(new Intent(this, SettingsActivity.class)));
     }
 
     /**
-     * Átnavigál a beszélgetős nézetre az üzenetküldő gomb megnyomásakor.
+     * Átnavigál a beszélgetős nézetre a "Kezdjük el" gomb megnyomásakor.
      */
-    public void onSendMessageClicked(View view) {
-        EditText etMessage = findViewById(R.id.etChatMessage);
-        String text = etMessage.getText().toString().trim();
-        if (text.isEmpty()) return;
-
+    public void onStartChatClicked(View view) {
         Intent intent = new Intent(this, ChatConversationActivity.class);
-        intent.putExtra("first_message", text);
         startActivity(intent);
     }
 
