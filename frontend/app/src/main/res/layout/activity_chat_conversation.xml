@@ -26,7 +26,8 @@
             android:onClick="onSettingsClicked"
             app:layout_constraintTop_toBottomOf="@id/imgSettingsIcon"
             app:layout_constraintEnd_toEndOf="@id/imgSettingsIcon"
-            app:layout_constraintStart_toStartOf="@id/imgSettingsIcon" />
+            app:layout_constraintStart_toStartOf="@id/imgSettingsIcon"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
     <ImageView
             android:id="@+id/SentimentIconSmall"
@@ -49,7 +50,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/SentimentIconSmall"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/titleAppFontFamily"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChatHistory"
@@ -76,19 +78,22 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 1" />
+                android:text="Suggestion 1"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
         <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 2" />
+                android:text="Suggestion 2"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
         <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 3" />
+                android:text="Suggestion 3"
+                android:fontFamily="?attr/mainAppFontFamily"/>
     </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout
@@ -110,7 +115,8 @@
                 android:layout_weight="1"
                 android:hint="Válaszolj..."
                 android:background="@android:color/transparent"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
         <ImageButton
                 android:id="@+id/btnSendMessage"

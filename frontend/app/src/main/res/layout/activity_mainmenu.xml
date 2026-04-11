@@ -17,7 +17,8 @@
                 android:layout_marginTop="12dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:backgroundTint="@android:color/darker_gray"/>
+                android:backgroundTint="@android:color/darker_gray"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
         <ImageView
                 android:id="@+id/imgSettingsIcon"
@@ -38,7 +39,8 @@
                 android:textSize="10sp"
                 app:layout_constraintTop_toBottomOf="@id/imgSettingsIcon"
                 app:layout_constraintEnd_toEndOf="@id/imgSettingsIcon"
-                app:layout_constraintStart_toStartOf="@id/imgSettingsIcon" />
+                app:layout_constraintStart_toStartOf="@id/imgSettingsIcon"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
     <ImageView
             android:id="@+id/imgAppIcon"
@@ -58,9 +60,11 @@
                 android:layout_marginTop="24dp"
                 android:text="Mire akarsz ma fókuszálni?"
                 android:textStyle="bold"
+                android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@id/imgAppIcon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="?attr/titleAppFontFamily"/>
 
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glMenu"
@@ -81,7 +85,8 @@
                     app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Teendő lista"
-                    android:backgroundTint="@android:color/darker_gray"/>
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
 
             <Button
                     android:id="@+id/btnJournal"
@@ -91,7 +96,8 @@
                     app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Napló"
-                    android:backgroundTint="@android:color/darker_gray"/>
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
 
             <Button
                     android:id="@+id/btnChat"
@@ -101,7 +107,8 @@
                     app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Chat"
-                    android:backgroundTint="@android:color/darker_gray"/>
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
 
             <Button
                     android:id="@+id/btnCustom"
@@ -111,7 +118,8 @@
                     app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Button"
-                    android:backgroundTint="@android:color/darker_gray"/>
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
         </androidx.gridlayout.widget.GridLayout>
 
         <TextView
@@ -119,10 +127,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Te döntöd el, mit jelent számodra a wellness."
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

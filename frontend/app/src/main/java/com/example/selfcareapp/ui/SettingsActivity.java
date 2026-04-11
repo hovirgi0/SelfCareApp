@@ -22,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     private LinearLayout cardStyleSupportive, cardStyleDirect;
 
     //Theme cards
-    private LinearLayout cardThemeLight, cardThemeDark, cardThemeNatural, cardThemeMinimal;
+    private LinearLayout cardThemeDopamineBright, cardThemeDopamineDark, cardThemeSoothingLight, cardThemeSoothingDark;
 
     private SharedPreferences sharedPrefs;
 
@@ -53,10 +53,10 @@ public class SettingsActivity extends AppCompatActivity {
         cardStyleDirect = findViewById(R.id.cardStyleDirect);
 
         //Theme cards
-        cardThemeLight = findViewById(R.id.cardThemeLight);
-        cardThemeDark = findViewById(R.id.cardThemeDark);
-        cardThemeNatural = findViewById(R.id.cardThemeNatural);
-        cardThemeMinimal = findViewById(R.id.cardThemeMinimal);
+        cardThemeDopamineBright = findViewById(R.id.cardThemeDopamineBright);
+        cardThemeDopamineDark = findViewById(R.id.cardThemeDopamineDark);
+        cardThemeSoothingLight = findViewById(R.id.cardThemeSoothingLight);
+        cardThemeSoothingDark = findViewById(R.id.cardThemeSoothingDark);
     }
 
     // Highlight previously saved selections when screen opens
@@ -76,10 +76,10 @@ public class SettingsActivity extends AppCompatActivity {
         cardStyleSupportive.setOnClickListener(view -> selectStyle("supportive"));
         cardStyleDirect.setOnClickListener(view -> selectStyle("direct"));
 
-        cardThemeLight.setOnClickListener(view -> selectTheme("light"));
-        cardThemeDark.setOnClickListener(view -> selectTheme("dark"));
-        cardThemeNatural.setOnClickListener(view -> selectTheme("natural"));
-        cardThemeMinimal.setOnClickListener(view -> selectTheme("minimal"));
+        cardThemeDopamineBright.setOnClickListener(view -> selectTheme("dopamine bright"));
+        cardThemeDopamineDark.setOnClickListener(view -> selectTheme("dopamine dark"));
+        cardThemeSoothingLight.setOnClickListener(view -> selectTheme("soothing light"));
+        cardThemeSoothingDark.setOnClickListener(view -> selectTheme("soothing dark"));
     }
 
     private void selectTone(String tone) {
@@ -123,15 +123,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void highlightTheme(String selected) {
-        resetCard(cardThemeLight);
-        resetCard(cardThemeDark);
-        resetCard(cardThemeNatural);
-        resetCard(cardThemeMinimal);
+        resetCard(cardThemeDopamineBright);
+        resetCard(cardThemeDopamineDark);
+        resetCard(cardThemeSoothingLight);
+        resetCard(cardThemeSoothingDark);
         switch (selected) {
-            case "light": activateCard(cardThemeLight); break;
-            case "dark": activateCard(cardThemeDark); break;
-            case "natural": activateCard(cardThemeNatural); break;
-            case "minimal": activateCard(cardThemeMinimal); break;
+            case "dopamine bright": activateCard(cardThemeDopamineBright); break;
+            case "dopamine dark": activateCard(cardThemeDopamineDark); break;
+            case "soothing light": activateCard(cardThemeSoothingLight); break;
+            case "soothing dark": activateCard(cardThemeSoothingDark); break;
         }
     }
 

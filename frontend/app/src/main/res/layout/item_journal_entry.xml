@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
     <TextView
             android:id="@+id/tvEntryDate"
@@ -26,7 +27,8 @@
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@id/tvEntryMood"
             app:layout_constraintTop_toTopOf="@id/tvEntryMood"
-            app:layout_constraintBottom_toBottomOf="@id/tvEntryMood" />
+            app:layout_constraintBottom_toBottomOf="@id/tvEntryMood"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
     <TextView
             android:id="@+id/tvEntryContent"
@@ -37,6 +39,7 @@
             android:maxLines="100"
             app:layout_constraintTop_toBottomOf="@id/tvEntryMood"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

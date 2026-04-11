@@ -35,7 +35,8 @@
             app:layout_constraintTop_toBottomOf="@id/imgAppIcon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/titleAppFontFamily"/>
 
     <!-- layout_marginTop: Distance between the button and whatever is above it (tvAppTitle) -->
     <!-- layout_marginStart: Distance between the button and the left edge of the screen -->
@@ -52,6 +53,7 @@
             android:onClick="onStartClicked"
             app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/imgJournalAppIcon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/titleAppFontFamily" />
 
     <TextView
             android:id="@+id/tvPreviousEntries"
@@ -39,7 +40,8 @@
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@id/tvJournalTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvJournalEntries"
@@ -65,7 +67,8 @@
             app:layout_constraintTop_toTopOf="@id/rvJournalEntries"
             app:layout_constraintBottom_toBottomOf="@id/rvJournalEntries"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddEntry"

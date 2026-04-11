@@ -32,21 +32,23 @@
                 android:layout_marginEnd="40dp"
                 app:layout_constraintTop_toBottomOf="@id/imgAppIcon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="?attr/titleAppFontFamily"/>
 
         <TextView
                 android:id="@+id/tvExplanation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Válasz ki azt ami a legfontosabb számodra. Ez segít abban, hogy (personalize your experience)."
-                android:textSize="12sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:layout_marginTop="12dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 app:layout_constraintTop_toBottomOf="@id/tvQuestion"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
         <View
                 android:id="@+id/bgOptionsContainer"
@@ -83,7 +85,8 @@
                     android:gravity="center_vertical|start"
                     android:paddingStart="16dp"
                     app:cornerRadius="0dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
 
             <Button
                     android:id="@+id/btnOption2"
@@ -96,7 +99,8 @@
                     android:gravity="center_vertical|start"
                     android:paddingStart="16dp"
                     app:cornerRadius="0dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
 
             <Button
                     android:id="@+id/btnOption3"
@@ -108,7 +112,8 @@
                     android:backgroundTint="#FFFFFF"
                     android:gravity="center_vertical|start"
                     android:paddingStart="16dp"
-                    app:cornerRadius="0dp"/>
+                    app:cornerRadius="0dp"
+                    android:fontFamily="?attr/mainAppFontFamily"/>
         </LinearLayout>
 
      <TextView
@@ -121,7 +126,8 @@
             android:layout_marginTop="50dp"
             app:layout_constraintTop_toBottomOf="@id/bgOptionsContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
         <Button
                 android:id="@+id/btnContinue"
@@ -135,6 +141,7 @@
                 android:onClick="onPreferencesContinueClicked"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="?attr/mainAppFontFamily"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

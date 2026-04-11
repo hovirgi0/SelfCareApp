@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toStartOf="@+id/btnEditTask"
             app:layout_constraintStart_toEndOf="@+id/cbTaskDone"
             app:layout_constraintTop_toTopOf="parent"
-/>
+            android:fontFamily="?attr/mainAppFontFamily"/>
 
     <ImageButton
             android:id="@+id/btnEditTask"

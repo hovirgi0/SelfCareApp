@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SelfCareApp.Minimalist" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.SelfCareApp.Soothing" parent="Theme.Material3.Light.NoActionBar">
         <item name="mainAppFontFamily">@font/font_soothing</item>
         <item name="titleAppFontFamily">@font/font_dopamine</item>
     </style>
