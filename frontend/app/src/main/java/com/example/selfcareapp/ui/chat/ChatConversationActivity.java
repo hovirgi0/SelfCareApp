@@ -32,6 +32,8 @@ public class ChatConversationActivity extends AppCompatActivity {
     private EditText etMessage;
     private RecyclerView rvChat;
     private ImageView viewSentimentIcon; // SentimentEngine
+    private String sessionId = ""; // persists across messages in this activity
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class ChatConversationActivity extends AppCompatActivity {
 
         etMessage = findViewById(R.id.etChatMessage);
         rvChat = findViewById(R.id.rvChatHistory);
+
+        // Navigate to the Settings Screen
+        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
+                startActivity(new Intent(this, SettingsActivity.class)));
 
         // SentimentEngine
         viewSentimentIcon = findViewById(R.id.SentimentIconSmall);
@@ -101,6 +107,7 @@ public class ChatConversationActivity extends AppCompatActivity {
         body.addProperty("message", userText);
         body.addProperty("tone", tone);
         body.addProperty("style", style);
+        body.addProperty("session_id", sessionId); // to send and recieve session id
 
         //chatbot.py modify + must return 'response'
         Request request = new Request.Builder()
@@ -125,7 +132,7 @@ public class ChatConversationActivity extends AppCompatActivity {
                 String responseBody = response.body().string();
                 JsonObject json = gson.fromJson(responseBody, JsonObject.class);
                 String botResponse = json.get("response").getAsString();
-
+                sessionId = json.get("session_id").getAsString(); // save it back
                 // UI frissítés a főszálon (OkHttp callback háttérszálon fut)
                 runOnUiThread(() -> addBotMessage(botResponse));
             }
@@ -143,6 +150,26 @@ public class ChatConversationActivity extends AppCompatActivity {
         messages.add(new ChatMessage(text, ChatMessage.TYPE_BOT));
         adapter.notifyItemInserted(messages.size() - 1);
         rvChat.scrollToPosition(messages.size() - 1);
+    }
+
+    private void resetConversation() {
+        if (sessionId.isEmpty()) return;
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/" + sessionId)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override public void onFailure(Call call, IOException e) {}
+            @Override public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(() -> {
+                    messages.clear();
+                    adapter.notifyDataSetChanged();
+                    sessionId = "";
+                });
+            }
+        });
     }
 
     // --- metódus ---
@@ -208,12 +235,5 @@ public class ChatConversationActivity extends AppCompatActivity {
                 .setDuration(150)
                 .withEndAction(() -> viewSentimentIcon.animate().scaleX(1.0f).scaleY(1.0f).start())
                 .start();
-    }
-
-    /**
-     * Beállítások elérése a beszélgetés közben is.
-     */
-    public void onSettingsClicked(View view) {
-        // Opcionális: AI tónus vagy stílus váltása
     }
 }

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SelfCareApp.Soothing" parent="Theme.Material3.Light.NoActionBar">
-        <item name="mainAppFontFamily">@font/font_soothing</item>
-        <item name="titleAppFontFamily">@font/font_dopamine</item>
-    </style>
+<style name="Base.Theme.SelfCareApp" parent="Theme.Material3.DayNight.NoActionBar">
+</style>
+
+<style name="Theme.SelfCareApp.Soothing" parent="Base.Theme.SelfCareApp">
+    <item name="mainAppFontFamily">@font/font_soothing</item>
+    <item name="titleAppFontFamily">@font/font_soothing</item>
+    <item name="appSceneBackground">@drawable/bg_gradient_soothing</item>
+</style>
+
+<style name="Theme.SelfCareApp.Dopamine" parent="Base.Theme.SelfCareApp">
+    <item name="mainAppFontFamily">@font/font_dopamine</item>
+    <item name="titleAppFontFamily">@font/font_dopamine</item>
+    <item name="appSceneBackground">@drawable/bg_gradient_dopamine</item>
+</style>
 </resources>

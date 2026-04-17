@@ -2,4 +2,8 @@
 <resources>
     <attr name="mainAppFontFamily" format="reference" />
     <attr name="titleAppFontFamily" format="reference" />
+
+    <!--Gradient -->
+    <attr name="appSceneBackground" format="reference" />
+    <attr name="cardStylePreference" format="reference" />
 </resources>

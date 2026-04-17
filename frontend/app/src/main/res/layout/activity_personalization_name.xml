@@ -5,7 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.personalization.NamePersonalizationActivity">
+        tools:context=".ui.personalization.NamePersonalizationActivity"
+        android:background="?attr/appSceneBackground">
 
     <!-- Icon at the top -->
     <!-- Icon is Andorid default launcher icon (for now) -->
