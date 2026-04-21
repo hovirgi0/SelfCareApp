@@ -13,7 +13,7 @@
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.SelfCareApp.Soothing"
+            android:theme="@style/Theme.SelfCareApp.Soothing.Light"
             android:usesCleartextTraffic="true">
 
     <!-- Kezdőképernyő -->
@@ -78,8 +78,6 @@
         <activity android:name=".ui.chat.ChatActivity" />
         <activity android:name=".ui.chat.ChatConversationActivity" />
         <activity android:name=".ui.SettingsActivity" />
-
-
 
         </application>
     </manifest>

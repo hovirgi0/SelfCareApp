@@ -7,10 +7,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.UserPreferences;
+import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.MainMenuActivity;
 import com.example.selfcareapp.ui.todo.ToDoListActivity;
 
-public class StartPersonalizationActivity extends AppCompatActivity {
+public class StartPersonalizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

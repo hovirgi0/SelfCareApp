@@ -11,7 +11,7 @@ import com.example.selfcareapp.ui.journal.JournalActivity;
 import com.example.selfcareapp.ui.todo.ToDoListActivity;
 
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

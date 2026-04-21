@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.selfcareapp.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "AppSettings";
     private static final String KEY_THEME = "selected_theme";
@@ -30,7 +30,15 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Restore the theme before layout inflates - prevents visual flash -.-
         sharedPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        applyTheme(sharedPrefs.getString(KEY_THEME, "light")); //app theme will be 'light' by default
+        String selectedTheme = sharedPrefs.getString(KEY_THEME, "soothing light"); //app theme will be 'light' by default
+
+        //setTheme()
+        switch (selectedTheme) {
+            case "dopamine bright": setTheme(R.style.Theme_SelfCareApp_Dopamine_Bright); break;
+            case "dopamine dark":   setTheme(R.style.Theme_SelfCareApp_Dopamine_Dark);   break;
+            case "soothing dark":   setTheme(R.style.Theme_SelfCareApp_Soothing_Light);   break;
+            default:                setTheme(R.style.Theme_SelfCareApp_Soothing_Dark);  break;
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -152,21 +160,21 @@ public class SettingsActivity extends AppCompatActivity {
             case "natural": activateCard(cardThemeNatural); break;
             case "minimal": activateCard(cardThemeMinimal); break;*/
 
-                case "dark":
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    break;
-                case "light":
-                case "natural":
-                case "minimal":
-                default:
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    break;
+            case "soothing dark":
+            case "dopamine dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
         }
     }
 
-    public static void restoreTheme(android.content.Context context) {
+        public static void restoreTheme(android.content.Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        if ("dark".equals(prefs.getString(KEY_THEME, "light"))) {
+        String theme = prefs.getString(KEY_THEME, "soothing light");
+        if ("soothing dark".equals(theme) || "dopamine dark".equals(theme)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);

@@ -7,9 +7,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.UserPreferences;
+import com.example.selfcareapp.ui.BaseActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class NamePersonalizationActivity extends AppCompatActivity{
+public class NamePersonalizationActivity extends BaseActivity {
 
     private TextInputEditText etName; //EditText Name
     private UserPreferences userPreferences;

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.SettingsActivity;
 import com.google.gson.JsonObject;
 import okhttp3.*;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatConversationActivity extends AppCompatActivity {
+public class ChatConversationActivity extends BaseActivity {
     private static final String BASE_URL = "http://10.0.2.2:8000/chat";
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final OkHttpClient client = new OkHttpClient();
@@ -190,7 +191,7 @@ public class ChatConversationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String currentText = s.toString().trim();
                 SentimentEngine.Sentiment sentiment = SentimentEngine.analyze(currentText);
-                updateHeaderColor(sentiment);
+                updateIconColor(sentiment);
             }
         });
     }
@@ -207,7 +208,7 @@ public class ChatConversationActivity extends AppCompatActivity {
      *   NEGATIVE → colorSecondary (nyugtató, nem riasztó – tudatos design döntés)
      *   NEUTRAL  → colorPrimary (alapszín)
      */
-    private void updateHeaderColor(SentimentEngine.Sentiment sentiment) {
+    private void updateIconColor(SentimentEngine.Sentiment sentiment) {
         if (viewSentimentIcon == null) return;
 
         int colorAttr;

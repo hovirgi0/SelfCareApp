@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
 import com.example.selfcareapp.data.repository.JournalRepository;
+import com.example.selfcareapp.ui.BaseActivity;
 
-public class JournalAddEntryActivity extends AppCompatActivity {
+public class JournalAddEntryActivity extends BaseActivity {
 
     private EditText etJournalEntry;
     private JournalRepository journalRepository;

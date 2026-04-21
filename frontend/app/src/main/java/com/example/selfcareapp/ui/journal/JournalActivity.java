@@ -17,12 +17,13 @@ import com.example.selfcareapp.data.database.AppDatabase;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.JournalRepository;
+import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.todo.ToDoAddEditActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class JournalActivity extends AppCompatActivity {
+public class JournalActivity extends BaseActivity {
     private JournalAdapter journalAdapter;
     private JournalRepository journalRepository;
 

@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.ui.BaseActivity;
 
-public class PreferencesPersonalizationActivity extends AppCompatActivity {
+public class PreferencesPersonalizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
