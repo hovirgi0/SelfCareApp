@@ -30,7 +30,7 @@
                 android:src="@drawable/settings_24px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:tint="?attr/colorOnSurface"/>
+                android:background="?attr/android:colorBackground"/>
 
         <TextView
                 android:id="@+id/tvSettingsLabel"

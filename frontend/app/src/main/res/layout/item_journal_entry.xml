@@ -42,4 +42,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:fontFamily="?attr/mainAppFontFamily"/>
 
+    <ImageButton
+            android:id="@+id/btnEditJournalEntry"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/edit_note_24px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

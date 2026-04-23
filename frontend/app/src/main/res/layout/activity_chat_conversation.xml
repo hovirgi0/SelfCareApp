@@ -14,7 +14,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:contentDescription="Settings icon"
-            android:src="@drawable/settings_icon_foreground"
+            android:src="@drawable/settings_24px"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
-            android:contentDescription="Sentiment indicator"
+            android:contentDescription="Sentiment Indicator"
             android:src="@drawable/ic_app_placeholder"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,7 @@
                 android:id="@+id/btnSendMessage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_send"
+                android:src="@drawable/send_24px"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onSendMessageClicked" />
     </LinearLayout>

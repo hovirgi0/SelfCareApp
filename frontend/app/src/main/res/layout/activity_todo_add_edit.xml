@@ -61,9 +61,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="32dp"
-            android:src="@android:drawable/ic_input_add"
-            android:backgroundTint="#000000"
-            app:tint="#FFFFFF"
+            android:src="@drawable/add_box_24px"
+
+            app:tint="#000000"
             app:fabSize="normal"
             app:layout_constraintTop_toTopOf="@id/tilNewTask"
             app:layout_constraintBottom_toBottomOf="@id/tilNewTask"
@@ -137,7 +137,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="..."
+                android:src="@drawable/more_horiz_24px"
                 android:fontFamily="?attr/mainAppFontFamily" />
     </com.google.android.material.chip.ChipGroup>
 
