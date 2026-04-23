@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SOOTHING — 8dp -->
+    <style name="ShapeAppearance.Soothing.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="ShapeAppearance.Soothing.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="ShapeAppearance.Soothing.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- DOPAMINE — 24dp / full round -->
+    <style name="ShapeAppearance.Dopamine.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="ShapeAppearance.Dopamine.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+    <style name="ShapeAppearance.Dopamine.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+</resources>

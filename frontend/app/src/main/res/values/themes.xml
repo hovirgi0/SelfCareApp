@@ -51,6 +51,11 @@
         <item name="colorSurfaceContainerHighest">@color/sl_md_theme_surfaceContainerHighest</item>
         <!-- Custom attrs -->
         <item name="android:windowBackground">@color/sl_md_theme_background</item>
+
+        <!-- Corner Radii Shape érték -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Soothing.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Soothing.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Soothing.Large</item>
     </style>
 
     <!--SOOTHING DARK-->
@@ -103,6 +108,10 @@
         <item name="colorSurfaceContainerHighest">@color/sd_md_theme_surfaceContainerHighest</item>
         <!-- Custom attrs -->
         <item name="android:windowBackground">@color/sd_md_theme_background</item>
+        <!-- Corner Radii Shape érték -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Soothing.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Soothing.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Soothing.Large</item>
     </style>
 
     <!--DOPAMINE BRIGHT-->
@@ -155,6 +164,10 @@
         <item name="colorSurfaceContainerHighest">@color/db_md_theme_surfaceContainerHighest</item>
         <!-- Custom attrs -->
         <item name="android:windowBackground">@color/db_md_theme_background</item>
+        <!-- Corner Radii Shape érték -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Dopamine.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Dopamine.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Dopamine.Large</item>
     </style>
 
     <!--DOPAMINE DARK-->
@@ -207,6 +220,10 @@
         <item name="colorSurfaceContainerHighest">@color/dd_md_theme_surfaceContainerHighest</item>
         <!-- Custom attrs -->
         <item name="android:windowBackground">@color/db_md_theme_background</item>
+        <!-- Corner Radii Shape érték -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Dopamine.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Dopamine.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Dopamine.Large</item>
     </style>
 
 </resources>
