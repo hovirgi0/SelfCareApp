@@ -1,46 +1,42 @@
-# FastAPI szerver belépési pontja
-# Docs: https//fastapi.tiangolo.com
-
 from fastapi import FastAPI
 from pydantic import BaseModel
-from chatbot import get_response
 import uuid
+from chatbot import get_response
 
 app = FastAPI()
+sessions = {}
 
-# In-memory session store: session_id → list of {"role": "user"/"bot", "text": str}
-sessions: dict = {}
-
-# Request body séma
 class ChatRequest(BaseModel):
     message: str
     tone: str = "friendly"
-    style: str = "neutral"
-    session_id: str = "" # conversation session
+    session_id: str = ""
 
-class ChatResponse(BaseModel):
-    response: str
-    session_id: str  # send it back so Android can store it
-
-# POST /chat végpont
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat")
 def chat(request: ChatRequest):
-    # Create or retrieve session
+    # 1. Session betöltése vagy létrehozása
     sid = request.session_id if request.session_id else str(uuid.uuid4())
     if sid not in sessions:
-        sessions[sid] = []
+        sessions[sid] = {"history": [], "state": "idle"}
 
-    history = sessions[sid]
-    history.append({"role": "user", "text": request.message})
+    session = sessions[sid]
 
-    response = get_response(request.message, request.tone, request.style, history)
+    # 2. Válasz generálása (MÉG a history frissítése előtt, hogy lássa, üres-e!)
+    # Így az első üzenetre az üdvözlést adja, a másodikra már a reakciót
+    response_text, new_state = get_response(
+        request.message,
+        request.tone,
+        session["history"],
+        session["state"]
+    )
 
-    history.append({"role": "bot", "text": response})
-    sessions[sid] = history  # save back
+    # 3. History és állapot frissítése
+    session["history"].append({"role": "user", "content": request.message})
+    session["history"].append({"role": "bot", "content": response_text})
+    session["state"] = new_state
 
-    return {"response": response, "session_id": sid}
+    return {"response": response_text, "session_id": sid}
 
-@app.delete("/chat/{session_id}")  # user can reset conversation
+@app.delete("/chat/{session_id}")
 def reset_chat(session_id: str):
     sessions.pop(session_id, None)
     return {"status": "reset"}
