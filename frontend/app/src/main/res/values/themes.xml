@@ -56,6 +56,13 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Soothing.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Soothing.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Soothing.Large</item>
+
+        <!--Font hozzárendelés-->
+        <item name="mainAppFontFamily">@font/font_soothing</item>
+        <item name="titleAppFontFamily">@font/font_soothing</item>
+
+        <!-- Gradient -->
+        <item name="appGradientBackground">@drawable/bg_gradient_soothing</item>
     </style>
 
     <!--SOOTHING DARK-->
@@ -112,6 +119,13 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Soothing.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Soothing.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Soothing.Large</item>
+
+        <!--Font hozzárendelés-->
+        <item name="mainAppFontFamily">@font/font_soothing</item>
+        <item name="titleAppFontFamily">@font/font_soothing</item>
+
+        <!-- Gradient -->
+        <item name="appGradientBackground">@drawable/bg_gradient_soothing</item>
     </style>
 
     <!--DOPAMINE BRIGHT-->
@@ -168,6 +182,13 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Dopamine.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Dopamine.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Dopamine.Large</item>
+
+        <!--Font hozzárendelés-->
+        <item name="mainAppFontFamily">@font/font_dopamine</item>
+        <item name="titleAppFontFamily">@font/font_dopamine</item>
+
+        <!-- Gradient -->
+        <item name="appGradientBackground">@drawable/bg_gradient_dopamine</item>
     </style>
 
     <!--DOPAMINE DARK-->
@@ -224,6 +245,13 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Dopamine.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Dopamine.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Dopamine.Large</item>
+
+        <!--Font hozzárendelés-->
+        <item name="mainAppFontFamily">@font/font_dopamine</item>
+        <item name="titleAppFontFamily">@font/font_dopamine</item>
+
+        <!-- Gradient -->
+        <item name="appGradientBackground">@drawable/bg_gradient_dopamine</item>
     </style>
 
 </resources>

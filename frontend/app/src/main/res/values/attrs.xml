@@ -5,4 +5,7 @@
 
     <!--Gradient / Background -->
     <attr name="cardStylePreference" format="reference" />
+
+    <!--Gradient-->
+    <attr name="appGradientBackground" format="reference" />
 </resources>
