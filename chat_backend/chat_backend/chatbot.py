@@ -2,17 +2,58 @@ import random
 from datetime import datetime
 
 KEYWORDS = {
-    "stress":  ["stressz", "fáradt", "túlterhelt", "nehéz", "rossz", "sír", "ideges", "szorongás"],
-    "happy":   ["boldog", "jó", "szuper", "klassz", "örülök", "remek", "sikerült", "büszke"],
-    "todo":    ["teendő", "feladat", "tennivaló", "lista", "elvégzett", "tervek", "meg kell"],
-    "journal": ["napló", "leírnám", "érzés", "gondolat", "ma történt", "azon gondolkozom"],
-    "negation": ["nem", "se", "sem", "soha", "sehogy"],
+    "stress": [
+        "stressz", "stresszes", "stresszelt", "stresszben", "stresszel", "stresszez", "stresszet", "stressznek", "stresszem",
+        "fáradt", "fáradtság", "fáradtan", "elfáradt", "kifáradt", "fáradtnak", "fáradtabb", "fáradtsággal",
+        "túlterhelt", "túlterhelve", "túlterhelés", "túlterhelten",
+        "nehéz", "nehezen", "nehézség", "nehézségekkel", "nehezemre",
+        "rossz", "rosszul", "rosszabb", "rosszabbul", "rosszat",
+        "szorongás", "szorongok", "szorongásom", "szorongással", "szorong", "szorongott", "szorongva",
+        "ideges", "idegesség", "idegeskedek", "idegesít", "idegesített", "idegeskedés", "idegesen",
+        "szomorú", "szomorúság", "szomorúan", "szomorúbb", "szomorkodok",
+        "sírok", "sír", "sírtam", "sírt", "sírva", "sírás",
+        "depresszió", "depressziós", "depressziót", "depresszióban", "depresszióval", "depressziótól",
+        "elveszett", "elveszve", "elvesztem", "eltévedtem", "tehetetlen", "tehetetlenség", "tehetetlennek",
+        "nem bírom", "nem bírok", "nem tudom tovább"
+    ],
+    "happy": [
+        "boldog", "boldogan", "boldogság", "boldogtalan", "örülök", "örül", "örültem", "örömmel", "öröm", "örömöm",
+        "örömteli", "örvendek", "jól érzem", "jól vagyok", "jó napom", "nagyon jó", "remek", "szuper", "klassz",
+        "fantasztikus", "csodás", "nagyszerű", "kiváló", "tökéletes", "motivált", "motiváltan", "motivációm",
+        "energikus", "energiával", "lendületes", "lendülettel", "sikerült", "sikeresen", "siker", "sikeres",
+        "sikerrel", "büszke", "büszkén", "büszkeség", "elégedett", "elégedetten", "elégedettség"
+    ],
+    "todo": [
+        "feladat", "feladatom", "feladatok", "feladatokat", "feladatokkal", "tennivaló", "tennivalóm", "tennivalók",
+        "lista", "listám", "listán", "elvégzett", "elvégzem", "elvégezni", "tervek", "terveim", "terveimmel",
+        "tervezem", "határidő", "határidőm", "határidőre", "megcsinálni", "meg kell", "meg kellene", "befejezni",
+        "befejeztem", "befejezetlen", "prioritás", "prioritásom"
+    ],
+    "journal": [
+        "napló", "naplóm", "naplóba", "naplóban", "leírnám", "leírom", "leírni", "érzés", "érzésem", "érzéseimet",
+        "érzéseimről", "gondolat", "gondolataim", "gondolataimat", "ma történt", "ma volt", "ma éreztem",
+        "azon gondolkozom", "azon töprengek", "reflexió", "önreflexió"
+    ],
+    "vague": [
+        "hmm", "nem tudom", "semmit", "minden", "fogalmam sincs", "csak úgy", "nem igazán", "talán",
+        "nem is tudom", "valahogy", "nehéz mondani", "nem tudok válaszolni", "kicsit minden", "passz"
+    ],
+    "negation": [
+        "nem", "se", "sem", "soha", "sehogy", "semmi", "semmit", "semmilyen", "nem igazán",
+        "nem nagyon", "nem annyira", "nem érzem", "nem érzed", "nem vagyok"
+    ]
 }
 
 REDIRECTS = ["hagyjuk", "mindegy", "inkább", "valami mást", "nem akarok erről"]
 
 # Multiple responses per category+tone so it doesn't repeat
 RESPONSES = {
+    "vague": {
+        "neutral": ["Rendben, nem kell tudni. Csak mesélj, ami eszedbe jut.", "Nincs rossz válasz."],
+        "friendly": ["Ez is teljesen rendben van. Nem kell tudni.", "Mondd csak el, ami jön, bármi legyen is."],
+        "calm": ["Nem kell szavak. Üljünk csak így egy kicsit.", "Rendben van, ha most nincs szó rá."],
+        "energetic": ["Nem baj! Kezd azzal, ami először eszedbe jut.", "Semmi gond, mondd csak!"],
+    },
     "stress": {
         "neutral": [
             "Megértem, hogy most nehéz. Miben tudok segíteni?",
@@ -207,12 +248,62 @@ ARCS = {
 
 def detect_category(message: str) -> str:
     msg = message.lower()
-    has_negation = any(neg in msg for neg in KEYWORDS["negation"])
-    for category, words in KEYWORDS.items():
+    words = msg.split()
+
+    # Negációs pozíciók keresése
+    negation_positions = set()
+    for i, w in enumerate(words):
+        for neg in KEYWORDS["negation"]:
+            if neg in w:
+                negation_positions.add(i)
+
+    for category, kw_list in KEYWORDS.items():
         if category == "negation": continue
-        if any(w in msg for w in words):
-            if category == "happy" and has_negation: return "stress"
-            return category
+        for kw in kw_list:
+            if kw in msg:
+                # Kulcsszó pozíciójának megkeresése
+                kw_words = kw.split()
+                kw_pos = -1
+                for i in range(len(words) - len(kw_words) + 1):
+                    if words[i:i+len(kw_words)] == kw_words:
+                        kw_pos = i
+                        break
+
+                if kw_pos == -1: return category # Alrészlet találat
+
+                # Negációs ablak (3 szó)
+                negated = any(abs(neg_pos - kw_pos) <= 3 for neg_pos in negation_positions)
+
+                if negated:
+                    if category == "happy": return "stress"
+                    elif category == "stress": return "happy"
+                    else: return "default"
+                return category
+    return "default"
+
+def get_last_bot_category(history: list) -> str:
+    """Kitalálja az utolsó bot üzenet alapján, miről volt szó."""
+    if not history: return "default"
+
+    # Megkeressük az utolsó bot választ a history-ban
+    last_bot_msg = ""
+    for h in reversed(history):
+        if h["role"] == "bot":
+            last_bot_msg = h["content"].lower()
+            break
+
+    if not last_bot_msg: return "default"
+
+    signals = {
+        "stress": ["stressz", "terhel", "fáradt", "nehéz", "szorongás"],
+        "happy": ["örülök", "jó hallani", "remek", "fantasztikus", "szép"],
+        "todo": ["teendő", "feladat", "listá", "prioritás"],
+        "journal": ["napló", "ír", "gondolat", "érzés"]
+    }
+
+    for cat, sigs in signals.items():
+        if any(s in last_bot_msg for s in sigs):
+            return cat
     return "default"
 
 # Keresünk egy szót a user üzenetéből, amit visszaismételhetünk
@@ -233,6 +324,7 @@ def get_greeting() -> str:
     else: prefix = "Jó estét"
     return f"{prefix}! Miben segíthetek ma?"
 
+# --- Fő válaszgeneráló függvény ---
 def get_response(message: str, tone: str, history: list, state: str):
     tone_key = tone if tone in ["neutral", "friendly", "calm", "energetic"] else "friendly"
 
@@ -245,6 +337,11 @@ def get_response(message: str, tone: str, history: list, state: str):
         return "Természetesen, hagyjuk ezt a témát. Miről beszélnél szívesebben?", "idle"
 
     category = detect_category(message)
+
+    # Rövid válaszok kezelése kontextus alapján
+    if category == "default" and len(message.split()) <= 3:
+        category = get_last_bot_category(history)
+
     echo = get_echo_word(message, category)
 
     # 3. Folyamatban lévő beszélgetés (Arc) folytatása
@@ -261,10 +358,10 @@ def get_response(message: str, tone: str, history: list, state: str):
         else:
             return "Köszönöm, hogy elmondtad. Ha bármi más van benned, itt vagyok.", "idle"
 
-    # 4. Új téma indítása
+    # 4. Új téma indítása (ideértve a 'vague' kategóriát is)
     if category in ARCS:
         return ARCS[category][0][tone_key], f"arc_{category}_0"
 
-    # 5. Alapértelmezett válasz (ha csak beszélgetne, de nincs téma)
+    # 5. Fallback Alapértelmezett válasz (ha csak beszélgetne, de nincs téma)
     responses = ["Értem. Mesélj még erről!", "Hallgatlak, miben segíthetek még?", "Köszönöm, hogy megosztottad velem."]
     return random.choice(responses), "idle"
