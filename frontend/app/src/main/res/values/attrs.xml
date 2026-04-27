@@ -8,4 +8,8 @@
 
     <!--Gradient-->
     <attr name="appGradientBackground" format="reference" />
+
+    <!--Cards-->
+    <attr name="cardDefaultBackground" format="color"/>
+
 </resources>

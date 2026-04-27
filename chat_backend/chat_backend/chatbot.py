@@ -314,7 +314,7 @@ def get_echo_word(message: str, category: str) -> str:
         for w in words:
             if w in KEYWORDS[category]:
                 return w
-    # Ha nincs találat, csak az utolsó értelmes szót adjuk vissza
+    #  Ha nincs találat, csak az utolsó értelmes szót adjuk vissza
     return words[-1] if words else "ez"
 
 def get_greeting() -> str:

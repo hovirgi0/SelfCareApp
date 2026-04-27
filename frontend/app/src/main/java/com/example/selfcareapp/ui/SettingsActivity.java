@@ -2,6 +2,7 @@ package com.example.selfcareapp.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,9 +36,9 @@ public class SettingsActivity extends BaseActivity {
         //setTheme()
         switch (selectedTheme) {
             case "dopamine bright": setTheme(R.style.Theme_SelfCareApp_Dopamine_Bright); break;
-            case "dopamine dark":   setTheme(R.style.Theme_SelfCareApp_Dopamine_Dark);   break;
-            case "soothing dark":   setTheme(R.style.Theme_SelfCareApp_Soothing_Light);   break;
-            default:                setTheme(R.style.Theme_SelfCareApp_Soothing_Dark);  break;
+            case "dopamine dark":   setTheme(R.style.Theme_SelfCareApp_Dopamine_Dark); break;
+            case "soothing dark":   setTheme(R.style.Theme_SelfCareApp_Soothing_Dark); break;
+            default:                setTheme(R.style.Theme_SelfCareApp_Soothing_Light); break;
         }
 
         super.onCreate(savedInstanceState);
@@ -71,7 +72,7 @@ public class SettingsActivity extends BaseActivity {
     private void loadSelections() {
         highlightTone(sharedPrefs.getString(KEY_TONE,"neutral"));
         highlightStyle(sharedPrefs.getString(KEY_STYLE, "supportive"));
-        highlightTheme(sharedPrefs.getString(KEY_THEME, "light"));
+        highlightTheme(sharedPrefs.getString(KEY_THEME, " soothing light"));
     }
 
     // Attach click listeners to every card
@@ -143,8 +144,12 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
-    private void resetCard(LinearLayout card){
-        if (card != null) card.setBackgroundColor(0xFFF2F2F2);
+    private void resetCard(LinearLayout card) {
+        if (card != null) {
+            TypedValue value = new TypedValue();
+            getTheme().resolveAttribute(R.attr.cardDefaultBackground, value, true);
+            card.setBackgroundColor(value.data);
+        }
     }
 
     private void activateCard(LinearLayout card){

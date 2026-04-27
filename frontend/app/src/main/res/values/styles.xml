@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.SelfCareApp.Button.Soothing" parent="Widget.Material3.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+    <style name="Widget.SelfCareApp.Button.Dopamine" parent="Widget.Material3.Button">
+        <item name="cornerRadius">50dp</item>
+        <item name="elevation">6dp</item>
+    </style>
+</resources>

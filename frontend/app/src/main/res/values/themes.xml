@@ -63,6 +63,12 @@
 
         <!-- Gradient -->
         <item name="appGradientBackground">@drawable/bg_gradient_soothing</item>
+
+        <!-- Soothing Buttons: subtle, alacsony elevation -->
+        <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Soothing</item>
+
+        <!-- Soothing Cards: -->
+        <item name="cardDefaultBackground">#F2F2F2</item>
     </style>
 
     <!--SOOTHING DARK-->
@@ -125,7 +131,13 @@
         <item name="titleAppFontFamily">@font/font_soothing</item>
 
         <!-- Gradient -->
-        <item name="appGradientBackground">@drawable/bg_gradient_soothing</item>
+        <item name="appGradientBackground">@drawable/bg_gradient_soothing_dark</item>
+
+        <!-- Soothing Buttons: subtle, alacsony elevation -->
+        <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Soothing</item>
+
+        <!-- Soothing Cards: -->
+        <item name="cardDefaultBackground">#2C2C3A</item>
     </style>
 
     <!--DOPAMINE BRIGHT-->
@@ -189,6 +201,12 @@
 
         <!-- Gradient -->
         <item name="appGradientBackground">@drawable/bg_gradient_dopamine</item>
+
+        <!-- Dopamine Buttons: több elevation, rounded -->
+        <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Dopamine</item>
+
+        <!--Dopamine Cards-->
+        <item name="cardDefaultBackground">#EDE7FF</item>
     </style>
 
     <!--DOPAMINE DARK-->
@@ -240,7 +258,7 @@
         <item name="colorSurfaceContainerHigh">@color/dd_md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/dd_md_theme_surfaceContainerHighest</item>
         <!-- Custom attrs -->
-        <item name="android:windowBackground">@color/db_md_theme_background</item>
+        <item name="android:windowBackground">@color/dd_md_theme_background</item>
         <!-- Corner Radii Shape érték -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Dopamine.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Dopamine.Medium</item>
@@ -251,7 +269,13 @@
         <item name="titleAppFontFamily">@font/font_dopamine</item>
 
         <!-- Gradient -->
-        <item name="appGradientBackground">@drawable/bg_gradient_dopamine</item>
+        <item name="appGradientBackground">@drawable/bg_gradient_dopamine_dark</item>
+
+        <!-- Dopamine Buttons: több elevation, rounded -->
+        <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Dopamine</item>
+
+        <!--Dopamine Cards-->
+        <item name="cardDefaultBackground">#2A2A2A</item>
     </style>
 
 </resources>
