@@ -16,7 +16,7 @@ public class MainMenuActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //apply theme (without a flash: add before super.onCreate
-        SettingsActivity.restoreTheme(this);
+       // SettingsActivity.restoreTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);

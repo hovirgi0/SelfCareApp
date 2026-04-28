@@ -8,11 +8,15 @@ import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.UserPreferences;
 import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.MainMenuActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 
 public class CompletePersonalizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+        // SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personalization_complete);
     }

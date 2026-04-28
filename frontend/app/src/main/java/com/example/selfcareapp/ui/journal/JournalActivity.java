@@ -18,6 +18,7 @@ import com.example.selfcareapp.data.entity.JournalEntryEntity;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.JournalRepository;
 import com.example.selfcareapp.ui.BaseActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 import com.example.selfcareapp.ui.todo.ToDoAddEditActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,6 +33,9 @@ public class JournalActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+       // SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal_list);
 

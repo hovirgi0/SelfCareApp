@@ -12,11 +12,13 @@ import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.TaskRepository;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.selfcareapp.ui.BaseActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ToDoListActivity extends AppCompatActivity {
+public class ToDoListActivity extends BaseActivity {
     //Repository-t és az Adaptert osztályszintű változóba való kiemelése
     private TaskAdapter taskAdapter;
     private TaskRepository taskRepository;
@@ -26,6 +28,9 @@ public class ToDoListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+        //SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
 

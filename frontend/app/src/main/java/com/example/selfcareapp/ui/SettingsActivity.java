@@ -29,6 +29,9 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+        //SettingsActivity.restoreTheme(this);
+
         // Restore the theme before layout inflates - prevents visual flash -.-
         sharedPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String selectedTheme = sharedPrefs.getString(KEY_THEME, "soothing light"); //app theme will be 'light' by default
@@ -72,7 +75,7 @@ public class SettingsActivity extends BaseActivity {
     private void loadSelections() {
         highlightTone(sharedPrefs.getString(KEY_TONE,"neutral"));
         highlightStyle(sharedPrefs.getString(KEY_STYLE, "supportive"));
-        highlightTheme(sharedPrefs.getString(KEY_THEME, " soothing light"));
+        highlightTheme(sharedPrefs.getString(KEY_THEME, "soothing light"));
     }
 
     // Attach click listeners to every card

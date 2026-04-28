@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
 import com.example.selfcareapp.data.repository.TaskRepository;
+import com.example.selfcareapp.ui.BaseActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 
 /**
  * Activity for creating a new task or editing an existing one.
@@ -23,7 +25,7 @@ import com.example.selfcareapp.data.repository.TaskRepository;
  * @see TaskRepository for database operations (insert, edit)
  * @see TaskEntity for the data model
  */
-public class ToDoAddEditActivity extends Activity {
+public class ToDoAddEditActivity extends BaseActivity {
 
     /**
      * The text input field where the user types a task name manually.
@@ -64,6 +66,9 @@ public class ToDoAddEditActivity extends Activity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+        // SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_add_edit);
 

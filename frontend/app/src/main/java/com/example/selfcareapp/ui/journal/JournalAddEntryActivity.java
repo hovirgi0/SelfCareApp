@@ -9,6 +9,7 @@ import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
 import com.example.selfcareapp.data.repository.JournalRepository;
 import com.example.selfcareapp.ui.BaseActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 
 public class JournalAddEntryActivity extends BaseActivity {
 
@@ -20,6 +21,9 @@ public class JournalAddEntryActivity extends BaseActivity {
     private int currentEntryId = -1; //-1 jelzi, ha új feladatról van szó
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+       // SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal_add_entry);
 

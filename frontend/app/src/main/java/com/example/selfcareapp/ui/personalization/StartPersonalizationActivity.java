@@ -9,12 +9,16 @@ import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.UserPreferences;
 import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.MainMenuActivity;
+import com.example.selfcareapp.ui.SettingsActivity;
 import com.example.selfcareapp.ui.todo.ToDoListActivity;
 
 public class StartPersonalizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme (without a flash: call before super.onCreate)
+        // SettingsActivity.restoreTheme(this);
+
         super.onCreate(savedInstanceState);
 
         //If the onboarding part is already done skip straight to main menu
