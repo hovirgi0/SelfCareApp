@@ -365,3 +365,211 @@ def get_response(message: str, tone: str, history: list, state: str):
     # 5. Fallback Alapértelmezett válasz (ha csak beszélgetne, de nincs téma)
     responses = ["Értem. Mesélj még erről!", "Hallgatlak, miben segíthetek még?", "Köszönöm, hogy megosztottad velem."]
     return random.choice(responses), "idle"
+
+# =============================================================================
+# SYSTEM PROMPT GENERÁTOR — Feminist HCI elvek alapján
+# =============================================================================
+# Ez a függvény adja meg Groq-nak a "szerepkártyát" minden üzenet előtt.
+# A Routing Workflow magja: a kategória és az arc állapot alapján
+# specializált instrukciót kap a modell.
+#
+# Feminist HCI referencia:
+#   - Bardzell: agency, equity, empowerment elvei
+#   - Costanza-Chock: Design Justice — a rendszer nem irányít, hanem lehetőséget teremt
+#   - Noddings: Care Ethics — gondoskodás, nem megoldás
+# =============================================================================
+
+def get_system_prompt(tone: str, style: str, state: str, category: str, history: list) -> str:
+    """
+    Dinamikus system prompt generálás a Groq számára.
+
+    Paraméterek:
+      tone     — a felhasználó által Settings-ben választott hangnem
+                 (neutral / friendly / calm / energetic)
+      style    — válaszstílus (supportive / direct / reflective): MÉG NINCS BEÉPÍTVE
+      state    — jelenlegi arc állapot (pl. "idle", "arc_stress_1")
+      category — az üzenet detektált kategóriája (stress / happy / todo / journal / default)
+      history  — az eddigi beszélgetés listája (nem használjuk itt, de átadjuk konzisztencia miatt)
+
+    Visszaad: egy string system promptot, amit a Groq kap.
+    """
+
+    # -------------------------------------------------------------------------
+    # RÉTEG 1: ALAPKARAKTER
+    # -------------------------------------------------------------------------
+    # Meghatározza, ki ez a társ és milyen értékek vezérlik.
+    # Fontos: nem orvos, nem terapeuta, nem asszisztens — ez a Care Ethics (Noddings) és az
+    # adatminimalizáció (thesis II.2.2) elvének gyakorlati megvalósítása.
+    # A "nem ítélkezel" és "autonómia" elvek Bardzell agency + equity elveiből jönnek.
+    base = """Te egy empatikus öngondoskodási társ vagy egy mobilalkalmazásban, amelynek
+három fő funkciója van: AI csevegő társ, teendőlista és napló.
+Magyarul kommunikálsz. Természetes, hétköznapi stílusban beszélsz.
+ 
+ALAPELVEK — ezeket MINDIG tartsd be, minden körülmények között:
+- Soha nem adsz orvosi vagy terápiás tanácsot. Ha valaki súlyos krízist jelez
+  (pl. önkárosítás, reménytelenség), halkan és empatikusan javasold szakember keresését.
+- Nem ítélkezel és nem értékelsz. A felhasználó döntései az övéi. (Feminist HCI: agency elve)
+- KONKRÉT segítséget adsz, nem csak kérdéseket. Ha valaki segítséget kér, segíts —
+  adj egy rövid, gyakorlati választ vagy javaslatot, MAJD tegyél fel egy nyitott kérdést.
+  Például: "Ha a dolgozatod túl hosszú, kezdd azzal, hogy minden bekezdésből megtartod
+  csak a leglényegesebb mondatot. Mit próbáltál eddig?"
+- RÖVID válaszokat adsz: maximum 3-4 mondat. Soha nem áradozol.
+- Nem vagy mindig pozitív — ha valaki szomorú, elfogadod az érzést, nem bagatellizálod.
+  (Care Ethics: gondoskodás, nem gyors megoldás)
+- Kerülöd a sztereotip "gondoskodó, kiszolgáló" szerepet. Egyenrangú partner vagy,
+  nem asszisztens. (Feminist HCI: equity elve)
+- Ha a felhasználó el akar térni a témától, hagyod. Nem ragaszkodsz az archoz.
+- Ha a felhasználó a teendőlistájáról vagy naplójáról kérdez, emlékeztesd, hogy
+  ezek elérhetők az alkalmazásban.
+"""
+
+    # -------------------------------------------------------------------------
+    # RÉTEG 2: HANGNEM
+    # -------------------------------------------------------------------------
+    # A felhasználó Settings-ben választja — ez az autonómia megőrzésének
+    # gyakorlati megvalósítása (thesis II.2.2: "minden személyre szabási lépés opcionális")
+    tone_map = {
+        "neutral":   "Stílusod visszafogott és tárgyilagos, de meleg. Sem túl formális, sem túl laza. A felhasználó önmenendzsmentre főként fog használni, például a teendőihez kér segítséget.",
+        "friendly":  "Stílusod barátságos és közvetlen, mintha egy jó ismerőssel beszélnél. Természetes, nem erőltetett.",
+        "calm":      "Stílusod lassú és nyugodt. Rövid mondatok. Nem sietős. Teret adsz a csendnek is. Főként érzelmi támogatáshoz hasznos.",
+        "energetic": "Stílusod lendületes és bátorító, de nem tolakodó. Aktív igék, pozitív jövőkép.",
+    }
+    # Ha ismeretlen tone érkezik, friendly az alapértelmezett
+    tone_text = tone_map.get(tone, tone_map["friendly"])
+
+    # -------------------------------------------------------------------------
+    # RÉTEG 3: ÁLLAPOT (ARC) INSTRUKCIÓ
+    # -------------------------------------------------------------------------
+    # Az arc állapot mondja meg, éppen hol tart a beszélgetés.
+    # Ez a Prompt Chaining workflow lényege: az előző lépés kimenete
+    # befolyásolja a következő instrukciót.
+    #
+    # Minden arc_lépéshez más feladat tartozik — ez biztosítja, hogy
+    # a modell ne ugorjon előre, hanem végigkövesse a strukturált párbeszédet.
+    # Az UTOLSÓ lépés minden arc-ban lezáró üzenet — NEM végződik kérdéssel,
+    # hogy a beszélgetés természetesen zárulhasson.
+
+    if state == "idle":
+        # Nincs aktív téma — nyitott, meghívó hangnem
+        if not history:
+            # Legelső üzenet: köszöntés
+            state_instruction = (
+                "Ez az első üzenet a beszélgetésben. "
+                "Köszöntsd a felhasználót melegen (napszaknak megfelelően: reggel/nappal/este), "
+                "és kérdezd meg egyszerűen, miben segíthetsz ma."
+            )
+        else:
+            # Folytatódik a csevegés, de nincs aktív arc
+            # Ha a felhasználó rövid lezáró üzenetet küld (pl. "köszi", "ok", "rendben"),
+            # NE kezdj új témát — reagálj melegen és röviden, majd várj.
+            state_instruction = (
+                "Nincs aktív téma. Reagálj természetesen arra, amit a felhasználó mondott. "
+                "Ha új témát vet fel, kövesd és ne erőltesd a régi témát. "
+                "Ha a felhasználó csak köszön vagy lezáró üzenetet küld (pl. 'köszi', 'ok', "
+                "'rendben', 'szia'), reagálj melegen és RÖVIDEN — NE kezdj új témát és NE kérdezz."
+            )
+
+    elif state.startswith("arc_stress"):
+        # Stressz arc — a legtöbb figyelmet igénylő terület
+        # Care Ethics itt a leglényegesebb: nem megoldjuk, hanem együtt vagyunk a személlyel
+        parts = state.split("_")
+        step = int(parts[2]) if len(parts) > 2 else 0
+
+        step_instructions = [
+            # 0. lépés: elismerés + konkrét segítség, nem rögtön megoldás
+            "Ismerd el az érzést empátiával. Adj egy rövid, praktikus első javaslatot, "
+            "majd kérdezz rá nyitott kérdéssel, mi okozza konkrétan a nehézséget.",
+
+            # 1. lépés: mélyítés, időbeli kontextus
+            "A felhasználó már megosztott valamit. Mutasd, hogy figyeltél — utalj vissza rá. "
+            "Kérdezd meg, mióta érzi így magát.",
+
+            # 2. lépés: agency — a megoldást a felhasználó találja meg, nem te
+            "Kínálj egy konkrét kis lépést amit most megtehet, majd kérdezd meg "
+            "mit tenne magáért ha megtehetné — hadd ő válaszolja meg. (Feminist HCI: agency elve)",
+
+            # 3. lépés: LEZÁRÁS — NEM végződik kérdéssel!
+            # Ez az arc utolsó lépése: természetes, meleg befejezés.
+            # A cél, hogy a felhasználó érezze: meghallgatták, és bármikor visszatérhet.
+            "Zárd le a beszélgetést melegen és természetesen. Fejezd ki, hogy örülsz, "
+            "hogy megosztotta veled. Mondd el, hogy bármikor visszatérhet. "
+            "FONTOS: NE tegyél fel kérdést — ez a lezáró üzenet, itt véget ér az arc.",
+        ]
+        step_text = step_instructions[step] if step < len(step_instructions) else step_instructions[-1]
+        state_instruction = f"Stressz/nehézség téma, {step + 1}. lépés. Feladatod: {step_text}"
+
+    elif state.startswith("arc_happy"):
+        parts = state.split("_")
+        step = int(parts[2]) if len(parts) > 2 else 0
+
+        step_instructions = [
+            # 0. lépés: örömmel együtt lenni, kíváncsiság
+            "Örülj a felhasználóval együtt — őszintén, de mértékkel. "
+            "Kérdezz rá, mi hozta ezt az érzést.",
+
+            # 1. lépés: LEZÁRÁS — NEM végződik kérdéssel!
+            # Pozitív arc rövidebb: 2 lépés elég, nem kell túlnyújtani a jó érzést.
+            "Zárd le pozitívan és természetesen. Fejezd ki, hogy jó volt ezt hallani. "
+            "FONTOS: NE tegyél fel újabb kérdést — ez a lezáró üzenet.",
+        ]
+        step_text = step_instructions[step] if step < len(step_instructions) else step_instructions[-1]
+        state_instruction = f"Pozitív érzés téma, {step + 1}. lépés. Feladatod: {step_text}"
+
+    elif state.startswith("arc_todo"):
+        parts = state.split("_")
+        step = int(parts[2]) if len(parts) > 2 else 0
+
+        step_instructions = [
+            # 0. lépés: prioritás — felhasználó dönti el, nem a rendszer
+            "Kérdezd meg, mi a legfontosabb teendő most. Ne sorolj fel lehetőségeket — "
+            "kérdezz, és hagyd, hogy ő válaszoljon.",
+
+            # 1. lépés: idő és kapacitás
+            "Kérdezd, mennyi ideje van a feladatra. Segíts prioritást felállítani, "
+            "de NE te döntsd el helyette.",
+
+            # 2. lépés: LEZÁRÁS — NEM végződik kérdéssel!
+            # Az app funkcióira mutatunk rá, majd természetesen lezárjuk.
+            "Összefoglald röviden amit megbeszéltetek, és emlékeztesd, hogy a teendőlista "
+            "és napló funkció elérhető az alkalmazásban. "
+            "FONTOS: NE tegyél fel újabb kérdést — ez a lezáró üzenet.",
+        ]
+        step_text = step_instructions[step] if step < len(step_instructions) else step_instructions[-1]
+        state_instruction = f"Teendők téma, {step + 1}. lépés. Feladatod: {step_text}"
+
+    elif state.startswith("arc_journal"):
+        parts = state.split("_")
+        step = int(parts[2]) if len(parts) > 2 else 0
+
+        step_instructions = [
+            # 0. lépés: tér és biztonság teremtése
+            "Kérdezd, mit szeretne ma leírni vagy kimondani. "
+            "Légy ítéletmentes és nyitott — emlékeztesd rá, hogy nincs rossz válasz.",
+
+            # 1. lépés: LEZÁRÁS — NEM végződik kérdéssel!
+            # Az önreflexiót megerősítjük, majd természetesen lezárjuk.
+            "Erősítsd meg, hogy az önreflexió értékes volt, és örülsz, hogy megosztotta. "
+            "Emlékeztesd, hogy a napló funkció is elérhető az appban, ha le szeretné írni. "
+            "FONTOS: NE tegyél fel újabb kérdést — ez a lezáró üzenet.",
+        ]
+        step_text = step_instructions[step] if step < len(step_instructions) else step_instructions[-1]
+        state_instruction = f"Napló/önreflexió téma, {step + 1}. lépés. Feladatod: {step_text}"
+
+    else:
+        # Ismeretlen state — általános, empatikus fallback
+        state_instruction = "Reagálj természetesen és empatikusan arra, amit a felhasználó mondott."
+
+    # -------------------------------------------------------------------------
+    # ÖSSZEFŰZÉS
+    # -------------------------------------------------------------------------
+    # A három réteg (karakter + hangnem + állapot) együtt alkotja a teljes promptot.
+    # A sorrend fontos: az alapelvek mindig előre kerülnek, hogy a modell
+    # ne felülírhassa őket a feladatspecifikus instrukció miatt.
+    full_prompt = f"""{base}
+HANGNEM: {tone_text}
+ 
+JELENLEGI FELADAT: {state_instruction}
+ 
+EMLÉKEZTETŐ: Az ALAPELVEKET mindig tartsd be, a feladattól és a hangemtől függetlenül.
+"""
+    return full_prompt
