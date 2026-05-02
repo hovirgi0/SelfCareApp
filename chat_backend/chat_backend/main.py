@@ -53,7 +53,7 @@ def chat(request: ChatRequest):
     # Call Groq Client
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
-        max_tokens=300,
+        max_tokens=500,
         messages=[
             {"role": "system", "content": system_prompt},  # system prompt itt van
             *client_messages                                # majd a beszélgetés history

@@ -318,11 +318,7 @@ def get_echo_word(message: str, category: str) -> str:
     return words[-1] if words else "ez"
 
 def get_greeting() -> str:
-    hour = datetime.now().hour
-    if hour < 12: prefix = "Jó reggelt"
-    elif hour < 18: prefix = "Jó napot"
-    else: prefix = "Jó estét"
-    return f"{prefix}! Miben segíthetek ma?"
+    return "Szia! Miben segíthetek ma? Örülök, hogy itt vagy."
 
 # --- Fő válaszgeneráló függvény ---
 def get_response(message: str, tone: str, history: list, state: str):
@@ -393,6 +389,8 @@ def get_system_prompt(tone: str, style: str, state: str, category: str, history:
 
     Visszaad: egy string system promptot, amit a Groq kap.
     """
+    # Lekérjük a pontos időt
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # -------------------------------------------------------------------------
     # RÉTEG 1: ALAPKARAKTER
@@ -437,6 +435,9 @@ ALAPELVEK — ezeket MINDIG tartsd be, minden körülmények között:
     # Ha ismeretlen tone érkezik, friendly az alapértelmezett
     tone_text = tone_map.get(tone, tone_map["friendly"])
 
+    # Itt adjuk át az időt, hogy az MI tájékozódhasson:
+    state_instruction = f"Jelenlegi időpont: {current_time}. Feladat: ..."
+
     # -------------------------------------------------------------------------
     # RÉTEG 3: ÁLLAPOT (ARC) INSTRUKCIÓ
     # -------------------------------------------------------------------------
@@ -455,7 +456,7 @@ ALAPELVEK — ezeket MINDIG tartsd be, minden körülmények között:
             # Legelső üzenet: köszöntés
             state_instruction = (
                 "Ez az első üzenet a beszélgetésben. "
-                "Köszöntsd a felhasználót melegen (napszaknak megfelelően: reggel/nappal/este), "
+                "Köszöntsd a felhasználót melegen és barátságosan, "
                 "és kérdezd meg egyszerűen, miben segíthetsz ma."
             )
         else:
