@@ -76,25 +76,55 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipChat1"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 1"
+                android:text="Stresszes vagyok"
                 android:fontFamily="?attr/mainAppFontFamily"/>
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipChat2"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 2"
+                android:text="Jól érzem magam"
                 android:fontFamily="?attr/mainAppFontFamily"/>
 
         <com.google.android.material.chip.Chip
+                android:id="@+id/chipChat3"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 3"
+                android:text="Teendőim vannak"
                 android:fontFamily="?attr/mainAppFontFamily"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipChat4"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Naplót írnék"
+                android:visibility="gone"
+                android:fontFamily="?attr/mainAppFontFamily"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipChat5"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Csak beszélgetnék"
+                android:visibility="gone"
+                android:fontFamily="?attr/mainAppFontFamily"/>
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chipChatMore"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:fontFamily="?attr/mainAppFontFamily"/>
+
     </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout

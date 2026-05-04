@@ -74,6 +74,49 @@ public class ChatConversationActivity extends BaseActivity {
 
         setupTextWatcher();
 
+        // Wire up suggestion chips defined in activity_todo_add_edit.xml
+        setupSuggestionChipsChat();
+    }
+
+    private void setupSuggestionChipsChat() {
+        int[] chipIds = {
+                R.id.chipChat1,
+                R.id.chipChat2,
+                R.id.chipChat3,
+                R.id.chipChat4,
+                R.id.chipChat5
+        };
+
+        for (int id : chipIds) {
+            com.google.android.material.chip.Chip chip = findViewById(id);
+            chip.setOnClickListener(v -> {
+                String suggestion = chip.getText().toString();
+                // Add to UI as user message
+                messages.add(new ChatMessage(suggestion, ChatMessage.TYPE_USER));
+                adapter.notifyItemInserted(messages.size() - 1);
+                rvChat.scrollToPosition(messages.size() - 1);
+                // Send to backend
+                sendMessage(suggestion);
+            });
+        }
+
+        // Toggle chip — same pattern as todo
+        com.google.android.material.chip.Chip chipMore = findViewById(R.id.chipChatMore);
+        com.google.android.material.chip.Chip chip4 = findViewById(R.id.chipChat4);
+        com.google.android.material.chip.Chip chip5 = findViewById(R.id.chipChat5);
+
+        chipMore.setOnClickListener(v -> {
+            boolean isExpanded = chip4.getVisibility() == View.VISIBLE;
+            if (isExpanded) {
+                chip4.setVisibility(View.GONE);
+                chip5.setVisibility(View.GONE);
+                chipMore.setText("...");
+            } else {
+                chip4.setVisibility(View.VISIBLE);
+                chip5.setVisibility(View.VISIBLE);
+                chipMore.setText("↑");
+            }
+        });
     }
 
     /**

@@ -382,7 +382,7 @@ def get_system_prompt(tone: str, style: str, state: str, category: str, history:
     Paraméterek:
       tone     — a felhasználó által Settings-ben választott hangnem
                  (neutral / friendly / calm / energetic)
-      style    — válaszstílus (supportive / direct / reflective): MÉG NINCS BEÉPÍTVE
+      style    — válaszstílus (supportive / direct / reflective)
       state    — jelenlegi arc állapot (pl. "idle", "arc_stress_1")
       category — az üzenet detektált kategóriája (stress / happy / todo / journal / default)
       history  — az eddigi beszélgetés listája (nem használjuk itt, de átadjuk konzisztencia miatt)
@@ -434,6 +434,19 @@ ALAPELVEK — ezeket MINDIG tartsd be, minden körülmények között:
     }
     # Ha ismeretlen tone érkezik, friendly az alapértelmezett
     tone_text = tone_map.get(tone, tone_map["friendly"])
+
+    style_map = {
+        "supportive": (
+            "Stílusod támogató és empatikus. Először elfogadod az érzést, "
+            "majd óvatosan kínálsz egy-egy javaslatot. Soha nem nyomsz semmit rá."
+        ),
+        "direct": (
+            "Stílusod közvetlen és praktikus. Gyorsan a lényegre térsz, "
+            "nem kerülgeted a dolgot. Empatikus vagy, de nem nyújtod el a válaszokat."
+        ),
+    }
+    # Ha ismeretlen style érkezik, friendly az alapértelmezett
+    style_text = style_map.get(style, style_map["supportive"])
 
     # Itt adjuk át az időt, hogy az MI tájékozódhasson:
     state_instruction = f"Jelenlegi időpont: {current_time}. Feladat: ..."
@@ -568,6 +581,8 @@ ALAPELVEK — ezeket MINDIG tartsd be, minden körülmények között:
     # ne felülírhassa őket a feladatspecifikus instrukció miatt.
     full_prompt = f"""{base}
 HANGNEM: {tone_text}
+
+STÍLUS: {style_text}
  
 JELENLEGI FELADAT: {state_instruction}
  

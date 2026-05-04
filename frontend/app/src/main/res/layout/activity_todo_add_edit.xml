@@ -85,7 +85,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 1"
+                android:text="Tanulás"
                 android:fontFamily="?attr/mainAppFontFamily"/>
 
         <com.google.android.material.chip.Chip
@@ -93,7 +93,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 2"
+                android:text="Takarítás"
                 android:fontFamily="?attr/mainAppFontFamily" />
 
         <com.google.android.material.chip.Chip
@@ -101,7 +101,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 3"
+                android:text="Bevásárlás"
                 android:fontFamily="?attr/mainAppFontFamily" />
 
         <!-- Suggestions hidden by default -->
@@ -110,7 +110,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 4"
+                android:text="Edzés"
                 android:visibility="gone"
                 android:fontFamily="?attr/mainAppFontFamily" />
 
@@ -119,7 +119,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 5"
+                android:text="Email"
                 android:visibility="gone"
                 android:fontFamily="?attr/mainAppFontFamily" />
 
@@ -128,7 +128,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggestion 6"
+                android:text="Vacsora főzés"
                 android:visibility="gone"
                 android:fontFamily="?attr/mainAppFontFamily" />
 

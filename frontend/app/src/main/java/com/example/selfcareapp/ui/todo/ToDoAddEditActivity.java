@@ -86,7 +86,7 @@ public class ToDoAddEditActivity extends BaseActivity {
         }
 
         // Wire up suggestion chips defined in activity_todo_add_edit.xml
-        setupSuggestionChips();
+        setupSuggestionChipsTodo();
     }
 
     /**
@@ -107,7 +107,7 @@ public class ToDoAddEditActivity extends BaseActivity {
      * @see TaskEntity
      * @see TaskRepository#insertTask(TaskEntity)
      */
-    private void setupSuggestionChips() {
+    private void setupSuggestionChipsTodo() {
 
         // All chips that should save a task when tapped (visible + hidden ones)
         int[] chipIds = {
