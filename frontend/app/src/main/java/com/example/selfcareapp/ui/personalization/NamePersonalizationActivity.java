@@ -37,6 +37,6 @@ public class NamePersonalizationActivity extends BaseActivity {
         }
 
         userPreferences.savePrefsName(name);
-        startActivity(new Intent(this, PreferencesPersonalizationActivity.class));
+        startActivity(new Intent(this, CompletePersonalizationActivity.class));
     }
 }

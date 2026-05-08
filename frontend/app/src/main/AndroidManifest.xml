@@ -27,7 +27,6 @@
 
         <!-- Personalization screens -->
         <activity android:name=".ui.personalization.NamePersonalizationActivity" />
-        <activity android:name=".ui.personalization.PreferencesPersonalizationActivity" />
         <activity android:name=".ui.personalization.CompletePersonalizationActivity" />
 
         <!-- Main app screens -->

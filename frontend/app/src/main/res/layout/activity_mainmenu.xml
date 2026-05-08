@@ -69,11 +69,13 @@
 
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glMenu"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                app:columnCount="2"
-                app:rowCount="2"
+                app:columnCount="1"
+                app:rowCount="3"
+                android:alignmentMode="alignMargins"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/tvQuestion"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -81,9 +83,8 @@
             <Button
                     android:id="@+id/btnTasks"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="0dp"
+                    android:layout_width="220dp"
                     android:layout_height="80dp"
-                    app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Teendő lista"
                     android:backgroundTint="?attr/colorPrimary"
@@ -92,9 +93,8 @@
             <Button
                     android:id="@+id/btnJournal"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="0dp"
+                    android:layout_width="220dp"
                     android:layout_height="80dp"
-                    app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Napló"
                     android:backgroundTint="?attr/colorPrimary"
@@ -103,22 +103,10 @@
             <Button
                     android:id="@+id/btnChat"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="0dp"
+                    android:layout_width="220dp"
                     android:layout_height="80dp"
-                    app:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     android:text="Chat"
-                    android:backgroundTint="?attr/colorPrimary"
-                    android:fontFamily="?attr/mainAppFontFamily"/>
-
-            <Button
-                    android:id="@+id/btnCustom"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    app:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:text="Button"
                     android:backgroundTint="?attr/colorPrimary"
                     android:fontFamily="?attr/mainAppFontFamily"/>
         </androidx.gridlayout.widget.GridLayout>
