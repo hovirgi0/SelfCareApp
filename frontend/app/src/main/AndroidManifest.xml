@@ -16,36 +16,6 @@
             android:theme="@style/Theme.SelfCareApp.Soothing.Light"
             android:usesCleartextTraffic="true">
 
-    <!-- Kezdőképernyő -->
-        <!--<activity android:name="com.example.selfcareapp.ui.MainActivity"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> -->
-
-        <!-- Login képernyő -->
-        <!-- <activity android:name="com.example.selfcareapp.ui.LoginActivity" /> -->
-
-         <!-- ToDo képernyő -->
-        <!--<activity android:name="com.example.selfcareapp.ui.TodoActivity" /> -->
-
-        <!-- Journal képernyő -->
-        <!--<activity android:name="com.example.selfcareapp.ui.JournalActivity" /> -->
-
-        <!-- Chat képernyő -->
-        <!--<activity android:name="com.example.selfcareapp.ui.ChatActivity" /> -->
-
-        <!-- Kezdőképernyő -->
-      <!--  <activity android:name="com.example.selfcareapp.ui.personalization.StartPersonalizationActivity"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> -->
-
         <!-- Kezdőképernyő -->
         <activity android:name="com.example.selfcareapp.ui.personalization.StartPersonalizationActivity"
                   android:exported="true">
@@ -54,15 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Kezdőképernyő  teszthez-->
-        <!--<activity android:name="com.example.selfcareapp.ui.todo.ToDoAddEditActivity"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> -->
 
         <!-- Personalization screens -->
         <activity android:name=".ui.personalization.NamePersonalizationActivity" />

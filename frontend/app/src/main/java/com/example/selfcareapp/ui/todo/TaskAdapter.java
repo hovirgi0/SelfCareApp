@@ -13,30 +13,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.TaskEntity;
+import com.example.selfcareapp.ui.todo.ToDoAddEditActivity;
 
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Adapter for the To-Do list RecyclerView.
+ * Manages task visualization, handles user interactions for task completion,
+ * navigation to editing screens, and supports dynamic list reordering.
+ */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<TaskEntity> tasks;
     private setOnTaskStatusChangedListener taskStatusListener;
     private OnTaskOrderChangedListener orderChangedListener;
 
-    // Drag-to-reorder callback
     public interface OnTaskOrderChangedListener {
         void onOrderChanged(List<TaskEntity> reorderedTasks);
-    }
-
-    public void setOnTaskOrderChangedListener(OnTaskOrderChangedListener listener) {
-        this.orderChangedListener = listener;
     }
 
     public interface setOnTaskStatusChangedListener {
         void onTaskStatusChanged(TaskEntity task);
     }
 
-    //Task toggle box setter and getter
-    public void setOnTaskStatusChangedListener(setOnTaskStatusChangedListener taskStatuslistener){
+    public void setOnTaskOrderChangedListener(OnTaskOrderChangedListener listener) {
+        this.orderChangedListener = listener;
+    }
+
+    public void setOnTaskStatusChangedListener(setOnTaskStatusChangedListener taskStatuslistener) {
         this.taskStatusListener = taskStatuslistener;
     }
 
@@ -45,15 +49,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     /**
-     * Called by ItemTouchHelper when the user drags a task to a new position.
-     * Swaps the items in the local list and notifies the adapter immediately
-     * for smooth animation — the DB update happens in the Activity.
+     * Swaps task positions within the local list and updates their internal order.
+     * Notifies the adapter for smooth UI animations and triggers the order change listener.
      */
     public void moveItem(int fromPosition, int toPosition) {
         Collections.swap(tasks, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
 
-        // Update the 'order' field to reflect new positions
         for (int i = 0; i < tasks.size(); i++) {
             tasks.get(i).order = i;
         }
@@ -63,36 +65,32 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    @NonNull
     @Override
-    public @org.jspecify.annotations.NonNull TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_task, parent, false);
         return new TaskViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder (@NonNull TaskViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         TaskEntity task = tasks.get(position);
         holder.tvTaskName.setText(task.getTaskName());
 
-        //Todo toggle box
-        //Phone state listener
-        //set visual state - not to trigger a listener loop
+        // Reset listener to null before setting state to avoid unwanted trigger loops during binding
         holder.cbTaskDone.setOnCheckedChangeListener(null);
         holder.cbTaskDone.setChecked(task.isCompleted());
 
-        //when the user clicks on the box - listen for a new toggle
         holder.cbTaskDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            task.setCompleted(isChecked); //object data
-            if (taskStatusListener != null){
-                taskStatusListener.onTaskStatusChanged(task);        }
+            task.setCompleted(isChecked);
+            if (taskStatusListener != null) {
+                taskStatusListener.onTaskStatusChanged(task);
+            }
         });
 
-        //Szerkesztés gomb kezelése
         holder.btnEditTask.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ToDoAddEditActivity.class);
-
-            //Feladat átküldéséhez
             intent.putExtra("TASK_ID", task.id);
             intent.putExtra("TASK_NAME", task.getTaskName());
             v.getContext().startActivity(intent);
@@ -102,29 +100,28 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public int getItemCount() {
         return tasks == null ? 0 : tasks.size();
-       /* if (tasks == null) {
-            return 0;
-        }
-        return tasks.size(); */
     }
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder{
-
-        CheckBox cbTaskDone;
-        TextView tvTaskName;
-        ImageButton btnEditTask;
-
-        public TaskViewHolder(View itemView){
-            super(itemView);
-            tvTaskName = itemView.findViewById(R.id.tvTaskName); //item_task.xml
-            btnEditTask = itemView.findViewById(R.id.btnEditTask);
-            cbTaskDone = itemView.findViewById(R.id.cbTaskDone);
-        }
-    }
-
-    //Swipe-to-Delete törlés (alternatív megoldás - egyszerű, modern)
+    /**
+     * Retrieves the task entity at a specific adapter position.
+     */
     public TaskEntity getTaskAt(int position) {
         return tasks.get(position);
     }
 
+    /**
+     * ViewHolder for task items, providing direct access to UI components.
+     */
+    public static class TaskViewHolder extends RecyclerView.ViewHolder {
+        CheckBox cbTaskDone;
+        TextView tvTaskName;
+        ImageButton btnEditTask;
+
+        public TaskViewHolder(View itemView) {
+            super(itemView);
+            tvTaskName = itemView.findViewById(R.id.tvTaskName);
+            btnEditTask = itemView.findViewById(R.id.btnEditTask);
+            cbTaskDone = itemView.findViewById(R.id.cbTaskDone);
+        }
+    }
 }

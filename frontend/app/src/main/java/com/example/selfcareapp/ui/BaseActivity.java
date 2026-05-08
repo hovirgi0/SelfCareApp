@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.selfcareapp.R;
 
+/**
+ * Base activity class that handles global theme and night mode settings.
+ * All other activities inherit from this class to ensure visual consistency.
+ */
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "AppSettings";
@@ -17,6 +21,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Reads the saved theme from SharedPreferences and applies the 
+     * corresponding style and night mode before the UI is inflated.
+     */
     private void applyThemeFromPrefs() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String theme = prefs.getString(KEY_THEME, "soothing light");

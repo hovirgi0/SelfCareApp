@@ -1,58 +1,53 @@
 package com.example.selfcareapp.data.repository;
 
 import android.app.Application;
-
 import java.util.List;
-
 import com.example.selfcareapp.data.dao.JournalDao;
 import com.example.selfcareapp.data.database.AppDatabase;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
-import com.example.selfcareapp.data.entity.TaskEntity;
 
-/*
- Repository responsible for handling journal entry data.
-
- This class abstracts database access and provides
- a clean API for higher application layers.
-*/
-
+/**
+ * Repository responsible for handling journal entry data.
+ * Acts as an abstraction layer between the database and the UI-related components.
+ */
 public class JournalRepository {
 
-    private JournalDao journalDao;
+    private final JournalDao journalDao;
 
-    /*
-     Initializes DAO through the AppDatabase singleton.
-    */
+    /**
+     * Initializes the DAO using the AppDatabase singleton instance.
+     * @param application The application context for database initialization.
+     */
     public JournalRepository(Application application) {
-
         AppDatabase db = AppDatabase.getInstance(application);
-
-        journalDao = db.journalDao();
+        this.journalDao = db.journalDao();
     }
 
-    /*
-     Retrieves all journal entries belonging to a user.
-    */
+    /**
+     * Fetches all journal entries linked to a specific user.
+     */
     public List<JournalEntryEntity> getEntriesForUser(int userId) {
         return journalDao.getEntriesForUser(userId);
     }
 
-    /*
-     Inserts a new journal entry.
-    */
+    /**
+     * Delegates the insertion of a new journal entry to the DAO.
+     */
     public void insertEntry(JournalEntryEntity entry) {
         journalDao.insertEntry(entry);
     }
 
+    /**
+     * Updates an existing journal entry's data.
+     */
     public void editEntry(JournalEntryEntity entry) {
         journalDao.editEntry(entry);
     }
 
-    /*
-     Deletes an existing journal entry.
-    */
+    /**
+     * Removes a specific journal entry from the local storage.
+     */
     public void deleteEntry(JournalEntryEntity entry) {
         journalDao.deleteEntry(entry);
     }
-
 }

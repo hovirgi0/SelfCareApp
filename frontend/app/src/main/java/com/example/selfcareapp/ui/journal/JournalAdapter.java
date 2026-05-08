@@ -1,24 +1,33 @@
 package com.example.selfcareapp.ui.journal;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.data.entity.JournalEntryEntity;
-import com.example.selfcareapp.data.entity.TaskEntity;
-import com.example.selfcareapp.ui.todo.ToDoAddEditActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
+/**
+ * Adapter for the Journal RecyclerView.
+ * Manages the binding of journal entry data to UI components, including
+ * date formatting, mood-to-emoji mapping, and navigation to the edit screen.
+ */
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalViewHolder> {
+
     private List<JournalEntryEntity> entries;
 
+    /**
+     * Updates the underlying data source for the adapter.
+     */
     public void setEntries(List<JournalEntryEntity> entries) {
         this.entries = entries;
     }
@@ -35,17 +44,16 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
         JournalEntryEntity entry = entries.get(position);
 
-        //Szerkesztés gomb kezelése
         holder.tvContent.setText(entry.content);
 
-        //Adatok formázása és beállítása
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        // Format and display the entry date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String dateString = sdf.format(entry.date);
         holder.tvDate.setText(dateString);
 
-        //Mood beállítása: a Stringként elmentett mood konvertálása emojivá
+        // Map the stored mood string to its corresponding unicode emoji
         String displayMoodEmoji = "\uD83D\uDE10";
-        String selectedMoodEmoji = (entry.mood != null) ? entry.mood : "Neutral"; //default mood
+        String selectedMoodEmoji = (entry.mood != null) ? entry.mood : "Neutral";
 
         switch (selectedMoodEmoji) {
             case "Sad":
@@ -63,19 +71,15 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         }
 
         holder.tvMoodEmoji.setText(displayMoodEmoji);
-        //Szerkesztés gomb kezelése - itt nincs szerkesztés gomb mint a todo-nál így a bejegyzés kártyára tesszük rá tesszük rá a kattintást
+
+        // Navigates to the entry details/edit screen when an item is clicked
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), JournalAddEntryActivity.class);
-
-            //Feladat átküldéséhez
             intent.putExtra("ENTRY_ID", entry.id);
             intent.putExtra("ENTRY_CONTENT", entry.content);
             intent.putExtra("ENTRY_MOOD", entry.mood);
-
             v.getContext().startActivity(intent);
         });
-
-
     }
 
     @Override
@@ -83,23 +87,27 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         return entries == null ? 0 : entries.size();
     }
 
+    /**
+     * Retrieves a specific entry from the current list based on its position.
+     * Useful for swipe-to-delete operations.
+     */
+    public JournalEntryEntity getEntryAt(int position) {
+        return entries.get(position);
+    }
+
+    /**
+     * ViewHolder class for caching UI references to improve scrolling performance.
+     */
     public static class JournalViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate;
         TextView tvMoodEmoji;
         TextView tvContent;
 
-
         public JournalViewHolder(View itemView) {
             super(itemView);
             tvDate = itemView.findViewById(R.id.tvEntryDate);
-            tvMoodEmoji = itemView.findViewById(R.id.tvEntryMood); //puts the correct emoji in the preview of an entry
+            tvMoodEmoji = itemView.findViewById(R.id.tvEntryMood);
             tvContent = itemView.findViewById(R.id.tvEntryContent);
         }
     }
-
-    //Swipe-to-Delete törlés (alternatív megoldás - egyszerű, modern)
-    public JournalEntryEntity getEntryAt(int position) {
-        return entries.get(position);
-    }
-
 }

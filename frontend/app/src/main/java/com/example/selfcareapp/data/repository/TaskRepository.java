@@ -1,66 +1,60 @@
 package com.example.selfcareapp.data.repository;
 
 import android.app.Application;
-
 import java.util.List;
-
 import com.example.selfcareapp.data.dao.TaskDao;
 import com.example.selfcareapp.data.database.AppDatabase;
 import com.example.selfcareapp.data.entity.TaskEntity;
 
-/*
- Repository class responsible for managing Task data.
-
- The repository acts as an abstraction layer between
- the application's UI components and the database.
- It ensures that the UI does not directly access
- the DAO or the database.
-*/
-
+/**
+ * Repository class that abstracts access to Task data sources.
+ * It acts as a mediator between the ViewModel and the Room database.
+ */
 public class TaskRepository {
 
-    private TaskDao taskDao; // Inicialize as field instead contrustror in updatetask
+    private final TaskDao taskDao;
 
-    private Application application; // Inicialize as field instead contrustror in updatetask
-
-    /*
-     Constructor initializes the DAO using the
-     singleton instance of the Room database.
-    */
+    /**
+     * Initializes the DAO using the AppDatabase singleton.
+     * @param application The application context needed for database initialization.
+     */
     public TaskRepository(Application application) {
-
         AppDatabase db = AppDatabase.getInstance(application);
-
-        taskDao = db.taskDao();
+        this.taskDao = db.taskDao();
     }
 
-    /*
-     Retrieves all tasks belonging to a specific user.
-    */
-    //updates data
+    /**
+     * Retrieves tasks associated with a user, sorted by their order.
+     */
     public List<TaskEntity> getTasksForUser(int userId) {
         return taskDao.getTasksForUser(userId);
     }
 
-    /*
-     Inserts a new task into the database.
-    */
+    /**
+     * Delegates task insertion to the DAO.
+     */
     public void insertTask(TaskEntity task) {
         taskDao.insertTask(task);
     }
 
+    /**
+     * Updates an existing task's information.
+     */
     public void editTask(TaskEntity task) {
         taskDao.editTask(task);
     }
 
+    /**
+     * Updates specific task fields (e.g., completion status).
+     */
     public void updateTask(TaskEntity task) {
         taskDao.updateTask(task);
     }
-    /*
-     Deletes a task from the database.
-    */
+
+    /**
+     * Removes a task from the persistent storage.
+     */
     public void deleteTask(TaskEntity task) {
         taskDao.deleteTask(task);
     }
-
 }

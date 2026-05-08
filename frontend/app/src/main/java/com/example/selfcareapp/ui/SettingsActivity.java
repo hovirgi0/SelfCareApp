@@ -9,34 +9,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.selfcareapp.R;
 
+/**
+ * SettingsActivity facilitates the management of user-defined preferences,
+ * specifically focusing on AI personality (tone and style) and visual aesthetics (themes).
+ *
+ * Implementation Details:
+ * - Persistence: Utilizes SharedPreferences for lightweight data storage.
+ * - Dynamic UI: Implements manual view state management to provide visual feedback
+ *   on selection (active/inactive states).
+ * - Theme Engine: Orchestrates runtime theme switching and NightMode synchronization.
+ */
 public class SettingsActivity extends BaseActivity {
 
+    // Persistent storage constants
     private static final String PREFS_NAME = "AppSettings";
     private static final String KEY_THEME = "selected_theme";
     private static final String KEY_TONE = "selected_tone";
     private static final String KEY_STYLE = "selected_style";
 
-    //Tone cards
+    // UI Component References: Tone Selection
     private LinearLayout cardToneNeutral, cardToneFriendly, cardToneCalm, cardToneEnergetic;
 
-    //Style cards
+    // UI Component References: Interaction Style
     private LinearLayout cardStyleSupportive, cardStyleDirect;
 
-    //Theme cards
+    // UI Component References: Theme Configuration
     private LinearLayout cardThemeDopamineBright, cardThemeDopamineDark, cardThemeSoothingLight, cardThemeSoothingDark;
 
     private SharedPreferences sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //apply theme (without a flash: call before super.onCreate)
-        //SettingsActivity.restoreTheme(this);
-
-        // Restore the theme before layout inflates - prevents visual flash -.-
+        /*
+         * Theme Injection: The theme must be applied prior to super.onCreate()
+         * and setContentView() to ensure the DecorView is inflated with the correct
+         * attribute set, preventing visual flickering or layout inconsistencies.
+         */
         sharedPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String selectedTheme = sharedPrefs.getString(KEY_THEME, "soothing light"); //app theme will be 'light' by default
+        String selectedTheme = sharedPrefs.getString(KEY_THEME, "soothing light");
 
-        //setTheme()
         switch (selectedTheme) {
             case "dopamine bright": setTheme(R.style.Theme_SelfCareApp_Dopamine_Bright); break;
             case "dopamine dark":   setTheme(R.style.Theme_SelfCareApp_Dopamine_Dark); break;
@@ -47,38 +58,43 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // Standard initialization sequence
         bindViews();
         loadSelections();
         setOnClicklisteners();
     }
 
-    // Bind all card views by their XML id-ss
+    /**
+     * Initializes view references by mapping XML identifiers to Java objects.
+     */
     private void bindViews() {
-        //Tone cards
         cardToneNeutral = findViewById(R.id.cardToneNeutral);
         cardToneFriendly = findViewById(R.id.cardToneFriendly);
         cardToneCalm = findViewById(R.id.cardToneCalm);
         cardToneEnergetic = findViewById(R.id.cardToneEnergetic);
 
-        //Style cards
         cardStyleSupportive = findViewById(R.id.cardStyleSupportive);
         cardStyleDirect = findViewById(R.id.cardStyleDirect);
 
-        //Theme cards
         cardThemeDopamineBright = findViewById(R.id.cardThemeDopamineBright);
         cardThemeDopamineDark = findViewById(R.id.cardThemeDopamineDark);
         cardThemeSoothingLight = findViewById(R.id.cardThemeSoothingLight);
         cardThemeSoothingDark = findViewById(R.id.cardThemeSoothingDark);
     }
 
-    // Highlight previously saved selections when screen opens
+    /**
+     * Restores UI state from persistent storage to ensure the interface reflects
+     * the user's current configuration.
+     */
     private void loadSelections() {
         highlightTone(sharedPrefs.getString(KEY_TONE,"neutral"));
         highlightStyle(sharedPrefs.getString(KEY_STYLE, "supportive"));
         highlightTheme(sharedPrefs.getString(KEY_THEME, "soothing light"));
     }
 
-    // Attach click listeners to every card
+    /**
+     * Assigns event listeners to UI components to handle user interaction.
+     */
     private void setOnClicklisteners() {
         cardToneNeutral.setOnClickListener(view -> selectTone("neutral"));
         cardToneFriendly.setOnClickListener(view -> selectTone("friendly"));
@@ -94,24 +110,38 @@ public class SettingsActivity extends BaseActivity {
         cardThemeSoothingDark.setOnClickListener(view -> selectTheme("soothing dark"));
     }
 
+    /**
+     * Persists the selected AI tone and updates the visual state of the selection group.
+     */
     private void selectTone(String tone) {
         sharedPrefs.edit().putString(KEY_TONE, tone).apply();
         highlightTone(tone);
     }
 
+    /**
+     * Persists the selected AI interaction style and updates UI feedback.
+     */
     private void selectStyle(String style) {
         sharedPrefs.edit().putString(KEY_STYLE, style).apply();
         highlightStyle(style);
     }
 
+    /**
+     * Handles the theme transition logic.
+     * Note: Calling recreate() is necessary to refresh the activity's resource
+     * context and apply the new style dynamically.
+     */
     private void selectTheme(String theme) {
         sharedPrefs.edit().putString(KEY_THEME, theme).apply();
         highlightTheme(theme);
-        applyTheme(theme); //apply the logic
+        applyTheme(theme);
 
-        recreate(); //force the activity to restart to show the new theme immediately
+        recreate();
     }
 
+    /**
+     * Resets the visual state of all tone-related components and highlights the active selection.
+     */
     private void highlightTone(String selected) {
         resetCard(cardToneNeutral);
         resetCard(cardToneFriendly);
@@ -125,6 +155,9 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Manages the active state visualization for interaction style options.
+     */
     private void highlightStyle(String selected) {
         resetCard(cardStyleSupportive);
         resetCard(cardStyleDirect);
@@ -134,11 +167,15 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Manages the active state visualization for theme selection options.
+     */
     private void highlightTheme(String selected) {
         resetCard(cardThemeDopamineBright);
         resetCard(cardThemeDopamineDark);
         resetCard(cardThemeSoothingLight);
         resetCard(cardThemeSoothingDark);
+
         switch (selected) {
             case "dopamine bright": activateCard(cardThemeDopamineBright); break;
             case "dopamine dark": activateCard(cardThemeDopamineDark); break;
@@ -147,6 +184,10 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Reverts a card's background to the default attribute-defined color.
+     * Uses TypedValue to programmatically resolve theme-specific attributes.
+     */
     private void resetCard(LinearLayout card) {
         if (card != null) {
             TypedValue value = new TypedValue();
@@ -155,19 +196,19 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Applies a highlight color to indicate a component's active/selected state.
+     */
     private void activateCard(LinearLayout card){
         if (card != null) card.setBackgroundColor(0xFFD0E8FF);
     }
 
+    /**
+     * Synchronizes the application's NightMode state with the selected theme preference.
+     * This leverages AppCompatDelegate to manage global system-level UI modes.
+     */
     private void applyTheme(String theme){
         switch (theme) {
-            // only hightlights the cards visually but doesnt switch the apps theme
-            // theres alreay a method that does that
-            /*case "light": activateCard(cardThemeLight); break;
-            case "dark": activateCard(cardThemeDark); break;
-            case "natural": activateCard(cardThemeNatural); break;
-            case "minimal": activateCard(cardThemeMinimal); break;*/
-
             case "soothing dark":
             case "dopamine dark":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -179,7 +220,11 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
-        public static void restoreTheme(android.content.Context context) {
+    /**
+     * Static utility method to restore global theme settings upon application initialization
+     * or activity transitions outside of SettingsActivity.
+     */
+    public static void restoreTheme(android.content.Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String theme = prefs.getString(KEY_THEME, "soothing light");
         if ("soothing dark".equals(theme) || "dopamine dark".equals(theme)) {
@@ -189,6 +234,9 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Navigates back to the parent activity by destroying the current instance.
+     */
     public void onBackClicked(View view) {
         finish();
     }

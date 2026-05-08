@@ -10,17 +10,16 @@ import com.example.selfcareapp.data.UserPreferences;
 import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.SettingsActivity;
 import com.google.android.material.textfield.TextInputEditText;
-
+/**
+ * Handles the collection and persistence of the user's name.
+ */
 public class NamePersonalizationActivity extends BaseActivity {
 
-    private TextInputEditText etName; //EditText Name
+    private TextInputEditText etName;
     private UserPreferences userPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //apply theme (without a flash: call before super.onCreate)
-       // SettingsActivity.restoreTheme(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personalization_name);
 
@@ -28,8 +27,9 @@ public class NamePersonalizationActivity extends BaseActivity {
         userPreferences = new UserPreferences(this);
     }
 
+    /** Validates input and saves the name before continuing. */
     public void onNameContinueClicked(View view) {
-        String name = etName.getText()!= null ? etName.getText().toString().trim(): "";
+        String name = etName.getText() != null ? etName.getText().toString().trim() : "";
 
         if (name.isEmpty()){
             Toast.makeText(this, "Add meg a neved!", Toast.LENGTH_SHORT).show();
@@ -37,8 +37,6 @@ public class NamePersonalizationActivity extends BaseActivity {
         }
 
         userPreferences.savePrefsName(name);
-
-        Intent intent = new Intent(this, PreferencesPersonalizationActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, PreferencesPersonalizationActivity.class));
     }
 }

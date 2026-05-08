@@ -9,26 +9,29 @@ import com.example.selfcareapp.data.UserPreferences;
 import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.MainMenuActivity;
 import com.example.selfcareapp.ui.SettingsActivity;
-
+/**
+ * Finalizes the onboarding process.
+ * Marks the session as completed and cleans up the navigation stack.
+ */
 public class CompletePersonalizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //apply theme (without a flash: call before super.onCreate)
-        // SettingsActivity.restoreTheme(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personalization_complete);
     }
 
+    /** 
+     * Completes onboarding and redirects to Main Menu.
+     * Uses Intent flags to prevent the user from going back to the onboarding screens.
+     */
     public void onContinueClicked(View view) {
-        //mark onboarding as done so it never shows again
         UserPreferences userPreferences = new UserPreferences(this);
         userPreferences.setOnboardingComplete(true);
 
         Intent intent = new Intent(this, MainMenuActivity.class);
 
-        //Clear the back stacks so back button doesnt return to onboarding
+        // Security/UX: Clears the activity history so back button won't return here
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -8,99 +8,112 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.selfcareapp.R;
 import com.example.selfcareapp.ui.BaseActivity;
 import com.example.selfcareapp.ui.SettingsActivity;
 import com.google.gson.JsonObject;
-import okhttp3.*;
-import com.example.selfcareapp.ui.chat.SentimentEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+/**
+ * Manages the user interface and network interactions for the chat feature.
+ * Connects to a local FastAPI backend to process messages and uses real-time
+ * sentiment analysis to adapt the UI based on the user's emotional tone.
+ */
 public class ChatConversationActivity extends BaseActivity {
+
+    // 10.0.2.2 is the special alias to your host loopback interface (localhost) in the Android emulator
     private static final String BASE_URL = "http://10.0.2.2:8000/chat";
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
     private final OkHttpClient client = new OkHttpClient();
     private final com.google.gson.Gson gson = new com.google.gson.Gson();
-
     private final List<ChatMessage> messages = new ArrayList<>();
+
     private ChatAdapter adapter;
     private EditText etMessage;
     private RecyclerView rvChat;
-    private ImageView viewSentimentIcon; // SentimentEngine
-    private String sessionId = ""; // persists across messages in this activity
+    private ImageView viewSentimentIcon;
 
+    // Tracks the current conversation context with the backend
+    private String sessionId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //apply theme (without a flash: call before super.onCreate)
-       // SettingsActivity.restoreTheme(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_conversation);
 
-        etMessage = findViewById(R.id.etChatMessage);
-        rvChat = findViewById(R.id.rvChatHistory);
-
-        // Navigate to the Settings Screen
-        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
-                startActivity(new Intent(this, SettingsActivity.class)));
-
-        // SentimentEngine
-        viewSentimentIcon = findViewById(R.id.SentimentIconSmall);
-
-        adapter = new ChatAdapter(messages);
-        rvChat.setAdapter(adapter);
-        rvChat.setLayoutManager(new LinearLayoutManager(this));
-
-        String firstMessage = getIntent().getStringExtra("first_message");
-        if (firstMessage != null && !firstMessage.isEmpty()) {
-            messages.add(new ChatMessage(firstMessage, ChatMessage.TYPE_USER));
-           /* messages.add(new ChatMessage("Köszönöm az üzeneted!", ChatMessage.TYPE_BOT));
-            adapter.notifyDataSetChanged(); */
-            adapter.notifyItemInserted(messages.size() - 1);
-            rvChat.scrollToPosition(messages.size() - 1);
-            sendMessage(firstMessage);
-        }
-
-        // Navigate to the Settings Screen
-        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
-                startActivity(new Intent(this, SettingsActivity.class)));
-
+        initializeViews();
+        setupRecyclerView();
+        handleInitialIntent();
         setupTextWatcher();
-
-        // Wire up suggestion chips defined in activity_todo_add_edit.xml
         setupSuggestionChipsChat();
     }
 
+    private void initializeViews() {
+        etMessage = findViewById(R.id.etChatMessage);
+        rvChat = findViewById(R.id.rvChatHistory);
+        viewSentimentIcon = findViewById(R.id.SentimentIconSmall);
+
+        findViewById(R.id.imgSettingsIcon).setOnClickListener(view ->
+                startActivity(new Intent(this, SettingsActivity.class)));
+    }
+
+    private void setupRecyclerView() {
+        adapter = new ChatAdapter(messages);
+        rvChat.setAdapter(adapter);
+        rvChat.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    /**
+     * Checks if the activity was launched with a pre-filled first message
+     * (e.g., from a deep link or another activity) and sends it immediately.
+     */
+    private void handleInitialIntent() {
+        String firstMessage = getIntent().getStringExtra("first_message");
+        if (firstMessage != null && !firstMessage.isEmpty()) {
+            displayUserMessage(firstMessage);
+            sendMessage(firstMessage);
+        }
+    }
+
+    /**
+     * Binds suggestion chips to auto-populate and send predefined messages.
+     * Includes logic to expand/collapse additional chips to save screen real estate.
+     */
     private void setupSuggestionChipsChat() {
         int[] chipIds = {
-                R.id.chipChat1,
-                R.id.chipChat2,
-                R.id.chipChat3,
-                R.id.chipChat4,
-                R.id.chipChat5
+                R.id.chipChat1, R.id.chipChat2, R.id.chipChat3,
+                R.id.chipChat4, R.id.chipChat5
         };
 
         for (int id : chipIds) {
             com.google.android.material.chip.Chip chip = findViewById(id);
             chip.setOnClickListener(v -> {
                 String suggestion = chip.getText().toString();
-                // Add to UI as user message
-                messages.add(new ChatMessage(suggestion, ChatMessage.TYPE_USER));
-                adapter.notifyItemInserted(messages.size() - 1);
-                rvChat.scrollToPosition(messages.size() - 1);
-                // Send to backend
+                displayUserMessage(suggestion);
                 sendMessage(suggestion);
             });
         }
 
-        // Toggle chip — same pattern as todo
+        setupChipToggleLogic();
+    }
+
+    private void setupChipToggleLogic() {
         com.google.android.material.chip.Chip chipMore = findViewById(R.id.chipChatMore);
         com.google.android.material.chip.Chip chip4 = findViewById(R.id.chipChat4);
         com.google.android.material.chip.Chip chip5 = findViewById(R.id.chipChat5);
@@ -120,43 +133,39 @@ public class ChatConversationActivity extends BaseActivity {
     }
 
     /**
-     * Újabb üzenet küldése a már megkezdett beszélgetésben.
-     * OkHttp POST → FastAPI /chat endpoint.
-     * Tone + style SharedPreferences-ből olvasva.
+     * Triggered directly by the UI Send button (via XML onClick attribute).
      */
     public void onSendMessageClicked(View view) {
-        // Itt fogom később frissíteni a RecyclerView-t
-        // Week 4: Csak a UI gomb működését ellenőrizzük
-
         String userText = etMessage.getText().toString().trim();
         if (userText.isEmpty()) return;
 
-        // Felhasználó üzenete
-        messages.add(new ChatMessage(userText, ChatMessage.TYPE_USER));
-        adapter.notifyItemInserted(messages.size() - 1);
-        rvChat.scrollToPosition(messages.size() - 1);
+        displayUserMessage(userText);
         etMessage.setText("");
-
         sendMessage(userText);
     }
 
     /**
-     * OkHttp POST → FastAPI /chat endpoint.
-     * Tone + style SharedPreferences-ből olvasva.
+     * Appends the user's message to the chat UI and scrolls to the bottom.
+     */
+    private void displayUserMessage(String text) {
+        messages.add(new ChatMessage(text, ChatMessage.TYPE_USER));
+        adapter.notifyItemInserted(messages.size() - 1);
+        rvChat.scrollToPosition(messages.size() - 1);
+    }
+
+    /**
+     * Asynchronously sends the user's message to the backend via OkHttp POST.
+     * Attaches current user preferences (tone and style) to the request payload.
      */
     private void sendMessage(String userText) {
         SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
-        String tone = prefs.getString("selected_tone", "neutral");
-        String style = prefs.getString("selected_style", "supportive");
 
-        // JSON body összeállítása
         JsonObject body = new JsonObject();
         body.addProperty("message", userText);
-        body.addProperty("tone", tone);
-        body.addProperty("style", style);
-        body.addProperty("session_id", sessionId); // to send and recieve session id
+        body.addProperty("tone", prefs.getString("selected_tone", "neutral"));
+        body.addProperty("style", prefs.getString("selected_style", "supportive"));
+        body.addProperty("session_id", sessionId);
 
-        //chatbot.py modify + must return 'response'
         Request request = new Request.Builder()
                 .url(BASE_URL)
                 .post(RequestBody.create(body.toString(), JSON))
@@ -165,40 +174,40 @@ public class ChatConversationActivity extends BaseActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // Hálózati hiba → fallback üzenet a főszálon
-                runOnUiThread(() -> addBotMessage("Sajnos nem sikerült kapcsolódni. Próbáld újra!"));
+                // Network callbacks run on a background thread. UI updates must be routed to the main thread.
+                runOnUiThread(() -> displayBotMessage("Sajnos nem sikerült kapcsolódni. Próbáld újra!"));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful() || response.body() == null) {
-                    runOnUiThread(() -> addBotMessage("Valami hiba történt a szerveren."));
+                    runOnUiThread(() -> displayBotMessage("Valami hiba történt a szerveren."));
                     return;
                 }
 
                 String responseBody = response.body().string();
                 JsonObject json = gson.fromJson(responseBody, JsonObject.class);
+
+                sessionId = json.get("session_id").getAsString();
                 String botResponse = json.get("response").getAsString();
-                sessionId = json.get("session_id").getAsString(); // save it back
-                // UI frissítés a főszálon (OkHttp callback háttérszálon fut)
-                runOnUiThread(() -> addBotMessage(botResponse));
+
+                runOnUiThread(() -> displayBotMessage(botResponse));
             }
         });
-
-        // Placeholder bot válasz (API hívás helyett egyelőre)
-       /*
-        messages.add(new ChatMessage("Köszönöm az üzeneted!", ChatMessage.TYPE_BOT));
-        adapter.notifyItemInserted(messages.size() - 1);
-        rvChat.scrollToPosition(messages.size() - 1);
-        */
     }
 
-    private void addBotMessage(String text) {
+    /**
+     * Appends the bot's response to the chat UI and scrolls to the bottom.
+     */
+    private void displayBotMessage(String text) {
         messages.add(new ChatMessage(text, ChatMessage.TYPE_BOT));
         adapter.notifyItemInserted(messages.size() - 1);
         rvChat.scrollToPosition(messages.size() - 1);
     }
 
+    /**
+     * Clears the current session both locally and on the backend.
+     */
     private void resetConversation() {
         if (sessionId.isEmpty()) return;
 
@@ -208,8 +217,13 @@ public class ChatConversationActivity extends BaseActivity {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
-            @Override public void onFailure(Call call, IOException e) {}
-            @Override public void onResponse(Call call, Response response) throws IOException {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Handled silently as session will expire on backend eventually
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
                 runOnUiThread(() -> {
                     messages.clear();
                     adapter.notifyDataSetChanged();
@@ -219,11 +233,10 @@ public class ChatConversationActivity extends BaseActivity {
         });
     }
 
-    // --- metódus ---
     /**
-     * TextWatcher: valós idejű hangulatfigyelés gépelés közben.
-     * Feminist HCI – Agency: a rendszer nem vár, hanem reagál a felhasználóra.
-     * A score-t az updateHeaderColor() veszi át.
+     * Real-time sentiment monitoring while the user is typing.
+     * Design Intent (Feminist HCI - Agency): The system reacts passively to the user's input
+     * without requiring an explicit submission.
      */
     private void setupTextWatcher() {
         etMessage.addTextChangedListener(new TextWatcher() {
@@ -235,24 +248,20 @@ public class ChatConversationActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String currentText = s.toString().trim();
-                SentimentEngine.Sentiment sentiment = SentimentEngine.analyze(currentText);
+                SentimentEngine.Sentiment sentiment = SentimentEngine.analyze(s.toString().trim());
                 updateIconColor(sentiment);
             }
         });
     }
 
     /**
-     * A chat toolbar háttérszínét a felhasználó aktuális hangulata alapján módosítja.
+     * Updates the chat header's visual state based on the current text sentiment.
      *
-     * Feminist HCI – Empowerment + Transparency:
-     *   A felület vizuálisan visszatükrözi, hogy a rendszer "hallja" a felhasználót.
-     *   Nem ítélkezik – mindhárom szín pozitív, befogadó tónus.
-     *
-     * Színek (Material Theme-ből):
-     *   POSITIVE → colorTertiary (meleg, örömteli)
-     *   NEGATIVE → colorSecondary (nyugtató, nem riasztó – tudatos design döntés)
-     *   NEUTRAL  → colorPrimary (alapszín)
+     * Design Intent (Feminist HCI - Empowerment/Transparency): Visually reflects that the system
+     * is listening without judgment. Colors are mapped to Material Theme semantics:
+     * - POSITIVE -> Tertiary (Warm/Joyful)
+     * - NEGATIVE -> Secondary (Calming/Non-alarming)
+     * - NEUTRAL  -> Primary (Default)
      */
     private void updateIconColor(SentimentEngine.Sentiment sentiment) {
         if (viewSentimentIcon == null) return;
@@ -270,13 +279,10 @@ public class ChatConversationActivity extends BaseActivity {
                 break;
         }
 
-        // Material attr → konkrét szín kinyerése a témából
         int resolvedColor = com.google.android.material.color.MaterialColors.getColor(viewSentimentIcon, colorAttr);
-
-    // Apply the color as a tint to the icon
         viewSentimentIcon.setColorFilter(resolvedColor, android.graphics.PorterDuff.Mode.SRC_IN);
 
-        // Optional: Add a subtle scale pulse to show "thinking"
+        // Subtle scale pulse to indicate active processing/listening
         viewSentimentIcon.animate()
                 .scaleX(1.1f).scaleY(1.1f)
                 .setDuration(150)
