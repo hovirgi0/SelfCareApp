@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- DOPAMINE BRIGHT — prefix: db_ -->
 <resources>
-    <color name="db_md_theme_primary">#B70052</color>
+    <color name="db_md_theme_primary">#FF0075</color>
     <color name="db_md_theme_onPrimary">#FFFFFF</color>
-    <color name="db_md_theme_primaryContainer">#E50069</color>
-    <color name="db_md_theme_onPrimaryContainer">#FFFBFF</color>
-    <color name="db_md_theme_secondary">#9F3655</color>
+    <color name="db_md_theme_primaryContainer">#FF4D9E</color>
+    <color name="db_md_theme_onPrimaryContainer">#3D0020</color>
+    <color name="db_md_theme_secondary">#FF3E00</color>
     <color name="db_md_theme_onSecondary">#FFFFFF</color>
-    <color name="db_md_theme_secondaryContainer">#BE4F6D</color>
-    <color name="db_md_theme_onSecondaryContainer">#FFFBFF</color>
-    <color name="db_md_theme_tertiary">#A83300</color>
+    <color name="db_md_theme_secondaryContainer">#FF6B35</color>
+    <color name="db_md_theme_onSecondaryContainer">#3D0E00</color>
+    <color name="db_md_theme_tertiary">#FF0055</color>
     <color name="db_md_theme_onTertiary">#FFFFFF</color>
-    <color name="db_md_theme_tertiaryContainer">#D24100</color>
-    <color name="db_md_theme_onTertiaryContainer">#FFFBFF</color>
+    <color name="db_md_theme_tertiaryContainer">#FF5C8A</color>
+    <color name="db_md_theme_onTertiaryContainer">#3D0018</color>
     <color name="db_md_theme_error">#BA1A1A</color>
     <color name="db_md_theme_onError">#FFFFFF</color>
     <color name="db_md_theme_errorContainer">#FFDAD6</color>
@@ -31,12 +31,12 @@
     <color name="db_md_theme_inversePrimary">#FFB1C2</color>
     <color name="db_md_theme_primaryFixed">#FFD9DF</color>
     <color name="db_md_theme_onPrimaryFixed">#3F0018</color>
-    <color name="db_md_theme_primaryFixedDim">#FFB1C2</color>
-    <color name="db_md_theme_onPrimaryFixedVariant">#8F003F</color>
-    <color name="db_md_theme_secondaryFixed">#FFD9DF</color>
-    <color name="db_md_theme_onSecondaryFixed">#3F0017</color>
-    <color name="db_md_theme_secondaryFixedDim">#FFB1C1</color>
-    <color name="db_md_theme_onSecondaryFixedVariant">#832040</color>
+    <color name="db_md_theme_primaryFixedDim">#FF4D9E</color>
+    <color name="db_md_theme_onPrimaryFixedVariant">#CC0060</color>
+    <color name="db_md_theme_secondaryFixed">#FFD9D0</color>
+    <color name="db_md_theme_onSecondaryFixed">#3D0E00</color>
+    <color name="db_md_theme_secondaryFixedDim">#FF6B35</color>
+    <color name="db_md_theme_onSecondaryFixedVariant">#CC3200</color>
     <color name="db_md_theme_tertiaryFixed">#FFDBD0</color>
     <color name="db_md_theme_onTertiaryFixed">#390B00</color>
     <color name="db_md_theme_tertiaryFixedDim">#FFB59D</color>

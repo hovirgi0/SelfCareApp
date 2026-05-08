@@ -62,7 +62,7 @@
         <item name="titleAppFontFamily">@font/font_soothing</item>
 
         <!-- Gradient -->
-        <item name="appGradientBackground">@drawable/bg_gradient_soothing</item>
+        <item name="appGradientBackground">@drawable/bg_gradient_soothing_light</item>
 
         <!-- Soothing Buttons: subtle, alacsony elevation -->
         <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Soothing</item>
