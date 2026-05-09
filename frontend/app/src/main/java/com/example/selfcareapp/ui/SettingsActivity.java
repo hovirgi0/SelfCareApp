@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.selfcareapp.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * SettingsActivity facilitates the management of user-defined preferences,
@@ -18,6 +22,8 @@ import com.example.selfcareapp.R;
  * - Dynamic UI: Implements manual view state management to provide visual feedback
  *   on selection (active/inactive states).
  * - Theme Engine: Orchestrates runtime theme switching and NightMode synchronization.
+ * - Preview Box: Displays a live example message reflecting the current tone + style
+ *   combination, sourced from the same response templates used by the chatbot backend.
  */
 public class SettingsActivity extends BaseActivity {
 
@@ -26,6 +32,23 @@ public class SettingsActivity extends BaseActivity {
     private static final String KEY_THEME = "selected_theme";
     private static final String KEY_TONE = "selected_tone";
     private static final String KEY_STYLE = "selected_style";
+
+    // Preview messages per tone+style combination.
+    // Strings are taken verbatim from ARCS["stress"][0] and RESPONSES["stress"]
+    // in chatbot.py — stress responses show the clearest personality contrast
+    // across all 8 combinations.
+    private static final Map<String, String> PREVIEW_MESSAGES;
+    static {
+        PREVIEW_MESSAGES = new HashMap<>();
+        PREVIEW_MESSAGES.put("neutral_supportive",   "Figyelek. Mi az, ami most a legtöbb stresszt okozza?");
+        PREVIEW_MESSAGES.put("neutral_direct",        "Értem, hogy most nehéz időszakod van. Miben tudnék leginkább segíteni?");
+        PREVIEW_MESSAGES.put("friendly_supportive",   "Látom, hogy nehéz. Mi az, ami most a leginkább nyomja a lelked?");
+        PREVIEW_MESSAGES.put("friendly_direct",       "Ne aggódj, majd együtt kibogozzuk. Mi a legnehezebb most?");
+        PREVIEW_MESSAGES.put("calm_supportive",       "Vegyél egy mély levegőt. Meséld el kérlek, mi bánt most leginkább.");
+        PREVIEW_MESSAGES.put("calm_direct",           "Ez is el fog múlni. Mi az a konkrét dolog, ami most a legjobban bánt?");
+        PREVIEW_MESSAGES.put("energetic_supportive",  "Rendben, nézzük meg közelebbről! Mi a legfőbb gond most?");
+        PREVIEW_MESSAGES.put("energetic_direct",      "Kemény helyzet, de te még ennél is keményebb vagy. Mit oldjunk meg legelőször?");
+    }
 
     // UI Component References: Tone Selection
     private LinearLayout cardToneNeutral, cardToneFriendly, cardToneCalm, cardToneEnergetic;
@@ -36,6 +59,8 @@ public class SettingsActivity extends BaseActivity {
     // UI Component References: Theme Configuration
     private LinearLayout cardThemeDopamineBright, cardThemeDopamineDark, cardThemeSoothingLight, cardThemeSoothingDark;
 
+    // UI Component References: Preview
+    private TextView tvPreviewText;
     private SharedPreferences sharedPrefs;
 
     @Override
@@ -80,6 +105,8 @@ public class SettingsActivity extends BaseActivity {
         cardThemeDopamineDark = findViewById(R.id.cardThemeDopamineDark);
         cardThemeSoothingLight = findViewById(R.id.cardThemeSoothingLight);
         cardThemeSoothingDark = findViewById(R.id.cardThemeSoothingDark);
+
+        tvPreviewText = findViewById(R.id.tvPreviewText);
     }
 
     /**
@@ -90,6 +117,7 @@ public class SettingsActivity extends BaseActivity {
         highlightTone(sharedPrefs.getString(KEY_TONE,"neutral"));
         highlightStyle(sharedPrefs.getString(KEY_STYLE, "supportive"));
         highlightTheme(sharedPrefs.getString(KEY_THEME, "soothing light"));
+        updatePreview();
     }
 
     /**
@@ -116,6 +144,7 @@ public class SettingsActivity extends BaseActivity {
     private void selectTone(String tone) {
         sharedPrefs.edit().putString(KEY_TONE, tone).apply();
         highlightTone(tone);
+        updatePreview();
     }
 
     /**
@@ -124,6 +153,7 @@ public class SettingsActivity extends BaseActivity {
     private void selectStyle(String style) {
         sharedPrefs.edit().putString(KEY_STYLE, style).apply();
         highlightStyle(style);
+        updatePreview();
     }
 
     /**
@@ -181,6 +211,22 @@ public class SettingsActivity extends BaseActivity {
             case "dopamine dark": activateCard(cardThemeDopamineDark); break;
             case "soothing light": activateCard(cardThemeSoothingLight); break;
             case "soothing dark": activateCard(cardThemeSoothingDark); break;
+        }
+    }
+
+    /**
+     * Updates the preview box to show an example message for the current tone + style combination.
+     * The displayed strings are sourced from the same ARCS and RESPONSES templates
+     * used by the chatbot backend (chatbot.py), ensuring the preview accurately
+     * represents real chatbot behaviour.
+     */
+    private void updatePreview() {
+        String tone  = sharedPrefs.getString(KEY_TONE,  "neutral");
+        String style = sharedPrefs.getString(KEY_STYLE, "supportive");
+        String key   = tone + "_" + style;
+        String preview = PREVIEW_MESSAGES.get(key);
+        if (preview != null && tvPreviewText != null) {
+            tvPreviewText.setText(preview);
         }
     }
 
