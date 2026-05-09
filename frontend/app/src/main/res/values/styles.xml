@@ -9,4 +9,9 @@
         <item name="cornerRadius">50dp</item>
         <item name="elevation">6dp</item>
     </style>
+
+    <style name="Widget.SelfCareApp.Chip" parent="Widget.Material3.Chip.Suggestion">
+        <item name="chipBackgroundColor">?attr/colorSecondaryContainer</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
+    </style>
 </resources>

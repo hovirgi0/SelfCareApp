@@ -12,4 +12,9 @@
     <!--Cards-->
     <attr name="cardDefaultBackground" format="color"/>
 
+    <!--Sentiment colors-->
+    <attr name="sentimentPositiveColor" format="color"/>
+    <attr name="sentimentNegativeColor" format="color"/>
+    <attr name="sentimentNeutralColor" format="color"/>
+
 </resources>

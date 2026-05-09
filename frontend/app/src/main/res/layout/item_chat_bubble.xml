@@ -11,10 +11,10 @@
             android:id="@+id/tvChatBubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_chat_bubble"
             android:padding="12dp"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:maxWidth="260dp"
-            android:fontFamily="?attr/mainAppFontFamily"/>
-
+            android:fontFamily="?attr/mainAppFontFamily"
+            android:background="?attr/colorPrimaryContainer"
+            android:textColor="?attr/colorOnPrimaryContainer" />
 </LinearLayout>

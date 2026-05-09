@@ -69,6 +69,14 @@
 
         <!-- Soothing Cards: -->
         <item name="cardDefaultBackground">#F2F2F2</item>
+
+        <!--Chip-s-->
+        <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
+
+        <!-- Sentiment Colors -->
+        <item name="sentimentPositiveColor">#4CAF50</item>
+        <item name="sentimentNegativeColor">#E57373</item>
+        <item name="sentimentNeutralColor">@color/sl_md_theme_primary</item>
     </style>
 
     <!--SOOTHING DARK-->
@@ -138,6 +146,14 @@
 
         <!-- Soothing Cards: -->
         <item name="cardDefaultBackground">#2C2C3A</item>
+
+        <!--Chip-s-->
+        <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
+
+        <!-- Sentiment Colors -->
+        <item name="sentimentPositiveColor">#81C784</item>
+        <item name="sentimentNegativeColor">#EF9A9A</item>
+        <item name="sentimentNeutralColor">@color/sd_md_theme_primary</item>
     </style>
 
     <!--DOPAMINE BRIGHT-->
@@ -207,6 +223,14 @@
 
         <!--Dopamine Cards-->
         <item name="cardDefaultBackground">#EDE7FF</item>
+
+        <!--Chip-s-->
+        <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
+
+        <!-- Sentiment Colors -->
+        <item name="sentimentPositiveColor">#00E676</item>
+        <item name="sentimentNegativeColor">#FF1744</item>
+        <item name="sentimentNeutralColor">@color/db_md_theme_primary</item>
     </style>
 
     <!--DOPAMINE DARK-->
@@ -276,6 +300,8 @@
 
         <!--Dopamine Cards-->
         <item name="cardDefaultBackground">#2A2A2A</item>
+        <!--Chip-s-->
+        <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
     </style>
 
 </resources>

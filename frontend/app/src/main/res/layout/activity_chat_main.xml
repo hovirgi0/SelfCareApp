@@ -10,34 +10,36 @@
 
     <ImageView
             android:id="@+id/imgSettingsIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="36dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:contentDescription="Settings icon"
             android:src="@drawable/settings_24px"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorOnBackground"/>
 
     <TextView
             android:id="@+id/tvSettingsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Beállítások"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:onClick="onSettingsClicked"
             app:layout_constraintTop_toBottomOf="@id/imgSettingsIcon"
             app:layout_constraintEnd_toEndOf="@id/imgSettingsIcon"
             app:layout_constraintStart_toStartOf="@id/imgSettingsIcon"
-            android:fontFamily="?attr/mainAppFontFamily"/>
+            android:fontFamily="?attr/mainAppFontFamily"
+            android:textColor="?attr/colorOnBackground"/>
 
     <ImageView
             android:id="@+id/imgChatIcon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="64dp"
-            android:src="@drawable/ic_app_placeholder"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintTop_toBottomOf="@id/imgSettingsIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -45,27 +47,27 @@
             android:id="@+id/tvChatPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Miben tudok ma segíteni?"
-            android:textSize="20sp"
+            android:text="Miben lehetek ma melletted?"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/imgChatIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:fontFamily="?attr/titleAppFontFamily"
-    />
+            android:fontFamily="?attr/titleAppFontFamily"/>
 
     <Button
             android:id="@+id/btnStartChat"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:textSize="20sp"
             android:text="Kezdjük el"
-            app:cornerRadius="0dp"
             android:layout_marginTop="120dp"
             android:onClick="onStartChatClicked"
             app:layout_constraintTop_toBottomOf="@id/tvChatPrompt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:fontFamily="?attr/mainAppFontFamily"/>
+            android:fontFamily="?attr/mainAppFontFamily"
+            android:textColor="?attr/colorOnBackground"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

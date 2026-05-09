@@ -61,6 +61,7 @@ public class ChatConversationActivity extends BaseActivity {
         setupRecyclerView();
         handleInitialIntent();
         setupTextWatcher();
+        updateSentimentIconColor(SentimentEngine.Sentiment.NEUTRAL);
         setupSuggestionChipsChat();
     }
 
@@ -107,6 +108,7 @@ public class ChatConversationActivity extends BaseActivity {
                 String suggestion = chip.getText().toString();
                 displayUserMessage(suggestion);
                 sendMessage(suggestion);
+                findViewById(R.id.cgChatSuggestions).setVisibility(View.GONE);
             });
         }
 
@@ -142,6 +144,7 @@ public class ChatConversationActivity extends BaseActivity {
         displayUserMessage(userText);
         etMessage.setText("");
         sendMessage(userText);
+        findViewById(R.id.cgChatSuggestions).setVisibility(View.GONE);
     }
 
     /**
@@ -249,7 +252,7 @@ public class ChatConversationActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 SentimentEngine.Sentiment sentiment = SentimentEngine.analyze(s.toString().trim());
-                updateIconColor(sentiment);
+                updateSentimentIconColor(sentiment);
             }
         });
     }
@@ -263,7 +266,7 @@ public class ChatConversationActivity extends BaseActivity {
      * - NEGATIVE -> Secondary (Calming/Non-alarming)
      * - NEUTRAL  -> Primary (Default)
      */
-    private void updateIconColor(SentimentEngine.Sentiment sentiment) {
+    private void updateSentimentIconColor(SentimentEngine.Sentiment sentiment) {
         if (viewSentimentIcon == null) return;
 
         int colorAttr;
