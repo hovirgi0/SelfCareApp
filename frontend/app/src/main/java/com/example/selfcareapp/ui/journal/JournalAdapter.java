@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,26 +52,29 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         String dateString = sdf.format(entry.date);
         holder.tvDate.setText(dateString);
 
-        // Map the stored mood string to its corresponding unicode emoji
-        String displayMoodEmoji = "\uD83D\uDE10";
-        String selectedMoodEmoji = (entry.mood != null) ? entry.mood : "Neutral";
+        // Map the stored mood string to its corresponding drawable resource
+        // Initialize with a default value to satisfy the compiler
+        int displayMoodIcon = R.drawable.sentiment_neutral_24px;
 
-        switch (selectedMoodEmoji) {
+        // Use entry.mood (the actual field name in your Entity class)
+        String selectedMoodIcon = (entry.mood != null) ? entry.mood : "Neutral";
+
+        switch (selectedMoodIcon) {
             case "Sad":
-                displayMoodEmoji = "\uD83D\uDE22";
+                displayMoodIcon = R.drawable.sentiment_sad_24px;
                 break;
             case "Neutral":
-                displayMoodEmoji = "\uD83D\uDE10";
+                displayMoodIcon = R.drawable.sentiment_neutral_24px;
                 break;
             case "Happy":
-                displayMoodEmoji = "\uD83D\uDE0A";
+                displayMoodIcon = R.drawable.sentiment_satisfied_24px;
                 break;
             case "Great":
-                displayMoodEmoji = "\uD83D\uDE03";
+                displayMoodIcon = R.drawable.sentiment_very_satisfied_24px;
                 break;
         }
 
-        holder.tvMoodEmoji.setText(displayMoodEmoji);
+        holder.ivMoodIcon.setImageResource(displayMoodIcon);
 
         // Navigates to the entry details/edit screen when an item is clicked
         holder.itemView.setOnClickListener(v -> {
@@ -100,13 +104,13 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
      */
     public static class JournalViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate;
-        TextView tvMoodEmoji;
+        ImageView ivMoodIcon;
         TextView tvContent;
 
         public JournalViewHolder(View itemView) {
             super(itemView);
             tvDate = itemView.findViewById(R.id.tvEntryDate);
-            tvMoodEmoji = itemView.findViewById(R.id.tvEntryMood);
+            ivMoodIcon = itemView.findViewById(R.id.ivEntryMood);
             tvContent = itemView.findViewById(R.id.tvEntryContent);
         }
     }

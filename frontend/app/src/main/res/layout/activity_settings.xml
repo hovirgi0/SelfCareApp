@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:padding="15dp">
 
         <!-- Header -->
         <LinearLayout
@@ -18,8 +18,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:orientation="vertical"
-                android:background="?attr/colorSecondaryContainer"
-                android:padding="10dp"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:padding="14dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -28,16 +29,15 @@
                     android:id="@+id/tvSettingsGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
                     android:fontFamily="?attr/mainAppFontFamily"/>
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Állítsd be a chat társadat úgy, hogy a legjobban megfeleljen neked. Ezek a beállítások bármikor módosíthatók."
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_marginTop="4dp"
                     android:fontFamily="?attr/mainAppFontFamily"/>
         </LinearLayout>
@@ -49,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="35dp"
                 android:orientation="vertical"
-                android:background="?attr/colorSurface"
-                android:padding="8dp"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:padding="12dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@id/llHeader"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,16 +62,15 @@
                     android:layout_height="wrap_content"
                     android:text="Előnézet"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:textColor="#000000"
+                    android:textSize="15sp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="?attr/mainAppFontFamily"/>
 
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:padding="8dp"
+                    android:background="@drawable/bg_chat_bubble"
+                    android:padding="10dp"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -78,16 +78,14 @@
                 <View
                         android:layout_width="12dp"
                         android:layout_height="18dp"
-                        android:background="#D9D9D9"
-                        android:layout_marginEnd="6dp" />
+                        android:layout_marginEnd="6dp"/>
 
                 <TextView
                         android:id="@+id/tvPreviewText"
                         android:layout_width="170dp"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
                         android:text="Értem, amit mondasz. Ez valóban kihívást jelenthet. Szeretnél beszélni róla részletesebben?"
-                        android:textSize="10sp"
+                        android:textSize="14sp"
                         android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
@@ -95,10 +93,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Válassz különböző kombinációkat, hogy megtaláld, mi illik hozzád!"
-                    android:textSize="9sp"
+                    android:textSize="13sp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:textColor="#424242"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="?attr/mainAppFontFamily"/>
         </LinearLayout>
 
@@ -109,13 +106,13 @@
                 android:layout_height="wrap_content"
                 android:text="Chat társ hangneme"
                 android:textStyle="bold"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:layout_marginTop="18dp"
                 app:layout_constraintTop_toBottomOf="@id/llPreviewBox"
                 app:layout_constraintStart_toStartOf="parent"
-                android:fontFamily="?attr/mainAppFontFamily"/>
+                android:fontFamily="?attr/mainAppFontFamily"
+                android:textColor="?attr/colorOnSurface"/>
 
-        <!-- Tone grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glTone"
                 android:layout_width="match_parent"
@@ -129,13 +126,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Semleges" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kiegyensúlyozott hang." android:textSize="9sp"
-                          android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Semleges"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kiegyensúlyozott hang."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -143,13 +153,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Barátságos" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Meleg, kedves stílus." android:textSize="9sp"
-                          android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Barátságos"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meleg, kedves stílus."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -157,13 +180,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nyugodt" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lassú, békés tempó." android:textSize="9sp"
-                          android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nyugodt"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lassú, békés tempó."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -171,22 +207,36 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Energikus" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lelkesítő és aktív." android:textSize="9sp"
-                          android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Energikus"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lelkesítő és aktív."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
+
         </androidx.gridlayout.widget.GridLayout>
 
-        <!-- Style title -->
         <TextView
                 android:id="@+id/tvStyleTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Válasz stílusa"
+                android:textColor="?attr/colorOnSurface"
                 android:textStyle="bold"
                 android:textSize="13sp"
                 android:layout_marginTop="16dp"
@@ -194,7 +244,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:fontFamily="?attr/mainAppFontFamily"/>
 
-        <!-- Style grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glStyle"
                 android:layout_width="match_parent"
@@ -208,13 +257,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Támogató" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Együttérző válaszok." android:textSize="9sp"
-                     android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Támogató"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Együttérző válaszok."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -222,22 +284,36 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Direkt" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lényegre törő." android:textSize="9sp"
-                          android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Direkt"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lényegre törő."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
+
         </androidx.gridlayout.widget.GridLayout>
 
-        <!-- Theme title -->
         <TextView
                 android:id="@+id/tvThemeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alkalmazás témája"
+                android:textColor="?attr/colorOnSurface"
                 android:textStyle="bold"
                 android:textSize="13sp"
                 android:layout_marginTop="16dp"
@@ -245,7 +321,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:fontFamily="?attr/mainAppFontFamily"/>
 
-        <!-- Theme grid -->
         <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/glTheme"
                 android:layout_width="match_parent"
@@ -259,13 +334,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dopamine Bright" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="." android:textSize="9sp"
-                    android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dopamine Bright"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Világos és energikus téma."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -273,13 +361,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#000000"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dopamine Dark" android:textStyle="bold" android:textColor="#FFFFFF" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textSize="9sp" android:textColor="#FFFFFF"
-                    android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dopamine Dark"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sötét és élénk megjelenés."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -287,13 +388,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soothing Light" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="...." android:textSize="9sp"
-                   android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soothing Light"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lágy és nyugodt világos téma."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
             <LinearLayout
@@ -301,16 +415,30 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1"
-                    android:layout_margin="3dp"
-                    android:padding="10dp"
-                    android:background="#F2F2F2"
-                    android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soothing Dark" android:textStyle="bold" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="...." android:textSize="9sp"
-                     android:fontFamily="?attr/mainAppFontFamily"/>
+                    android:layout_margin="5dp"
+                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soothing Dark"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nyugodt sötét megjelenés."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="?attr/mainAppFontFamily"/>
             </LinearLayout>
 
         </androidx.gridlayout.widget.GridLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

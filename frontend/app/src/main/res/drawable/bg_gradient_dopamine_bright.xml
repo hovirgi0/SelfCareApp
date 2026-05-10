@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base purple-blue -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="90%p"
+                    android:centerX="0.7"
+                    android:centerY="0.2"
+                    android:startColor="#B9C3FF"
+                    android:endColor="#9B5FFF" />
+        </shape>
+    </item>
+    <!-- Hot pink wave top left -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="55%p"
+                    android:centerX="0.15"
+                    android:centerY="0.3"
+                    android:startColor="#FF0075"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Orange wave top -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="65%p"
+                    android:centerX="0.4"
+                    android:centerY="0.15"
+                    android:startColor="#FF6B35"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Yellow wave middle -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="75%p"
+                    android:centerX="0.5"
+                    android:centerY="0.55"
+                    android:startColor="#FF8C33"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Magenta wave -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="50%p"
+                    android:centerX="0.25"
+                    android:centerY="0.65"
+                    android:startColor="#FF0055"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Orange accent bottom -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="60%p"
+                    android:centerX="0.7"
+                    android:centerY="0.85"
+                    android:startColor="#FF3E00"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Pink accent right -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="45%p"
+                    android:centerX="0.85"
+                    android:centerY="0.5"
+                    android:startColor="#FF4D9E"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+</layer-list>

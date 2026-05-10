@@ -393,12 +393,6 @@ ARCS = {
             "calm":      "Lassan haladunk, nem kell kapkodni. Mennyi időd van erre ma?",
             "energetic": "Vágom! Mennyi idő alatt akarod letudni?",
         },
-        {
-            "neutral":   "Szükséged van emlékeztetőre, vagy elég, ha a naplóba kerül?",
-            "friendly":  "Beírjuk a naplóba, vagy elég, ha itt megmarad nekünk?",
-            "calm":      "Elég, ha most rögzítjük. Szeretnéd, ha a naplódba is bekerülne?",
-            "energetic": "Tegyük be a teendőid közé! Mehet a naplóba is?",
-        },
     ],
 
     "journal": [

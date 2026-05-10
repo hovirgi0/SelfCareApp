@@ -46,6 +46,26 @@ public class JournalAddEntryActivity extends BaseActivity {
             currentEntryId = getIntent().getIntExtra("ENTRY_ID", -1);
             etJournalEntry.setText(getIntent().getStringExtra("ENTRY_CONTENT"));
             selectedMoodEntry = getIntent().getStringExtra("ENTRY_MOOD");
+
+            // Manually trigger the selection UI based on the loaded mood
+            View viewToHighlight;
+            switch (selectedMoodEntry) {
+                case "Sad":
+                    viewToHighlight = findViewById(R.id.moodSad);
+                    break;
+                case "Happy":
+                    viewToHighlight = findViewById(R.id.moodHappy);
+                    break;
+                case "Great":
+                    viewToHighlight = findViewById(R.id.moodGreat);
+                    break;
+                default:
+                    viewToHighlight = findViewById(R.id.moodNeutral);
+                    break;
+            }
+            if (viewToHighlight != null) {
+                onMoodEntrySelected(viewToHighlight);
+            }
         }
     }
 
@@ -57,7 +77,6 @@ public class JournalAddEntryActivity extends BaseActivity {
         String content = etJournalEntry.getText().toString().trim();
 
         if (content.isEmpty()) {
-            etJournalEntry.setError("A bejegyzés nem maradhat üresen!");
             Toast.makeText(this, "Kérlek írj valamit!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -83,11 +102,23 @@ public class JournalAddEntryActivity extends BaseActivity {
     }
 
     /**
-     * Updates the selected mood state based on the user's selection in the layout.
-     * Triggered by the onClick attribute of the mood icons in the XML.
+     * Updates the selected mood state based on the tapped mood icon.
+     * Highlights the selected icon and resets the others.
+     * Triggered by the onClick attribute of the mood ImageViews in the XML.
      */
     public void onMoodEntrySelected(View view) {
-        view.setBackgroundColor(android.graphics.Color.LTGRAY);
+        // Reset all icons to transparent
+        findViewById(R.id.moodSad).setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        findViewById(R.id.moodNeutral).setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        findViewById(R.id.moodHappy).setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        findViewById(R.id.moodGreat).setBackgroundColor(android.graphics.Color.TRANSPARENT);
+
+        // Highlight selected
+        view.setBackgroundColor(
+                com.google.android.material.color.MaterialColors.getColor(
+                        view, com.google.android.material.R.attr.colorPrimaryContainer
+                )
+        );
 
         int id = view.getId();
         if (id == R.id.moodSad) {

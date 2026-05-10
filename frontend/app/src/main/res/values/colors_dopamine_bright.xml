@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- DOPAMINE BRIGHT — prefix: db_ -->
 <resources>
-    <color name="db_md_theme_primary">#FF0075</color>
+    <color name="db_md_theme_primary">#FF8C00</color>
     <color name="db_md_theme_onPrimary">#FFFFFF</color>
     <color name="db_md_theme_primaryContainer">#FF4D9E</color>
     <color name="db_md_theme_onPrimaryContainer">#3D0020</color>
@@ -18,7 +18,7 @@
     <color name="db_md_theme_errorContainer">#FFDAD6</color>
     <color name="db_md_theme_onErrorContainer">#93000A</color>
     <color name="db_md_theme_background">#FFF8F7</color>
-    <color name="db_md_theme_onBackground">#29161A</color>
+    <color name="db_md_theme_onBackground">#FFD100</color>
     <color name="db_md_theme_surface">#FFF8F7</color>
     <color name="db_md_theme_onSurface">#29161A</color>
     <color name="db_md_theme_surfaceVariant">#FFD9DF</color>

@@ -15,6 +15,7 @@
             android:textSize="17sp"
             android:maxWidth="260dp"
             android:fontFamily="?attr/mainAppFontFamily"
-            android:background="?attr/colorPrimaryContainer"
-            android:textColor="?attr/colorOnPrimaryContainer" />
+            android:background="@drawable/bg_chat_bubble"
+            android:clipToOutline="true"
+            android:textColor="?attr/colorOnPrimaryContainer"/>
 </LinearLayout>

@@ -216,7 +216,7 @@
         <item name="titleAppFontFamily">@font/font_dopamine</item>
 
         <!-- Gradient -->
-        <item name="appGradientBackground">@drawable/bg_gradient_dopamine</item>
+        <item name="appGradientBackground">@drawable/bg_gradient_dopamine_bright</item>
 
         <!-- Dopamine Buttons: több elevation, rounded -->
         <item name="materialButtonStyle">@style/Widget.SelfCareApp.Button.Dopamine</item>

@@ -6,9 +6,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.selfcareapp.R;
+import com.example.selfcareapp.data.UserPreferences;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,8 +85,23 @@ public class SettingsActivity extends BaseActivity {
 
         // Standard initialization sequence
         bindViews();
+        setupGreeting();
         loadSelections();
         setOnClicklisteners();
+    }
+
+    /**
+     * Retrieves the user's name from persistent storage (SharedPreferences)
+     * and updates the greeting message dynamically.
+     */
+    private void setupGreeting() {
+        UserPreferences userPreferences = new UserPreferences(this);
+        String name = userPreferences.getPrefsName();
+        TextView tvGreeting = findViewById(R.id.tvSettingsGreeting);
+
+        if (tvGreeting != null && !name.isEmpty()) {
+            tvGreeting.setText("Szia, " + name + "!");
+        }
     }
 
     /**

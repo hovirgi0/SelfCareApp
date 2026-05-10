@@ -1,9 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-            android:type="linear"
-            android:angle="135"
-            android:startColor="#E8DDFF"
-            android:centerColor="#CAE6FF"
-            android:endColor="#FFD8E8" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base soft lavender -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="100%p"
+                    android:centerX="0.5"
+                    android:centerY="0.4"
+                    android:startColor="#E8DDFF"
+                    android:endColor="#CEBDFE" />
+        </shape>
+    </item>
+    <!-- Pink wave top left -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="60%p"
+                    android:centerX="0.2"
+                    android:centerY="0.2"
+                    android:startColor="#FFD8E8"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Soft blue wave right -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="75%p"
+                    android:centerX="0.8"
+                    android:centerY="0.5"
+                    android:startColor="#CAE6FF"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Light pink center -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="50%p"
+                    android:centerX="0.4"
+                    android:centerY="0.6"
+                    android:startColor="#FCB0D5"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Cyan accent bottom -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="55%p"
+                    android:centerX="0.5"
+                    android:centerY="0.95"
+                    android:startColor="#96CDF8"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Lavender wave -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="45%p"
+                    android:centerX="0.7"
+                    android:centerY="0.25"
+                    android:startColor="#DDE1FF"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Peach/pink accent -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="40%p"
+                    android:centerX="0.3"
+                    android:centerY="0.85"
+                    android:startColor="#FFD8E8"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+</layer-list>

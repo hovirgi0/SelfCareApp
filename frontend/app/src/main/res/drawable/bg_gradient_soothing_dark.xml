@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-            android:type="linear"
-            android:angle="135"
-            android:startColor="#0A0D1F"
-            android:centerColor="#162040"
-            android:endColor="#0C1024" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Deep dark blue base -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="100%p"
+                    android:centerX="0.5"
+                    android:centerY="0.5"
+                    android:startColor="#162040"
+                    android:endColor="#0A0D1F" />
+        </shape>
+    </item>
+    <!-- Cyan wave accent -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="55%p"
+                    android:centerX="0.1"
+                    android:centerY="0.3"
+                    android:startColor="#88D1EB"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Blue-purple wave -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="65%p"
+                    android:centerX="0.7"
+                    android:centerY="0.6"
+                    android:startColor="#384379"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+    <!-- Light blue accent -->
+    <item>
+        <shape>
+            <gradient
+                    android:type="radial"
+                    android:gradientRadius="40%p"
+                    android:centerX="0.85"
+                    android:centerY="0.2"
+                    android:startColor="#B9C3FF"
+                    android:endColor="#00000000" />
+        </shape>
+    </item>
+</layer-list>
