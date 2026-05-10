@@ -69,6 +69,7 @@
 
         <!-- Soothing Cards: -->
         <item name="cardDefaultBackground">#F2F2F2</item>
+        <item name="cardSelectedBackground">@color/sl_md_theme_primaryContainer</item>
 
         <!--Chip-s-->
         <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
@@ -146,6 +147,7 @@
 
         <!-- Soothing Cards: -->
         <item name="cardDefaultBackground">#2C2C3A</item>
+        <item name="cardSelectedBackground">@color/sd_md_theme_primaryContainer</item>
 
         <!--Chip-s-->
         <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
@@ -223,6 +225,7 @@
 
         <!--Dopamine Cards-->
         <item name="cardDefaultBackground">#EDE7FF</item>
+        <item name="cardSelectedBackground">@color/db_md_theme_secondaryContainer</item>
 
         <!--Chip-s-->
         <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
@@ -300,6 +303,8 @@
 
         <!--Dopamine Cards-->
         <item name="cardDefaultBackground">#2A2A2A</item>
+        <item name="cardSelectedBackground">@color/dd_md_theme_primaryFixed</item>
+        
         <!--Chip-s-->
         <item name="chipStyle">@style/Widget.SelfCareApp.Chip</item>
     </style>

@@ -85,6 +85,7 @@ public class JournalAddEntryActivity extends BaseActivity {
             JournalEntryEntity entry = new JournalEntryEntity();
             entry.setMood(selectedMoodEntry);
             entry.setContent(content);
+            entry.setDate(System.currentTimeMillis());
             entry.userId = 1;
 
             if (currentEntryId == -1) {
@@ -93,7 +94,6 @@ public class JournalAddEntryActivity extends BaseActivity {
                 entry.setId(currentEntryId);
                 journalRepository.editEntry(entry);
             }
-
             runOnUiThread(() -> {
                 Toast.makeText(JournalAddEntryActivity.this, "Bejegyzés sikeresen mentve", Toast.LENGTH_SHORT).show();
                 finish();

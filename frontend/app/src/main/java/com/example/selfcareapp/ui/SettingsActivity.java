@@ -2,7 +2,6 @@ package com.example.selfcareapp.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -246,22 +245,17 @@ public class SettingsActivity extends BaseActivity {
     }
 
     /**
-     * Reverts a card's background to the default attribute-defined color.
-     * Uses TypedValue to programmatically resolve theme-specific attributes.
+     * Reverts a card's background to the default unselected appearance.
      */
     private void resetCard(LinearLayout card) {
-        if (card != null) {
-            TypedValue value = new TypedValue();
-            getTheme().resolveAttribute(R.attr.cardDefaultBackground, value, true);
-            card.setBackgroundColor(value.data);
-        }
+        if (card != null) card.setBackgroundResource(R.drawable.bg_card);
     }
 
     /**
-     * Applies a highlight color to indicate a component's active/selected state.
+     * Applies the theme-aware selected background to indicate an active selection.
      */
-    private void activateCard(LinearLayout card){
-        if (card != null) card.setBackgroundColor(0xFFD0E8FF);
+    private void activateCard(LinearLayout card) {
+        if (card != null) card.setBackgroundResource(R.drawable.bg_card_selected);
     }
 
     /**

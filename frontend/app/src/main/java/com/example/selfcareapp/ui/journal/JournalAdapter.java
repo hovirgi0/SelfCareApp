@@ -48,7 +48,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         holder.tvContent.setText(entry.content);
 
         // Format and display the entry date
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd.", Locale.getDefault());
         String dateString = sdf.format(entry.date);
         holder.tvDate.setText(dateString);
 

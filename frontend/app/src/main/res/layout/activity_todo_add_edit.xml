@@ -36,8 +36,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="4dp"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tvHeader"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,15 +53,15 @@
                 android:inputType="textCapSentences"
                 android:padding="12dp"
                 android:fontFamily="?attr/mainAppFontFamily"
-                android:background="?attr/cardDefaultBackground"/>
+                android:background="@drawable/bg_card"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
             android:id="@+id/btnSaveTask"
             android:onClick="onSaveTaskClicked"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginEnd="32dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/add_box_24px"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:fabSize="normal"
@@ -108,7 +108,6 @@
                 android:textSize="17sp"
                 android:fontFamily="?attr/mainAppFontFamily" />
 
-        <!-- Suggestions hidden by default -->
         <com.google.android.material.chip.Chip
                 android:id="@+id/chipSuggestion4"
                 style="@style/Widget.MaterialComponents.Chip.Action"

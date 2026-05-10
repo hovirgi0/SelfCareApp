@@ -11,6 +11,7 @@
 
     <!--Cards-->
     <attr name="cardDefaultBackground" format="color"/>
+    <attr name="cardSelectedBackground" format="color"/>
 
     <!--Sentiment colors-->
     <attr name="sentimentPositiveColor" format="color"/>
