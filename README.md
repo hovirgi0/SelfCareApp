@@ -118,10 +118,10 @@ export GEMINI_API_KEY=your_key_here
 
 The app is informed by feminist HCI and Care Ethics frameworks:
 
-- **Bardzell** – Agency, equity, and empowerment in design
-- **Costanza-Chock** – Design Justice
-- **Noddings / Gilligan** – Care Ethics
-- **Wajcman** – Feminist technology theory
+- Agency, equity, and empowerment in design
+- Design Justice
+- Care Ethics
+- Feminist technology theory
 
 ---
 
