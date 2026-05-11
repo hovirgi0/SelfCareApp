@@ -3,7 +3,7 @@
 #
 # Responsibilities:
 # - Manage user chat sessions
-# - Generate LLM responses through Groq API
+# - Generate LLM responses through Gemini API
 # - Maintain lightweight conversational state
 # - Provide session reset functionality
 
@@ -11,7 +11,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import uuid
 
-from groq import Groq
+import google.generativeai as genai
+import os
 
 from chatbot import (
     get_system_prompt,
@@ -37,11 +38,11 @@ app = FastAPI()
 
 sessions = {}
 
-# --- Groq Client ---
+# --- Gemini Client ---
 # API key is loaded automatically from the
-# GROQ_API_KEY environment variable.
+# GEMINI_API_KEY environment variable.
 
-client = Groq()
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 # --- Request Schema ---
 
@@ -93,43 +94,26 @@ def chat(request: ChatRequest):
     )
 
     # --- Build LLM Conversation History ---
-    # Convert local message format into Groq-compatible format.
+    # Convert local message format into Gemini-compatible format.
 
-    client_messages = []
-
+    gemini_history = []
     for h in session["history"]:
-
-        role = (
-            "user"
-            if h["role"] == "user"
-            else "assistant"
-        )
-
-        client_messages.append({
+        role = "user" if h["role"] == "user" else "model"
+        gemini_history.append({
             "role": role,
-            "content": h["content"]
+            "parts": [h["content"]]
         })
-
-    client_messages.append({
-        "role": "user",
-        "content": request.message
-    })
 
     # --- Generate LLM Response ---
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        max_tokens=500,
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            *client_messages
-        ]
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        system_instruction=system_prompt
     )
 
-    response_text = response.choices[0].message.content
+    chat_session = model.start_chat(history=gemini_history)
+    response = chat_session.send_message(request.message)
+    response_text = response.text
 
     # --- Update Conversational Arc State ---
 
