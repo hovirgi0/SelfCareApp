@@ -11,15 +11,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import uuid
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import os
-
 from chatbot import (
     get_system_prompt,
     detect_category,
     get_last_bot_category,
     ARCS
 )
+
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
 app = FastAPI()
 
@@ -37,12 +39,6 @@ app = FastAPI()
 # when the server restarts.
 
 sessions = {}
-
-# --- Gemini Client ---
-# API key is loaded automatically from the
-# GEMINI_API_KEY environment variable.
-
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 # --- Request Schema ---
 
@@ -94,25 +90,50 @@ def chat(request: ChatRequest):
     )
 
     # --- Build LLM Conversation History ---
-    # Convert local message format into Gemini-compatible format.
+    # Convert local message format into Groq-compatible format.
 
-    gemini_history = []
+    client_messages = []
+
     for h in session["history"]:
-        role = "user" if h["role"] == "user" else "model"
-        gemini_history.append({
+
+        role = (
+            "user"
+            if h["role"] == "user"
+            else "assistant"
+        )
+
+        client_messages.append({
             "role": role,
-            "parts": [h["content"]]
+            "content": h["content"]
         })
+
+    client_messages.append({
+        "role": "user",
+        "content": request.message
+    })
 
     # --- Generate LLM Response ---
 
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        system_instruction=system_prompt
+    # Convert history to Gemini format (all messages except the last user one)
+    gemini_history = [
+        types.Content(
+            role="user" if msg["role"] == "user" else "model",
+            parts=[types.Part(text=msg["content"])]
+        )
+        for msg in client_messages[:-1]
+    ]
+
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=gemini_history + [
+            types.Content(role="user", parts=[types.Part(text=request.message)])
+        ],
+        config=types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            max_output_tokens=500
+        )
     )
 
-    chat_session = model.start_chat(history=gemini_history)
-    response = chat_session.send_message(request.message)
     response_text = response.text
 
     # --- Update Conversational Arc State ---
